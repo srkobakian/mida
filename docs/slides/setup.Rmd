@@ -6,13 +6,11 @@ author: "Stuart Lee"
 date: "9th Mar 2020"
 output:
   html_document:
-    css:
-      - "assets/animate.css"
-      - "assets/monash-logo.css"
-      - "assets/monash-brand.css"
-      - "assets/monash-fonts.css"
-      - "assets/styles.css" # small improvements
-      - "assets/custom.css" # add your own CSS here!
+    theme: cosmo
+    highlight: textmate
+    include:
+      after_body: ./../assets/footer.html
+    css: ./../assets/styles.css
 ---
 
 ```{r setup, include=FALSE}
