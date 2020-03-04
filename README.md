@@ -1,5 +1,9 @@
-# Masters Unit: Introduction to Data Analysis
+# IDA: Introduction to Data Analysis
 
-Instructor: Stuart Lee
+<!-- badges: start -->
+<!-- badges: end -->
 
-Chief Examiner: Prof Di Cook
+Materials for ETC1010, semester 1, 2020
+
+# Instructor: Dr Nick Tierney
+# Chief examiner: Prof Di Cook
