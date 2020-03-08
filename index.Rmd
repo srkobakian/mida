@@ -54,6 +54,19 @@ The "Assessments" tab above provides information about all assessment for ETC551
   miss a lecture/lab, it is your responsibility to catch up with
   missed material, learn about due dates for material to be turned in,
   and getting assigned to a group for team work.
+- **This class requires your attendance from week 2 onwards** and will be difficult 
+to do online. For those students who are unable attend due to extenuating 
+circumstances, it may be best to enrol second semester. An alternative is to complete
+a microcredential offered online. Completing this is equivalent and gives you credit for ETC5510, and would. keep you on track for MBAt. This started Mar 2 but it is still possible to enrol up until Mar 11. More information is available at  https://www.futurelearn.com/microcredentials/data-driven-decision-making. 
+
+
+## MoVE
+
+Borrow a laptop: If you are enrolled in a MoVE unit and forget your laptop, or do not own one as yet, please visit Monash Connect to borrow a laptop for an activity or part of a day:
+
+**Clayton: 7.45AM - 5PM**
+
+You may be required to provide proof of ID (student card or personal ID) in order to borrow a laptop. We have a limited amount of laptops available for students to borrow (during semester only). Collect an IT Services ticket when you go to Monash Connect.
 
 ## Consultation times
 
@@ -61,11 +74,19 @@ Consultations begin from Week 2 (16th March)
 
 - Steph Kobakian: TBA
 - Sherry Zhang: Friday 2pm-3pm
-- Stuart Lee: Monday afternoon **Menzies W1105**
-- Stuart Lee: Wednesday afternoon **Menzies W1105**
+- Stuart Lee: Monday afternoon 3-4pm **Menzies W1105**
+- Stuart Lee: Wednesday afternoon 4:30pm-6:30pm **Menzies W1105**
 
-## Tentative Schedule
+## Schedule
 
+### The first week of semester March 9 - March 13 is online only
+
+The lecturer and the tutors will be available via the *ED* forum and Zoom
+to answer any questions you have about the course or content. 
+Lecture recordings for this week will be posted on Moodle.
+
+
+### From the second week onwards
 There are two lectorials every week:
 
 * **Monday 6-8pm** (Room 321 - LTB Bldg 92)
