@@ -49,7 +49,7 @@ ul {
 .motivator   { background-color: #9651A0; } /* monash-bg-fuchsia2 */
 .transition  { 
   background-color: #006DAE; /* monash-bg-blue */
-  text-align: left;  
+  text-align: center;  
 } 
 
 .motivator .info-box strong { color: #9651A0; }
@@ -147,15 +147,8 @@ a {
   color: white!important;
 }
 
-.remark-code { 
-  font-size: 20px; 
-}
 
-.remark-code .overflow { 
-  overflow-y: scroll;
-  height: 500px;
-  margin: 0em 0em -1em -1em;
-}
+.remark-code { font-size: 24pt; }
 .font_small .remark-code { font-size: 18pt;}
 .font_smaller .remark-code { font-size: 16pt }
 .font_smaller2 .remark-code { font-size: 13pt }
@@ -166,6 +159,7 @@ li { margin: 10px 0; }
 .remark-slide-content h1:first-of-type {
   padding-top:20px;
 }
+
 
 .shade_black  {
     background-color: rgba(0,0,0,0.5);

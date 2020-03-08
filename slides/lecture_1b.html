@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>ETC1010: Introduction to Data Analysis</title>
+    <title>ETC5510: Introduction to Data Analysis</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Nicholas Tierney" />
-    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <meta name="author" content="Stuart Lee &amp; Nicholas Tierney" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
     <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
     <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
-    <link href="libs/typer-js-1.0.2/typer.css" rel="stylesheet" />
-    <script src="libs/typer-js-1.0.2/typer.min.js"></script>
-    <script src="libs/hacker-type-0.0.12/hacker-type.js"></script>
-    <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
-    <script src="libs/countdown-0.3.5/countdown.js"></script>
     <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
     -->
-    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>    
+    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>
     <link rel="stylesheet" href="assets/animate.css" type="text/css" />
     <link rel="stylesheet" href="assets/monash-logo.css" type="text/css" />
     <link rel="stylesheet" href="assets/monash-brand.css" type="text/css" />
@@ -32,6 +26,7 @@
 
 background-color: #006DAE
 class: middle center hide-slide-number
+
 
 &lt;div class="shade_black"  style="width:60%;right:0;bottom:0;padding:10px;border: dashed 4px white;margin: auto;"&gt;
 &lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See &lt;a href=/&gt;here for PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;. 
@@ -53,7 +48,7 @@ count: false
 
 &lt;br&gt;
 
-# .monash-blue.outline-text[ETC1010: Introduction to Data Analysis]
+# .monash-blue.outline-text[ETC5510: Introduction to Data Analysis]
 
 &lt;h2 class="monash-blue2 outline-text" style="font-size: 30pt!important;"&gt;Week 1, part B&lt;/h2&gt;
 
@@ -63,11 +58,11 @@ count: false
 
 .bottom_abs.width100[
 
-Lecturer: *Nicholas Tierney*
+Lecturer: *Stuart Lee &amp; Nicholas Tierney*
 
 Department of Econometrics and Business Statistics
 
-<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC1010.Clayton-x@monash.edu
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
 
 11th Mar 2020
 
@@ -90,7 +85,6 @@ Department of Econometrics and Business Statistics
 &lt;/svg&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-
 
 
 
@@ -338,10 +332,6 @@ With very little marking up, we can create rich text, that **actually resembles*
 
 **Learn to use markdown** Spend five minutes working through [markdowntutorial.com](https://www.markdowntutorial.com/)
 
-<div class="countdown" id="timer_5e61eabc" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-
 --
 
 ##  This the end of part 1 of lecture 1b
@@ -528,17 +518,13 @@ Which gives you the following sentence
 ---
 # Your Turn: Put it together
 
-Go to `rstudio.cloud` and go to "ida-exercise-1b"
+Download  "mida-exercise-1b.zip" from the course website
 
 * open the document "01-oz-atlas.Rmd"
 * knit the document 
 * Change the data section at the top to be from a different state instead of "New South Wales"
 * knit the document again
 * How do the text and figures in the document change?
-
-<div class="countdown" id="timer_5e61ece0" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
 
 ---
 class: transition center bottom
@@ -599,10 +585,6 @@ gap &lt;- read_csv("gapminder.csv")
 
 What do you think this does?
 
-<div class="countdown" id="timer_5e61ecff" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
-</div>
-
 
 ---
 # Code: Chunk options
@@ -619,13 +601,9 @@ You can read more about the options at the official documentation: https://yihui
 ---
 # Your turn
 
-* go to `rstudio.cloud`, open document `01-oz-atlas.Rmd` and change the document so that the code output is hidden, but the graphics are shown. (Hint: Google "rstudio rmarkdown cheatsheet" for some tips!)
+* Go back to  the document `01-oz-atlas.Rmd` and change the document so that the code output is hidden, but the graphics are shown. (Hint: Google "rstudio rmarkdown cheatsheet" for some tips!)
 * Re-Knit the document.
 * Take a look at the [R Markdown Gallery](https://rmarkdown.rstudio.com/gallery.html).
-
-<div class="countdown" id="timer_5e61ebf7" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
 
 ---
 class: transition
@@ -663,13 +641,6 @@ knitr::opts_chunk$set(
 
 - Update the other code chunks by removing the code chunk options.
 
-
-<div class="countdown" id="timer_5e61ec30" style="right:0;bottom:0;left:0;margin:3%;padding:15px;font-size:4em;" data-audio="true" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-
-
-
 ---
 class: transition
 
@@ -698,7 +669,7 @@ The many different outputs of rmarkdown
 ---
 # Your Turn
 
-- Go to rstudio.cloud to `oz-atlas-final.Rmd`
+- Open the `oz-atlas-final.Rmd` from the mida-exercise-1b project
 - Read through the document and add text where prompted to learn more about the Australian native platypus!
 
 ---
@@ -739,20 +710,13 @@ count: false
 
 .bottom_abs.width100[
 
-Lecturer: Nicholas Tierney
+Lecturer: Stuart Lee &amp; Nicholas Tierney
 
 Department of Econometrics and Business Statistics&lt;br&gt;
-<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC1010.Clayton-x@monash.edu
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
 
 11th Mar 2020
-
-
 ]
-
-&lt;br /&gt;
-This work is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"&gt;Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License&lt;/a&gt;.
-
-&lt;a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"&gt;&lt;img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /&gt;&lt;/a&gt;
 
 
 ]]

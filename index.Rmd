@@ -75,15 +75,26 @@ Consultations begin from Week 2 (16th March)
 - Steph Kobakian: TBA
 - Sherry Zhang: Friday 2pm-3pm
 - Stuart Lee: Monday afternoon 3-4pm **Menzies W1105**
-- Stuart Lee: Wednesday afternoon 4:30pm-6:30pm **Menzies W1105**
+- Stuart Lee: Wednesday afternoon 4:30pm-5:30pm **Menzies W1105**
 
 ## Schedule
 
 ### The first week of semester March 9 - March 13 is online only
 
-The lecturer and the tutors will be available via the *ED* forum and Zoom
+The lecturer and the tutors will be available
+this week via the *ED* forum and Zoom
 to answer any questions you have about the course or content. 
-Lecture recordings for this week will be posted on Moodle.
+
+The lecturer is available for consultation at the following times 
+
+- Monday 09/03 3-5pm
+- Tuesday 10/03 4-6pm
+- Wednesday 11/03 4-6pm
+
+The tutors will be monitoring the ED forum during class times.
+
+Lecture recordings for this week will be posted on Moodle. These are based on lectures recorded for ETC1010, so please ignore any reference to Rstudio
+cloud and instead refer to the [Setup R handout](slides/setup.html).  
 
 
 ### From the second week onwards
