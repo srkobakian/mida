@@ -1,6 +1,6 @@
 Week,Lecture,Date,HTML,PDF,Exercise,Topic,Readings,Assessment
-1,A,2020-03-09T00:00:00Z,lecture_1A.html,lecture_1A.pdf,exercise_1A.zip,Introduction to the language of data analysis,NA,NA
-1,B,2020-03-11T00:00:00Z,lecture_1B.html,lecture_1B.pdf,exercise_1B.zip,NA,NA,NA
+1,A,2020-03-09T00:00:00Z,lecture_1a.html,lecture_1A.pdf,1a/mida-exercise-1a.zip,Introduction to the language of data analysis,NA,NA
+1,B,2020-03-11T00:00:00Z,lecture_1b.html,lecture_1B.pdf,1b/mida-exercise-1b.zip,NA,NA,NA
 2,A,2020-03-16T00:00:00Z,NA,NA,NA,"Tidy data principles, reshaping your data into tidy form, and basic data wrangling",NA,NA
 2,B,2020-03-18T00:00:00Z,NA,NA,NA,NA,NA,NA
 3,A,2020-03-23T00:00:00Z,NA,NA,NA,"Plotting your data, and wrangling temporal data",NA,NA

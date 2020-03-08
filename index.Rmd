@@ -111,7 +111,7 @@ schedule <-  read_csv("materials/schedule.csv") %>%
     TRUE ~ ""
   ),
   Exercise = case_when(
-    !is.na(Exercise) ~ glue("<a class='fa fa-link' href='{Exercise}'></a>"),
+    !is.na(Exercise) ~ glue("<a class='fa fa-link' href='exercises/{Exercise}'></a>"),
     TRUE ~ ""
   ),
   Topic = ifelse(is.na(Topic), "", Topic),
