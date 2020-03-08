@@ -3,7 +3,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Materials for ETC1010, semester 1, 2020
+Materials for ETC5510, semester 1, 2020
 
-# Instructor: Dr Nick Tierney
+# Instructor: Stuart Lee
 # Chief examiner: Prof Di Cook
