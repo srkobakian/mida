@@ -447,18 +447,15 @@ grade_remainder <- data.frame(
   Assessment = c("Assignment", 
                  "Mid-Sem Theory + Concept exam", 
                  "Data Analysis Exam",
-                 "Project", 
-                 "Final Exam"),
-  Weight = c("12%", 
-             "8%", 
-             "10%", 
-             "10%", 
-             "50%"),
+                 "Project"),
+  Weight = c("20%", 
+             "20%", 
+             "20%", 
+             "30%"),
   Task = c("Teamwork, data analysis challenge, due in weeks 4, and 8",
            "Due week 6",
            "Due week 11",
-           "Due week 11",
-           "TBA")
+           "Due week 11")
 )
 
 kable(grade_remainder,
