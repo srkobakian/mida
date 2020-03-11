@@ -83,7 +83,7 @@ class: transition middle
 
 
 ---
-# Steff
+# Steph
 
 .pull-left[
 * `r emo::ji("mortar_board")` Bachelor of Economics and Bachelor of Commerce from Monash
