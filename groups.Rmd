@@ -1,0 +1,89 @@
+---
+title: "Groups"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(googlesheets4)
+
+
+sheets <- "https://docs.google.com/spreadsheets/d/1C9RZRbD5sCzT6c4OhELdyTaBPCgtKQzX66CuFzUvUxg/edit?usp=sharing"
+```
+
+In the table below you will find your student ID and a corresponding
+group name. Once you have formed groups you can change names, but just
+let the tutors know. 
+
+```{r create-groups, eval = FALSE, echo = FALSE}
+# run once
+students <- read_csv(here::here("etc5510-participants.csv")) %>% 
+  select(monash_id = `ID number`, 
+         everything())
+
+class_size <- nrow(students)
+group_size <- 4
+# number of students in each group
+# number of groups divisible by 4,
+n_groups <- class_size %/% group_size
+# number of groups left over that will have size 3
+remainder <- class_size %% group_size
+if (remainder == 0) {
+  group_vec <- rep(group_size, n_groups) 
+} else {
+  # make left over groups have 3 members
+  left_over_size <- 3
+  group_vec <- c(rep(group_size, n_groups - (left_over_size - remainder)),
+                 rep(left_over_size, group_size %/% remainder))
+}
+
+stopifnot(sum(group_vec) == class_size)
+
+# use package names from rstudio and friends
+set.seed(9999)
+group_names <- sample(
+  c(
+  "dplyr", "tidyr", "ggplot2", 
+  "readr", "purrr", "tibble",
+  "stringr", "forcats", "magrittr",
+  "glue", "broom", "vegawidget",
+  "shiny", "stats", "base",
+  "tidyverse", "rvest", "rmarkdown"
+  ), 
+  size = length(group_vec)
+)
+
+set.seed(1999)
+groups_tbl <- tibble(group_name = group_names,
+                     group_size = group_vec) %>% 
+  uncount(group_size) %>% 
+  sample_n(n())
+
+students <- bind_cols(students, groups_tbl)
+
+stopifnot(
+  (students %>% 
+    count(group_name, sort = TRUE) %>% 
+    pull(n)
+  ) == as.integer(group_vec)
+)
+
+# upload to google drive
+write_csv(students, here::here("etc1010-groups.csv"))
+```
+
+```{r display-groups, echo = FALSE}
+read_csv(here::here("etc1010-groups.csv")) %>% 
+  select(`Student ID` = monash_id, `Group` = group_name) %>% 
+  kable(escape = FALSE, 
+        align = c("l", "c")) %>% 
+  kable_styling(bootstrap_options = "striped", fixed_thead = TRUE) %>% 
+  column_spec(1, width = "2cm") %>% 
+  column_spec(2, width = "2cm")
+```
