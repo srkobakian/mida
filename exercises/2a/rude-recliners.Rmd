@@ -1,0 +1,50 @@
+---
+title: "Rude Recliners"
+author: 
+output: html_document
+---
+
+This contains data from the article [41% Of Fliers Think You're Rude If You Recline Your Seat](http://fivethirtyeight.com/datalab/airplane-etiquette-recline-seat/). 
+
+V1 is the response to question: "Is it rude to recline your seat on a plane?"
+
+V2 is the response to question: "Do you ever recline your seat when you fly?". 
+
+# Exercise 1: Rude Recliners 
+
+Answer the following questions in the rmarkdown document.
+
+First, let's read in the data
+
+```{r read-in}
+library(tidyverse)
+
+# recliners <- read_csv(here::here("recliners.csv")
+recliners <- read_csv(here::here("exercises/2a/data/recliners.csv"))
+recliners
+```
+
+## Ex1 A) What are the variables and observations in this data?
+
+* The variables are ...
+* The observations are ...
+
+## Ex 1B) Pivot the data in tidy long form (using the names `V2` as the key variable, and `count` as the value). 
+
+```{r recline-long}
+recline_long <- recliners %>% 
+  pivot_longer(cols = -V1,
+               # names_to = __,
+               # values_to = __)
+               names_to = "response",
+               values_to = "count")
+
+recline_long
+```
+
+## Ex 1C) Use the `rename` function to better describe the variable names.
+
+```{r rename-recline}
+recline_long %>%
+  rename(question = V1)
+```

@@ -5,8 +5,6 @@
     <meta charset="utf-8" />
     <meta name="author" content="Stuart Lee" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
-    <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
-    <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
     <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
     <script src="libs/countdown-0.3.5/countdown.js"></script>
     <!--
@@ -18,83 +16,22 @@
     <link rel="stylesheet" href="assets/monash-brand.css" type="text/css" />
     <link rel="stylesheet" href="assets/monash-fonts.css" type="text/css" />
     <link rel="stylesheet" href="assets/styles.css" type="text/css" />
-    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
-    <link rel="stylesheet" href="assets/demo.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
+class: center, middle, inverse, title-slide
 
- 
-
-
-background-color: #006DAE
-class: middle center hide-slide-number
-
-
-&lt;div class="shade_black"  style="width:60%;right:0;bottom:0;padding:10px;border: dashed 4px white;margin: auto;"&gt;
-&lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See &lt;a href=/&gt;here for PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;. 
-&lt;/div&gt;
-
-&lt;br&gt;
-
-.white[Press the **right arrow** to progress to the next slide!]
+# ETC5510: Introduction to Data Analysis
+## Week of Tidy Data
+### Stuart Lee
+### 16th Mar 2020
 
 ---
 
 
-background-image: url(images/bg1.jpg)
-background-size: cover
-class: hide-slide-number split-70 title-slide
-count: false
-
-.column.shade_black[.content[
-
-&lt;br&gt;
-
-# .monash-blue.outline-text[ETC5510: Introduction to Data Analysis]
-
-&lt;h2 class="monash-blue2 outline-text" style="font-size: 30pt!important;"&gt;Week 2, part A&lt;/h2&gt;
-
-&lt;br&gt;
-
-&lt;h2 style="font-weight:900!important;"&gt;Week of Tidy Data&lt;/h2&gt;
-
-.bottom_abs.width100[
-
-Lecturer: *Stuart Lee*
-
-Department of Econometrics and Business Statistics
-
-<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
-
-16th Mar 2020
-
-&lt;br&gt;
-]
-
-
-]]
 
 
 
-&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
-&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
-&lt;svg class="clip-svg absolute"&gt;
-&lt;defs&gt;
-&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
-&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
-&lt;/clipPath&gt;
-&lt;/defs&gt;	
-&lt;/svg&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-
-
-
-
-
----
 class: transition middle
 
 # About your instructors
@@ -107,11 +44,11 @@ class: transition middle
 * 🎓 Bachelor of Mathematical Sciences at University of Adelaide
 *  🎓 PhD Candidate in Statistics at Monash EBS. 
 * Research: genomics, data visualisation, statistical computing
-* ❤️: board games, cooking, music and reading
+* ❤️: board games, cooking, music, reading and video games
 ]
 
 .pull-right[
-
+&lt;img src="images/stuart.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -182,7 +119,7 @@ class: transition left
 
 LASTLY, come up with a name for your team (we have provided a suggested name, but you are free to change it!) and tell this to a tutor, along with the names of members of the team.
 
-<div class="countdown" id="timer_5e689f5a" style="right:0;bottom:0;left:0;margin:2%;padding:2px;font-size:2em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad3ff" style="right:0;bottom:0;left:0;margin:2%;padding:2px;font-size:2em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -327,6 +264,7 @@ grad
 
 Good things about the format:
 
+.pull-left[
 
 ```
 ## # A tibble: 6 x 16
@@ -342,14 +280,13 @@ Good things about the format:
 ## #   PctFemaleStud &lt;dbl&gt;, PctIntlStud &lt;dbl&gt;, AvNumPhDs &lt;dbl&gt;, AvGREs &lt;dbl&gt;,
 ## #   TotFac &lt;dbl&gt;, PctAsstProf &lt;dbl&gt;, NumStud &lt;dbl&gt;
 ```
+]
+.pull-right[
 
---
+**Rows** contain information about the institution
 
-- **Rows** contain information about the institution
-
---
-
-- **Columns** contain types of information, like average number of publications, average number of citations, % completion, 
+**Columns** contain types of information, like average number of publications, average number of citations, % completion, 
+]
 
 ---
 
@@ -379,8 +316,10 @@ Easy to make summaries:
 ```r
 grad %&gt;%
   filter(subject == "economics") %&gt;%
-  summarise(mean = mean(NumStud),
-            s = sd(NumStud))
+  summarise(
+    mean = mean(NumStud), 
+    s = sd(NumStud)
+  )
 ## # A tibble: 1 x 2
 ##    mean     s
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -391,18 +330,29 @@ grad %&gt;%
 
 # Example: US graduate programs
 
+
+.pull-left[
+
 Easy to make a plot
 
-.left-code[
 
+
+```r
+grad %&gt;%
+  filter(subject == "economics") %&gt;%
+  ggplot(aes(x = NumStud, y = MedianTimetoDegree)) +
+  geom_point() + 
+  theme(aspect.ratio = 1)
+```
 ]
 
-.right-plot[
-&lt;img src="lecture_2a_files/figure-html/gra-dplot-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+.pull-right[
+&lt;img src="lecture_2a_files/figure-html/gra-dplot-out-1.png" height="100%" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 class: transition left
-# Your Turn: Open Lecture 2A in rstudio cloud
+## Your Turn: download exercises for today's lecture!
 
 - Notice the `data/` directory with many datasets! 
 - Open `graduate-programs.Rmd`
@@ -411,7 +361,7 @@ class: transition left
     - "What is the best description of the relationship between number of students and median time to degree?"
 - Use the traffic light system if you need a hand.
 
-<div class="countdown" id="timer_5e68a22e" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad507" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -431,7 +381,7 @@ class: refresher
 .left-code[
 What could this image say about R?
 
-<div class="countdown" id="timer_5e689ed6" style="bottom:0;left:0;font-size:1.5em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad527" style="bottom:0;left:0;font-size:1.5em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -595,13 +545,13 @@ For each of these data examples, **let's try together to identify the variables 
 ## #   `WM-12.R2` &lt;dbl&gt;, `WM-12.R4` &lt;dbl&gt;
 ```
 
-<div class="countdown" id="timer_5e689ef6" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad3f6" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 
 ---
-# Melbourne weather 😨
+# Melbourne weather 😱
 
 
 
@@ -624,7 +574,7 @@ For each of these data examples, **let's try together to identify the variables 
 ## # … with 1,583 more rows
 ```
 
-<div class="countdown" id="timer_5e68a1d4" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad33b" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -657,7 +607,7 @@ For each of these data examples, **let's try together to identify the variables 
 ## #   new_sp_f5564 &lt;dbl&gt;, new_sp_f65 &lt;dbl&gt;, new_sp_fu &lt;dbl&gt;
 ```
 
-<div class="countdown" id="timer_5e68a263" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad378" style="right:0;bottom:0;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -739,17 +689,6 @@ Tidy data can be though of as legos. Once you have this form, you can put it tog
 - `separate`: Split one column into many
 
 ---
-class: refresher
-# Aside: naming things is hard
-
-- You might have come across `pivot_` functions as `spread` or `gather`. These are still valid, but have been improved upon in the latest version of the `tidyr` package.
-- You can read more about this change here:
-
-  - [tidyverse blog post](https://www.tidyverse.org/blog/2019/09/tidyr-1-0-0/)
-  - [tidyr vignette](http://tidyr.tidyverse.org/articles/pivot.html)
-  - [Hadley Wickham's talk]()
-
----
 
 # one more time: `pivot_longer`
 
@@ -760,7 +699,7 @@ pivot_longer(&lt;DATA&gt;,
              &lt;VALUES_TO&gt;)
 ```
 
-- **Cols** to select are those that represent values, not variables.
+- **cols** to select are those that represent values, not variables.
 - **names_to** is the name of the variable whose values for the column names.
 - **values_to** is the name of the variable whose values are spread over the cells.
 
@@ -945,46 +884,53 @@ class: transition
 ---
 # Examine treatments against each other
 
-.left-code[
+.pull-left[
+
+```r
+genes_long_tidy %&gt;%
+  pivot_wider(id_cols = c(id, rep, time),
+              names_from = trt, 
+              values_from = expr) %&gt;%
+  ggplot(aes(x=WI, y=WM, colour=id)) + geom_point()
+```
+]
+
+.pull-right[
+&lt;img src="lecture_2a_files/figure-html/plot-genes-out-1.png" height="100%" style="display: block; margin: auto;" /&gt;
+Generally, some negative association within each gene, WM is low if WI is high. 
 
 ]
 
-.right-plot[
-&lt;img src="lecture_2a_files/figure-html/plot-genes-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
-
-Generally, some negative association within each gene, WM is low if WI is high. 
 
 ---
 # Examine replicates against each other
 
-.left-code[
+.pull-left[
 
+```r
+genes_long_tidy %&gt;%
+  pivot_wider(id_cols = c(id, trt, time),
+              names_from = rep, 
+              values_from = expr) %&gt;%
+  ggplot(aes(x=R1, y=R4, colour=id)) + 
+  geom_point() + coord_equal()
+```
 ]
 
-.right-plot[
-&lt;img src="lecture_2a_files/figure-html/shoe-replicates-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+.pull-right[
+&lt;img src="lecture_2a_files/figure-html/shoe-replicates-out-1.png" height="100%" style="display: block; margin: auto;" /&gt;
 
 Roughly, replicate 4 is like replicate 1, eg if one is low, the other is low. 
 
 That's a good thing, that the replicates are fairly similar.
+]
 
 ---
 class: transition
-# Your turn: Demonstrate with koala bilby data (live code)
+## Your turn: Demonstrate with koala bilby data (live code)
 
 Here is a little data to practice `pivot_longer`, `pivot_wider` and `separate` on.
 
-
-```
-## # A tibble: 5 x 5
-##   ID    koala_NSW koala_VIC bilby_NSW bilby_VIC
-##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 grey         23        43        11         8
-## 2 cream        56        89        22        17
-## 3 white        35        72        13         6
-## 4 black        28        44        19        16
-## 5 taupe        25        37        21        12
-```
 
 - Read over `koala-bilby.Rmd`
 - pivot_longer the data into long form, naming the two new variables, `label` and `count`
@@ -1035,7 +981,7 @@ class: transition left
 - Are you more of a dog or a cat person?
 - What languages do you know how to speak?
 
-<div class="countdown" id="timer_5e68a04e" style="right:0;bottom:0;left:0;margin:5%;padding:10px;font-size:2em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_5e6ad383" style="right:0;bottom:0;left:0;margin:5%;padding:10px;font-size:2em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1045,7 +991,7 @@ class: transition left
 
 Open: `tb-incidence.Rmd`
 
-Tidy the TB incidence data, using rthe Rmd to prompt questions.
+Tidy the TB incidence data, using the Rmd to prompt questions.
 
 ---
 # Exercise 3: Currency rates (15 minutes)
@@ -1149,58 +1095,7 @@ class: refresher
 
 ---
 
-# summary slide
-
-- Tower of babel analogy for writing R code
-
----
-
-background-image: url(images/tower-of-babel.jpg)
-background-size: contain
-background-position: 50% 50%
-class: refresher, center, bottom
-
-
----
-  
-
-background-image: url(images/bg1.jpg)
-background-size: cover
-class: hide-slide-number split-70
-count: false
-
-.column.shade_black[.content[
-
-&lt;br&gt;&lt;br&gt;
-
 # That's it!
-
-.bottom_abs.width100[
-
-Lecturer: Stuart Lee
-
-Department of Econometrics and Business Statistics&lt;br&gt;
-<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
-
-16th Mar 2020
-]
-
-
-]]
-
-
-
-&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
-&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
-&lt;svg class="clip-svg absolute"&gt;
-&lt;defs&gt;
-&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
-&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
-&lt;/clipPath&gt;
-&lt;/defs&gt;	
-&lt;/svg&gt;
-&lt;/div&gt;
-&lt;/div&gt;
 
 &lt;img src="images/horst_tidy.jpg" width="50%" style="display: block; margin: auto;" /&gt;
 
