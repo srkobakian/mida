@@ -75,11 +75,11 @@ stopifnot(
 )
 
 # upload to google drive
-write_csv(students, here::here("etc1010-groups.csv"))
+write_csv(students, here::here("etc5510-groups.csv"))
 ```
 
 ```{r display-groups, echo = FALSE}
-read_csv(here::here("etc1010-groups.csv")) %>% 
+read_csv(here::here("etc5510-groups.csv")) %>% 
   select(`Student ID` = monash_id, `Group` = group_name) %>% 
   kable(escape = FALSE, 
         align = c("l", "c")) %>% 
