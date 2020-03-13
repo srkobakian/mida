@@ -2,7 +2,7 @@
 title: "ETC5510: Introduction to Data Analysis"
 week: "Week 2, part A"
 subtitle: "Week of Tidy Data"
-author: "Stuart Lee"
+author: "Stuart Lee and Nick Tierney"
 email: "ETC5510.Clayton-x@monash.edu"
 date: "16th Mar 2020"
 pdflink: ""
@@ -16,10 +16,7 @@ output:
       - "assets/monash-brand.css"
       - "assets/monash-fonts.css"
       - "assets/styles.css" # small improvements
-      - "assets/custom.css" # add your own CSS here!
-      - "assets/demo.css" # this should be removed
     self_contained: false 
-    seal: false 
     chakra: 'libs/remark-latest.min.js'
     lib_dir: libs
     includes:
@@ -38,9 +35,6 @@ output:
         click: false
       ratio: '16:9'
 ---
- 
-```{r titleslide, child="components/titleslide.Rmd"}
-```
 
 
 ```{r setup, include=FALSE}
@@ -59,7 +53,6 @@ opts_chunk$set(echo = FALSE,
                cache = FALSE)
 ```
 
----
 class: transition middle
 
 # About your instructors
@@ -72,11 +65,12 @@ class: transition middle
 * `r emo::ji("mortar_board")` Bachelor of Mathematical Sciences at University of Adelaide
 *  `r emo::ji("mortar_board")` PhD Candidate in Statistics at Monash EBS. 
 * Research: genomics, data visualisation, statistical computing
-* `r emo::ji("heart")`: board games, cooking, music and reading
+* `r emo::ji("heart")`: board games, cooking, music, reading and video games
 ]
 
 .pull-right[
-```{r img-nick, out.width = "80%"}
+```{r img-stu, out.width = "80%"}
+include_graphics("images/stuart.jpeg")
 ```
 
 ]
@@ -116,6 +110,26 @@ knitr::include_graphics("images/steff.jpeg")
 knitr::include_graphics("images/sherry.jpeg")
 ```
 ]
+
+---
+# Nick
+
+.pull-left[
+* `r emo::ji("mortar_board")` Bachelor of Psychological Sciences UQ
+*  `r emo::ji("mortar_board")` PhD in Statistics at QUT. 
+* Research: missing data, data visualisation, statistical computing
+* R `r emo::ji("package")`: `naniar`, `visdat`, 
+* `#rstats` `r emo::ji("microphone")`: Credibly Curious w Saskia Freytag
+* `r emo::ji("heart")` outdoors, especially: `r emo::ji("hiking_boot")`, `r emo::ji("man_running")`, and `r emo::ji("man_climbing")`.
+]
+
+.pull-right[
+```{r img-nick, out.width = "80%"}
+knitr::include_graphics("images/njtierney.jpg")
+```
+
+]
+
 
 ---
 
@@ -293,17 +307,17 @@ grad
 
 Good things about the format:
 
+.pull-left[
 ```{r print-grad, echo = FALSE}
 head(grad)
 ```
+]
+.pull-right[
 
---
+**Rows** contain information about the institution
 
-- **Rows** contain information about the institution
-
---
-
-- **Columns** contain types of information, like average number of publications, average number of citations, % completion, 
+**Columns** contain types of information, like average number of publications, average number of citations, % completion, 
+]
 
 ---
 
@@ -324,35 +338,40 @@ Easy to make summaries:
 ```{r grad-filter, echo = TRUE}
 grad %>%
   filter(subject == "economics") %>%
-  summarise(mean = mean(NumStud),
-            s = sd(NumStud))
+  summarise(
+    mean = mean(NumStud), 
+    s = sd(NumStud)
+  )
 ```
 
 ---
 
 # Example: US graduate programs
 
+
+.pull-left[
+
 Easy to make a plot
 
-.left-code[
-```{r grad-plot, eval = FALSE}
+
+```{r grad-plot, eval = FALSE, echo = TRUE}
 grad %>%
   filter(subject == "economics") %>%
-  ggplot(aes(x = NumStud, 
-             y = MedianTimetoDegree)) +
+  ggplot(aes(x = NumStud, y = MedianTimetoDegree)) +
   geom_point() + 
   theme(aspect.ratio = 1)
 ```  
 ]
 
-.right-plot[
-```{r gra-dplot-out, ref.label = 'grad-plot', echo = FALSE, out.width = "100%"}
+.pull-right[
+```{r gra-dplot-out, ref.label = 'grad-plot', echo = FALSE, out.height= "100%"}
 
 ```
+]
 
 ---
 class: transition left
-# Your Turn: Open Lecture 2A in rstudio cloud
+## Your Turn: download exercises for today's lecture!
 
 - Notice the `data/` directory with many datasets! 
 - Open `graduate-programs.Rmd`
@@ -583,17 +602,6 @@ include_graphics("images/lego.png")
 - `separate`: Split one column into many
 
 ---
-class: refresher
-# Aside: naming things is hard
-
-- You might have come across `pivot_` functions as `spread` or `gather`. These are still valid, but have been improved upon in the latest version of the `tidyr` package.
-- You can read more about this change here:
-
-  - [tidyverse blog post](https://www.tidyverse.org/blog/2019/09/tidyr-1-0-0/)
-  - [tidyr vignette](http://tidyr.tidyverse.org/articles/pivot.html)
-  - [Hadley Wickham's talk]()
-
----
 
 # one more time: `pivot_longer`
 
@@ -604,7 +612,7 @@ pivot_longer(<DATA>,
              <VALUES_TO>)
 ```
 
-- **Cols** to select are those that represent values, not variables.
+- **cols** to select are those that represent values, not variables.
 - **names_to** is the name of the variable whose values for the column names.
 - **values_to** is the name of the variable whose values are spread over the cells.
 
@@ -699,8 +707,8 @@ class: transition
 ---
 # Examine treatments against each other
 
-.left-code[
-```{r plot-genes, eval = FALSE}
+.pull-left[
+```{r plot-genes, eval = FALSE, echo = TRUE}
 genes_long_tidy %>%
   pivot_wider(id_cols = c(id, rep, time),
               names_from = trt, 
@@ -709,18 +717,19 @@ genes_long_tidy %>%
 ```  
 ]
 
-.right-plot[
-```{r plot-genes-out, ref.label = 'plot-genes', echo = FALSE, out.width = "100%"}
-
+.pull-right[
+```{r plot-genes-out, ref.label = 'plot-genes', echo = FALSE, out.height = "100%"}
 ```
-
 Generally, some negative association within each gene, WM is low if WI is high. 
+
+]
+
 
 ---
 # Examine replicates against each other
 
-.left-code[
-```{r shoe-replicates, eval = FALSE}
+.pull-left[
+```{r shoe-replicates, eval = FALSE, echo = TRUE}
 genes_long_tidy %>%
   pivot_wider(id_cols = c(id, trt, time),
               names_from = rep, 
@@ -730,25 +739,23 @@ genes_long_tidy %>%
 ```  
 ]
 
-.right-plot[
-```{r shoe-replicates-out, ref.label = 'shoe-replicates', echo = FALSE, out.width = "100%"}
+.pull-right[
+```{r shoe-replicates-out, ref.label = 'shoe-replicates', echo = FALSE, out.height = "100%"}
 
 ```
 
 Roughly, replicate 4 is like replicate 1, eg if one is low, the other is low. 
 
 That's a good thing, that the replicates are fairly similar.
+]
 
 ---
-class: transition
-# Your turn: Demonstrate with koala bilby data (live code)
+
+
+## Your turn: Demonstrate with koala bilby data (live code)
 
 Here is a little data to practice `pivot_longer`, `pivot_wider` and `separate` on.
 
-```{r koala-bilby}
-kb <- read_csv(here::here("slides/data/koala_bilby.csv"))
-kb
-```
 
 - Read over `koala-bilby.Rmd`
 - pivot_longer the data into long form, naming the two new variables, `label` and `count`
@@ -818,7 +825,7 @@ countdown(minutes = 3,
 
 Open: `tb-incidence.Rmd`
 
-Tidy the TB incidence data, using rthe Rmd to prompt questions.
+Tidy the TB incidence data, using the Rmd to prompt questions.
 
 ---
 # Exercise 3: Currency rates (15 minutes)
@@ -922,25 +929,6 @@ class: refresher
 
 ---
 
-# summary slide
+class: middle, center
 
-- Tower of babel analogy for writing R code
-
----
-
-background-image: url(images/tower-of-babel.jpg)
-background-size: contain
-background-position: 50% 50%
-class: refresher, center, bottom
-
-
----
-  
-```{r endslide, child="components/endslide.Rmd"}
-```
-
-```{r allison-tidy-img, echo = FALSE, out.width = "50%"}
-include_graphics("images/horst_tidy.jpg")
-```
-
-Source: A drawing made by Alison Horst [@allison_horst](https://twitter.com/allison_horst?lang=en) 
+# That's it!
