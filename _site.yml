@@ -1,4 +1,4 @@
-name: "ETC1010"
+name: "ETC5510"
 output_dir: "docs"
 exclude: ["*.Rmd", "*.csv", "*.R", "_*", ".*", "*.Rproj", "di_reading", "quiz_template", "LICENSE", "README.md", "README.Rmd"]
 output:
@@ -9,7 +9,7 @@ output:
       after_body: assets/footer.html
     css: assets/styles.css
 navbar: 
-  title: "ETC1010"
+  title: "ETC5510"
   left: 
     - text: "Home"
       href: index.html

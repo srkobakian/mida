@@ -2,7 +2,7 @@
 title: "ETC5510: Introduction to Data Analysis"
 week: "Week 2, part A"
 subtitle: "Week of Tidy Data"
-author: "Stuart Lee"
+author: "Stuart Lee and Nick Tierney"
 email: "ETC5510.Clayton-x@monash.edu"
 date: "16th Mar 2020"
 pdflink: ""
@@ -110,6 +110,26 @@ knitr::include_graphics("images/steff.jpeg")
 knitr::include_graphics("images/sherry.jpeg")
 ```
 ]
+
+---
+# Nick
+
+.pull-left[
+* `r emo::ji("mortar_board")` Bachelor of Psychological Sciences UQ
+*  `r emo::ji("mortar_board")` PhD in Statistics at QUT. 
+* Research: missing data, data visualisation, statistical computing
+* R `r emo::ji("package")`: `naniar`, `visdat`, 
+* `#rstats` `r emo::ji("microphone")`: Credibly Curious w Saskia Freytag
+* `r emo::ji("heart")` outdoors, especially: `r emo::ji("hiking_boot")`, `r emo::ji("man_running")`, and `r emo::ji("man_climbing")`.
+]
+
+.pull-right[
+```{r img-nick, out.width = "80%"}
+knitr::include_graphics("images/njtierney.jpg")
+```
+
+]
+
 
 ---
 
@@ -730,7 +750,8 @@ That's a good thing, that the replicates are fairly similar.
 ]
 
 ---
-class: transition
+
+
 ## Your turn: Demonstrate with koala bilby data (live code)
 
 Here is a little data to practice `pivot_longer`, `pivot_wider` and `separate` on.
@@ -908,10 +929,6 @@ class: refresher
 
 ---
 
+class: middle, center
+
 # That's it!
-
-```{r allison-tidy-img, echo = FALSE, out.width = "50%"}
-include_graphics("images/horst_tidy.jpg")
-```
-
-Source: A drawing made by Alison Horst [@allison_horst](https://twitter.com/allison_horst?lang=en) 
