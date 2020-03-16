@@ -155,8 +155,8 @@ class: transition left
 
 We are going to set up the groups for doing assignment work.
 
-1. Find your name from the list at [this link]()
-2. Find the other people in the class with the same quote as you (feel free to wander around the class!)
+1. Find your name from the list at [this link](https://mida.numbat.space/groups.html)
+2. Find the other people in the class with the same gorup name as you (feel free to wander around the class!)
 3. Grab your gear and claim a table to work together at. 
 
 ---
