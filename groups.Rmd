@@ -11,10 +11,6 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(knitr)
 library(kableExtra)
-library(googlesheets4)
-
-
-sheets <- "https://docs.google.com/spreadsheets/d/1C9RZRbD5sCzT6c4OhELdyTaBPCgtKQzX66CuFzUvUxg/edit?usp=sharing"
 ```
 
 In the table below you will find your student ID and a corresponding
@@ -76,11 +72,17 @@ stopifnot(
 
 # upload to google drive
 write_csv(students, here::here("etc5510-groups.csv"))
+
+```
+
+```{r partial-groups, eval = FALSE}
+read_csv(here::here("etc5510-groups.csv")) %>% 
+  select(`Student ID` = monash_id, `Group` = group_name) %>% 
+  write_csv(here::here("etc5510-groups-partial.csv"))
 ```
 
 ```{r display-groups, echo = FALSE}
-read_csv(here::here("etc5510-groups.csv")) %>% 
-  select(`Student ID` = monash_id, `Group` = group_name) %>% 
+read_csv(here::here("etc5510-groups-partial.csv")) %>% 
   kable(escape = FALSE, 
         align = c("l", "c")) %>% 
   kable_styling(bootstrap_options = "striped", fixed_thead = TRUE) %>% 
