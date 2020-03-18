@@ -1,4 +1,4 @@
-Student ID,Group
+monash_id,group_name
 26226308,tidyverse
 26815060,forcats
 27232026,stringr
@@ -15,6 +15,8 @@ Student ID,Group
 28290321,broom
 29822270,base
 29949467,base
+29948002,dplyr
+30032245,tidyverse
 29462843,rvest
 30382106,stringr
 30762014,forcats
@@ -22,7 +24,6 @@ Student ID,Group
 31258867,tidyverse
 31184669,broom
 30386160,glue
-31100848,tidyverse
 31230008,tibble
 31196101,shiny
 31237754,shiny
