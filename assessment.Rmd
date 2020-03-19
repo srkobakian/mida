@@ -56,15 +56,14 @@ kable(escape = FALSE,
 
 Information to complete the assignments is below:
 
-- Unzip the file and double click on the rstudio project, "assignment-1-2020-s1.Rproj" This contains the data and Rmd file
-- **Note that the assignment is also on rstudio.cloud as well, named after the assessment task. So Assignment 1 will be named, "Assignment 1".**
+- Unzip the file and double click on the rstudio project, "assignment-1-2020-s1.Rproj" This contains the data and Rmd file.
 
 
 ```{r assignments}
 assignment_df <- data.frame(
   Assignment = 1,
-  `Due Date` = "2020/04/01 at 5pm",
-  Instructions = "link"
+  `Due Date` = "2020/04/03 at 5pm",
+  Instructions = "[here](assignments/assignment-1-instructions.html)"
 )
 
 assignment_df %>% 
