@@ -101,7 +101,7 @@ Note that the text that is written was originally written by Amelia, and you nee
 
 # How to get the assignment
 
-Downloaded via [this link](https://ida.numbat.space/assignments/mida-assignment-1.zip)
+Downloaded via [this link](https://mida.numbat.space/assignments/mida-assignment-1.zip)
 
 Or directly into R by typing the following into the console:
 
