@@ -79,6 +79,8 @@ Each student will be randomly assigned another team's submission to provide feed
 
 This assignment is due in by close of business (5pm) on Friday 3rd April. You will submit the assignment via ED. Please change the file name to include your teams name. For example, if you are team `dplyr`, your assignment file name could read: "assignment-1-2020-s1-team-dplyr.Rmd"
 
+### **You are required ot submit the Rmd file and the knitted HTML file**
+
 # Treatment
 
 You work as a data scientist in the well named consulting company, "Consulting for You".
