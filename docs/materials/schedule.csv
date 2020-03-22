@@ -1,10 +1,10 @@
 Week,Lecture,Date,HTML,PDF,Exercise,Topic,Readings,Assessment
-1,A,2020-03-09T00:00:00Z,lecture_1a.html,lecture_1A.pdf,1a/mida-exercise-1a.zip,Introduction to the language of data analysis,NA,NA
-1,B,2020-03-11T00:00:00Z,lecture_1b.html,lecture_1B.pdf,1b/mida-exercise-1b.zip,NA,NA,NA
+1,A,2020-03-09T00:00:00Z,lecture_1a.html,lecture_1a.pdf,1a/mida-exercise-1a.zip,Introduction to the language of data analysis,NA,NA
+1,B,2020-03-11T00:00:00Z,lecture_1b.html,lecture_1b.pdf,1b/mida-exercise-1b.zip,NA,NA,NA
 2,A,2020-03-16T00:00:00Z,lecture_2a.html,lecture_2a.pdf,2a/mida-exercise-2a.zip,"Tidy data principles, reshaping your data into tidy form, and basic data wrangling",NA,NA
 2,B,2020-03-18T00:00:00Z,lecture_2b.html,lecture_2b.pdf,2b/mida-exercise-2b.zip,NA,NA,NA
-3,A,2020-03-23T00:00:00Z,NA,NA,NA,"Plotting your data, and wrangling temporal data",NA,NA
-3,B,2020-03-25T00:00:00Z,NA,NA,NA,NA,NA,NA
+3,A,2020-03-23T00:00:00Z,lecture_3a.html,lecture_3a.pdf,3a/mida-exercise-3a.zip,"Plotting your data, and wrangling temporal data",NA,NA
+3,B,2020-03-25T00:00:00Z,lecture_3b.html,lecture_3b.pdf,3b/mida-exercise-3b.zip,NA,NA,NA
 4,A,2020-03-30T00:00:00Z,NA,NA,NA,"Advanced wrangling, joining tables, and advanced data visualisation",NA,NA
 4,B,2020-04-01T00:00:00Z,NA,NA,NA,NA,NA,Assignment 1
 5,A,2020-04-06T00:00:00Z,NA,NA,NA,Handling missing values and scraping data,NA,NA

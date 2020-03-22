@@ -28,11 +28,13 @@ ol {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 40px;
+  
 }
 
 ul {
     display: block;
     list-style-type: disc;
+    
     margin-block-start: 0.2em;
     margin-block-end: 0.2em;
     margin-inline-start: 0px;
@@ -49,7 +51,7 @@ ul {
 .motivator   { background-color: #9651A0; } /* monash-bg-fuchsia2 */
 .transition  { 
   background-color: #006DAE; /* monash-bg-blue */
-  text-align: center;  
+  text-align: left;  
 } 
 
 .motivator .info-box strong { color: #9651A0; }
@@ -71,8 +73,9 @@ ul {
 
 
 a {
-  color: #027EB6;
-  text-decoration: none;
+  /*color: #027EB6;*/
+  color: var(--color-deep-orange);
+  text-decoration: underline;
 }
 
 .footnote {
@@ -92,8 +95,12 @@ a {
 
 
 .remark-slide-number { font-size: 18pt; }
-/*.remark-slide-content h1:first-of-type { padding-top:20px; } 
-.remark-slide-content { padding: 0 0 0 0; }*/
+/*.remark-slide-content h1:first-of-type { padding-top:20px; } */
+
+.remark-slide-content { 
+  padding: 1em 3em 1em 3em; 
+  
+}
 
 
 .remark-slide-content:not(.transition):not(.refresher):not(.motivator):not(.informative)  > h1:first-of-type{
@@ -101,8 +108,8 @@ a {
   color: white;
   border-bottom: double 5px #3D5480;
   margin-top: -1em; 
-  margin-left: -4em;
-  margin-right: -4em;
+  margin-left: -3em;
+  margin-right: -3em;
   text-align: center;
 }
 
@@ -117,8 +124,8 @@ a {
 
 .grid, .grid-col, .grid-row {
   display: grid;
-  margin-left: -4em;
-  margin-right: -4em;
+  margin-left: -3em;
+  margin-right: -3em;
   width: calc(100% + 8em);
   height: 100%;  
 }
@@ -147,8 +154,15 @@ a {
   color: white!important;
 }
 
+.remark-code { 
+  font-size: 20px; 
+}
 
-.remark-code { font-size: 24pt; }
+.remark-code .overflow { 
+  overflow-y: scroll;
+  height: 500px;
+  margin: 0em 0em -1em -1em;
+}
 .font_small .remark-code { font-size: 18pt;}
 .font_smaller .remark-code { font-size: 16pt }
 .font_smaller2 .remark-code { font-size: 13pt }
@@ -159,7 +173,6 @@ li { margin: 10px 0; }
 .remark-slide-content h1:first-of-type {
   padding-top:20px;
 }
-
 
 .shade_black  {
     background-color: rgba(0,0,0,0.5);
