@@ -1,9 +1,9 @@
 ---
-title: "ETC1010: Introduction to Data Analysis"
+title: "ETC5510: Introduction to Data Analysis"
 week: "Week 3, part A"
 subtitle: "Data Visualisation"
 author: "Nicholas Tierney & Stuart Lee"
-email: "ETC1010.Clayton-x@monash.edu"
+email: "ETC5510.Clayton-x@monash.edu"
 date: "23rd March 2020"
 pdflink: ""
 bgimg: "images/bg1.jpg"
