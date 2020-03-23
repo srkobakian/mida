@@ -3,23 +3,23 @@ Week,Lecture,Date,HTML,PDF,Exercise,Topic,Readings,Assessment
 1,B,2020-03-11T00:00:00Z,lecture_1b.html,lecture_1b.pdf,1b/mida-exercise-1b.zip,NA,NA,NA
 2,A,2020-03-16T00:00:00Z,lecture_2a.html,lecture_2a.pdf,2a/mida-exercise-2a.zip,"Tidy data principles, reshaping your data into tidy form, and basic data wrangling",NA,NA
 2,B,2020-03-18T00:00:00Z,lecture_2b.html,lecture_2b.pdf,2b/mida-exercise-2b.zip,NA,NA,NA
-3,A,2020-03-23T00:00:00Z,lecture_3a.html,lecture_3a.pdf,3a/mida-exercise-3a.zip,"Plotting your data, and wrangling temporal data",NA,NA
-3,B,2020-03-25T00:00:00Z,lecture_3b.html,lecture_3b.pdf,3b/mida-exercise-3b.zip,NA,NA,NA
-4,A,2020-03-30T00:00:00Z,NA,NA,NA,"Advanced wrangling, joining tables, and advanced data visualisation",NA,NA
-4,B,2020-04-01T00:00:00Z,NA,NA,NA,NA,NA,Assignment 1
-5,A,2020-04-06T00:00:00Z,NA,NA,NA,Handling missing values and scraping data,NA,NA
-5,B,2020-04-08T00:00:00Z,NA,NA,NA,NA,NA,NA
-6,A,2020-04-20T00:00:00Z,NA,NA,NA,"Introduction to modeling, and programming",NA,Mid Semester In-Class Exam
-6,B,2020-04-22T00:00:00Z,NA,NA,NA,NA,NA,NA
-7,A,2020-04-27T00:00:00Z,NA,NA,NA,Intermediate models and programming,NA,NA
-7,B,2020-04-29T00:00:00Z,NA,NA,NA,NA,NA,NA
-8,A,2020-05-04T00:00:00Z,NA,NA,NA,Analysing text data,NA,NA
-8,B,2020-05-06T00:00:00Z,NA,NA,NA,NA,NA,Assignment 2
-9,A,2020-05-11T00:00:00Z,NA,NA,NA,"Wrangling, plotting and modeling network data",NA,NA
-9,B,2020-05-13T00:00:00Z,NA,NA,NA,NA,NA,NA
-10,A,2020-05-18T00:00:00Z,NA,NA,NA,"Computational modeling, and good data collection practices",NA,NA
-10,B,2020-05-20T00:00:00Z,NA,NA,NA,NA,NA,NA
-11,A,2020-05-25T00:00:00Z,NA,NA,NA,Guest Lecturer,NA,Project Due
-11,B,2020-05-27T00:00:00Z,NA,NA,NA,Practical Exam,NA,Practical Exam
-12,A,2020-06-01T00:00:00Z,NA,NA,NA,Project Presentation,NA,Projects Presented
-12,B,2020-06-03T00:00:00Z,NA,NA,NA,Project Presentation,NA,Projects Presented
+3,A,2020-03-30T00:00:00Z,lecture_3a.html,lecture_3a.pdf,3a/mida-exercise-3a.zip,"Plotting your data, and wrangling temporal data",NA,NA
+3,B,2020-04-01T00:00:00Z,lecture_3b.html,lecture_3b.pdf,3b/mida-exercise-3b.zip,NA,NA,NA
+4,A,2020-04-06T00:00:00Z,NA,NA,NA,"Advanced wrangling, joining tables, and advanced data visualisation",NA,NA
+4,B,2020-04-08T00:00:00Z,NA,NA,NA,NA,NA,Assignment 1
+5,A,2020-04-20T00:00:00Z,NA,NA,NA,Handling missing values and scraping data,NA,NA
+5,B,2020-04-22T00:00:00Z,NA,NA,NA,NA,NA,NA
+6,A,2020-04-27T00:00:00Z,NA,NA,NA,"Introduction to modeling, and programming",NA,Mid Semester Electronic Exam
+6,B,2020-04-29T00:00:00Z,NA,NA,NA,NA,NA,NA
+7,A,2020-05-04T00:00:00Z,NA,NA,NA,Intermediate models and programming,NA,NA
+7,B,2020-05-06T00:00:00Z,NA,NA,NA,NA,NA,NA
+8,A,2020-05-11T00:00:00Z,NA,NA,NA,Analysing text data,NA,NA
+8,B,2020-05-13T00:00:00Z,NA,NA,NA,NA,NA,Assignment 2
+9,A,2020-05-18T00:00:00Z,NA,NA,NA,"Wrangling, plotting and modeling network data",NA,NA
+9,B,2020-05-20T00:00:00Z,NA,NA,NA,NA,NA,NA
+10,A,2020-05-25T00:00:00Z,NA,NA,NA,"Computational modeling, and good data collection practices",NA,NA
+10,B,2020-05-27T00:00:00Z,NA,NA,NA,NA,NA,NA
+11,A,2020-06-01T00:00:00Z,NA,NA,NA,Miscellaneous topics,NA,Takehome Exam
+11,B,2020-06-03T00:00:00Z,NA,NA,NA,Project Development,NA,NA
+12,A,2020-06-08T00:00:00Z,NA,NA,NA,Submission and Peer Evaluation of Projects,NA,Project Due
+12,B,2020-06-10T00:00:00Z,NA,NA,NA,NA,NA,Project Peer Evaluation

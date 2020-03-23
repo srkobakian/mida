@@ -21,7 +21,7 @@ assessment_df <- data.frame(
                         "Mid-semester in-class exam",
                         "Assignment 2",
                         "Data Analysis Practical Exam",
-                        "Project"),
+                        "Project Submission"),
   "value" = c("5%",
               "5%",
               "10%",
@@ -31,10 +31,10 @@ assessment_df <- data.frame(
               "30%"),
   "due_date" = c("Weeks 1-8",
                  "Each class period",
-                 "Week 5 (9th April)",
-                 "Week 6 (20th April)",
-                 "Week 8 (4th May)",
-                 "Week 11 (27th May)",
+                 "Week 4 (9th April)",
+                 "Week 6 (29th April)",
+                 "Week 8 (13th May)",
+                 "Week 11 (3rd June)",
                  "Week 11")
   )
 
