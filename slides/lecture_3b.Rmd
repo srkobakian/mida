@@ -106,6 +106,7 @@ class: center, bottom, white
 Art by Allison Horst
 ]
 
+---
 
 # The challenges of working with dates and times
 
@@ -207,14 +208,14 @@ ymd("20190810")
 # `ymd()` can also take other kinds of separators
 
 ```{r moar-ymd}
-ymd("2019-08-10")
-ymd("2019/08/10")
+ymd("2020-03-31")
+ymd("2020/03/31")
 ```
 
 --
 
 ```{r even-moar-ymd}
-ymd("??2019-.-08//10---")
+ymd("??2020-.-03//31---")
 ```
 
 --
@@ -229,7 +230,7 @@ ymd("??2019-.-08//10---")
 --
 
 ```{r show-mdy}
-mdy("10/15/2019")
+mdy("03/31/2020")
 ```
 
 --
@@ -239,7 +240,7 @@ mdy("10/15/2019")
 --
 
 ```{r show-dmy}
-dmy("10/08/2019")
+dmy("03/31/2020")
 ```
 
 ---
@@ -248,7 +249,7 @@ dmy("10/08/2019")
 If you add a time zone, what changes?
 
 ```{r add-tz}
-ymd("2019-08-10", tz = "Australia/Melbourne")
+ymd("2020-03-31", tz = "Australia/Melbourne")
 ```
 
 ---
@@ -257,10 +258,10 @@ ymd("2019-08-10", tz = "Australia/Melbourne")
 .pull-left[
 
 ```{r add-tz-ymd}
-ymd("2019-08-10", 
+ymd("2020-03-31", 
     tz = "Africa/Abidjan")
 
-ymd("2019-08-10", 
+ymd("2020-03-31", 
     tz = "America/Los_Angeles")
 ```
 
@@ -301,13 +302,13 @@ now(tz = "America/Los_Angeles")
 # date and time: `ymd_hms()`
 
 ```{r ymd-hms}
-ymd_hms("2019-08-10 10:05:30", 
+ymd_hms("2020-03-31 10:05:30", 
         tz = "Australia/Melbourne")
 ```
 
 
 ```{r ymd-hms-la}
-ymd_hms("2019-08-10 10:05:30", 
+ymd_hms("2020-03-31 10:05:30", 
         tz = "America/Los_Angeles")
 ```
 
@@ -354,24 +355,24 @@ wday("2019-08-12", label = TRUE, week_start = 1)
 # Similarly, we can extract what month the day is in.
 
 ```{r month-label-abbr}
-month("2019-08-10")
-month("2019-08-10", label = TRUE)
-month("2019-08-10", label = TRUE, abbr = FALSE)
+month("2020-03-31")
+month("2020-03-31", label = TRUE)
+month("2020-03-31", label = TRUE, abbr = FALSE)
 ```
 
 ---
 # Fiscally, it is useful to know what quarter the day is in.
 
 ```{r quarter-semester}
-quarter("2019-08-10")
-semester("2019-08-10")
+quarter("2020-03-31")
+semester("2020-03-31")
 ```
 
 ---
 # Similarly, we can select days within a year. 
 
 ```{r yday}
-yday("2019-08-10")
+yday("2020-03-31")
 ```
 
 ---
@@ -519,7 +520,7 @@ How would you describe the pattern?
 
 ---
 class: transition
-# Your Turn: Brainstorm in a group to answer these questions:
+# Your Turn: Brainstorm to answer these questions:
 
 1. Are pedestrian counts different depending on the month?
 2. Are pedestrian counts different depending on the day of the week?
