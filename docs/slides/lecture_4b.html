@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ETC5510: Introduction to Data Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Nicholas Tierney &amp; Stuart Lee" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+    <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
+    <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+    <script src="libs/typedarray-0.1/typedarray.min.js"></script>
+    <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+    <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+    <link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+    <script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+    -->
+    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>
+    <link rel="stylesheet" href="assets/animate.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-logo.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-brand.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="assets/styles.css" type="text/css" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets/demo.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+  
+
+
+&lt;!-- background-color: #006DAE --&gt;
+&lt;!-- class: middle center hide-slide-number --&gt;
+
+&lt;div class="shade_black"  style="width:60%;right:0;bottom:0;padding:10px;border: dashed 4px white;margin: auto;"&gt;
+&lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See &lt;a href=/&gt;here for PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;.
+&lt;/div&gt;
+
+&lt;br&gt;
+
+.white[Press the **right arrow** to progress to the next slide!]
+
+---
+
+background-image: url(images/bg1.jpg)
+background-size: cover
+class: hide-slide-number split-70 title-slide
+count: false
+
+.column.shade_black[.content[
+
+&lt;br&gt;
+
+# .monash-blue.outline-text[ETC5510: Introduction to Data Analysis]
+
+&lt;h2 class="monash-blue2 outline-text" style="font-size: 30pt!important;"&gt;Week 4, part B&lt;/h2&gt;
+
+&lt;br&gt;
+
+&lt;h2 style="font-weight:900!important;"&gt;Advanced topics in data visualisation&lt;/h2&gt;
+
+.bottom_abs.width100[
+
+Lecturer: *Nicholas Tierney &amp; Stuart Lee*
+
+Department of Econometrics and Business Statistics
+
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
+
+April 2020
+
+&lt;br&gt;
+]
+
+
+]]
+
+
+
+&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
+&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
+&lt;svg class="clip-svg absolute"&gt;
+&lt;defs&gt;
+&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
+&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
+&lt;/clipPath&gt;
+&lt;/defs&gt;	
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+---
+class: transition
+# While the song is playing...
+
+Draw a mental model / concept map of last lectures content on joins.
+
+---
+class: refresher
+# recap
+
+- Joins
+- venn diagrams
+- feedback
+
+---
+
+# Joins with a person and a coat, by [Leight Tami](https://twitter.com/leigh_tami18/status/1021471889309487105/photo/1)
+
+&lt;img src="images/joins_using_coat.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Upcoming Due Dates
+
+- Assignment 1: ...
+- Other due dates?
+- Stay tuned on ED for the upcoming dates
+
+---
+
+
+# Making effective data plots
+
+1. Principles / science of data visualisation
+2. Features of graphics
+
+---
+# Principles / science of data visualisation
+
+  - Palettes and colour blindness
+  - change blindness
+  - using proximity
+  - hierarchy of mappings
+
+---
+# Features of graphics 
+
+- Layering statistical summaries
+- Themes
+- adding interactivity
+
+---
+# Palettes and colour blindness
+
+There are three main types of colour palette:
+
+- Qualitative: categorical variables
+- Sequential: low to high numeric values
+- Diverging: negative to positive values
+
+---
+# Qualitative: categorical variables
+
+&lt;img src="lecture_4b_files/figure-html/print-qual-pal-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Sequential: low to high numeric values
+
+&lt;img src="lecture_4b_files/figure-html/print-seq-pal-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Diverging: negative to positive values
+
+&lt;img src="lecture_4b_files/figure-html/print-div-pal-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Example: TB data
+
+
+```
+## # A tibble: 157,820 x 5
+##    country      year count gender age  
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
+##  1 Afghanistan  1980    NA m      04   
+##  2 Afghanistan  1981    NA m      04   
+##  3 Afghanistan  1982    NA m      04   
+##  4 Afghanistan  1983    NA m      04   
+##  5 Afghanistan  1984    NA m      04   
+##  6 Afghanistan  1985    NA m      04   
+##  7 Afghanistan  1986    NA m      04   
+##  8 Afghanistan  1987    NA m      04   
+##  9 Afghanistan  1988    NA m      04   
+## 10 Afghanistan  1989    NA m      04   
+## # … with 157,810 more rows
+```
+
+---
+# Example: TB data: adding relative change
+
+
+```
+## # A tibble: 219 x 4
+##    country             `2002` `2012`  reldif
+##    &lt;chr&gt;                &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Afghanistan           6509  13907  1.14  
+##  2 Albania                225    185 -0.178 
+##  3 Algeria               8246   7510 -0.0893
+##  4 American Samoa           1      0 -1     
+##  5 Andorra                  2      2  0     
+##  6 Angola               17988  22106  0.229 
+##  7 Anguilla                 0      0  0     
+##  8 Antigua and Barbuda      4      1 -0.75  
+##  9 Argentina             5383   4787 -0.111 
+## 10 Armenia                511    316 -0.382 
+## # … with 209 more rows
+```
+
+
+
+
+---
+# Example: Sequential colour with default palette
+
+
+```r
+ggplot(tb_map) + geom_polygon(aes(x = long, y = lat, group = group, fill = reldif)) +
+  theme_map()
+```
+
+&lt;img src="lecture_4b_files/figure-html/map-default-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+# Example: (improved) sequential colour with default palette
+
+
+```r
+library(viridis)
+ggplot(tb_map) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = reldif)) +
+  theme_map() + scale_fill_viridis(na.value = "white")
+```
+
+&lt;img src="lecture_4b_files/figure-html/viridis-plot-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+# Example:  Diverging colour with better palette
+
+
+```r
+ggplot(tb_map) +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = reldif)) +
+  theme_map() +
+  scale_fill_distiller(palette = "PRGn", na.value = "white", limits = c(-7, 7))
+```
+
+&lt;img src="lecture_4b_files/figure-html/map-distiller-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+# Summary on colour palettes
+
+- Different ways to map colour to values:
+  - Qualitative: categorical variables
+  - Sequential: low to high numeric values
+  - Diverging: negative to positive values
+
+---
+# Colour blindness
+
+- About 8% of men (about 1 in 12), and 0.5% women (about 1 in 200) population have difficulty distinguishing between red and green. 
+- Several colour blind tested palettes: RColorbrewer has an associated web site [colorbrewer.org](http://colorbrewer2.org) where the palettes are labelled. See also `viridis`, and `scico`.
+
+---
+# Plot of two coloured points: Normal Mode
+
+&lt;img src="lecture_4b_files/figure-html/colour-blind-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Plot of two coloured points: dicromat mode
+
+&lt;img src="lecture_4b_files/figure-html/colour-blind-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Showing all types of colourblindness
+
+&lt;img src="lecture_4b_files/figure-html/colourblindr-show-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Impact of colourblind-safe palette
+
+```r
+p2 &lt;- p + scale_colour_brewer(palette = "Dark2")
+p2
+```
+
+&lt;img src="lecture_4b_files/figure-html/colourblindr-brewer-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Impact of colourblind-safe palette
+&lt;img src="lecture_4b_files/figure-html/cb-grid-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Impact of colourblind-safe palette
+
+```r
+p3 &lt;- p + scale_colour_viridis_d()
+p3
+```
+
+&lt;img src="lecture_4b_files/figure-html/colourblindr-viridis-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Impact of colourblind-safe palette
+&lt;img src="lecture_4b_files/figure-html/cb-grid-viridis-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Summary colour blindness
+
+- Apply colourblind-friendly colourscales
+  - `+ scale_colour_viridis()`
+  - `+ scale_colour_brewer(palette = "Dark2")`
+  - `scico` R package
+
+---
+# Pre-attentiveness: Find the odd one out?
+
+&lt;img src="lecture_4b_files/figure-html/pre-attentiveness-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Pre-attentiveness: Find the odd one out?
+
+&lt;img src="lecture_4b_files/figure-html/pre-attentive-easier-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+class: idea
+# Using proximity in your plots
+
+Basic rule: place the groups that you want to compare close to each other
+
+
+
+---
+# Which plot answers which question?
+
+- "Is the incidence similar for males and females in 2012 across age groups?"
+- "Is the incidence similar for age groups in 2012, across gender?" 
+
+---
+# incidence similar for: (M and F) or (age, across gender) ?" 
+
+
+
+&lt;img src="lecture_4b_files/figure-html/print-many-tb-1.png" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="lecture_4b_files/figure-html/print-many-tb-2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+
+Here are two different arrangements of the tb data. To answer the question "Is the incidence similar for males and females in 2012 across age groups?" the first arrangement is better. It puts males and females right beside each other, so the relative heights of the bars can be seen quickly. The answer to the question would be "No, the numbers were similar in youth, but males are more affected with increasing age."
+
+The second arrangement puts the focus on age groups, and is better to answer the question "Is the incidence similar for age groups in 2012, across gender?" To which the answer would be "No, among females, the incidence is higher at early ages. For males, the incidence is much more uniform across age groups."
+
+
+---
+# "Incidence similar for M &amp; F in 2012 across age?"
+
+&lt;img src="lecture_4b_files/figure-html/gg-fill-gender-print-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+- Males &amp; females next to each other: relative heights of bars is seen quickly. 
+- Auestion answer: "No, the numbers were similar in youth, but males are more affected with increasing age."
+
+---
+# "Incidence similar for age in 2012, across gender?"
+
+&lt;img src="lecture_4b_files/figure-html/gg-fill-age-print-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+- Puts the focus on age groups 
+- Answer to the question: "No, among females, the incidence is higher at early ages. For males, the incidence is much more uniform across age groups."
+
+---
+# Proximity wrap up
+
+- Facetting of plots, and proximity are related to change blindness, an area of study in cognitive psychology. 
+- There are a series of fabulous videos illustrating the effects of making a visual break, on how the mind processes it by Daniel Simons lab. 
+- Here's one example:  
+[The door study](https://www.youtube.com/watch?v=FWSxSQsspiQ)
+
+---
+# Layering
+
+- *Statistical summaries:* It is common to layer plots, particularly by adding statistical summaries, like a model fit, or means and standard deviations. The purpose is to show the **trend** in relation to the **variation**. 
+- *Maps:* Commonly maps provide the framework for data collected spatially. One layer for the map, and another for the data.
+
+
+
+---
+# `geom_point()`
+
+```r
+ggplot(df, aes(x = x, y = y1)) + geom_point()
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# `geom_smooth(method = "lm", se = FALSE)`
+
+```r
+ggplot(df, aes(x = x, y = y1)) + geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# `geom_smooth(method = "lm")`
+
+```r
+ggplot(df, aes(x = x, y = y1)) + geom_point() +
+  geom_smooth(method = "lm")
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# `geom_point()`
+
+
+```r
+ggplot(df, aes(x = x, y = y2)) + geom_point()
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-4-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# `geom_smooth(method = "lm", se = FALSE)`
+
+```r
+ggplot(df, aes(x = x, y = y2)) + geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-5palette-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+`geom_smooth(se = FALSE)`
+
+```r
+ggplot(df, aes(x = x, y = y2)) + geom_point() +
+  geom_smooth(se = FALSE)
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-6palette-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+`geom_smooth(se = FALSE, span = 0.05)`
+
+```r
+ggplot(df, aes(x = x, y = y2)) + geom_point() +
+  geom_smooth(se = FALSE, span = 0.05)
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-7palette-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# `geom_smooth(se = FALSE, span = 0.2)`
+
+```r
+p1 &lt;- ggplot(df, aes(x = x, y = y2)) + geom_point() +
+  geom_smooth(se = FALSE, span = 0.2)
+p1
+```
+
+&lt;img src="lecture_4b_files/figure-html/point-8palette-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Interactivity with magic plotly
+
+
+```r
+library(plotly)
+ggplotly(p1)
+```
+
+<div id="htmlwidget-b6c774074913a27942d1" style="width:100%;height:288px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b6c774074913a27942d1">{"x":{"data":[{"x":[0.953506898833439,0.23543113633059,0.285293113905936,0.470008445670828,0.57905547064729,0.731847279239446,0.593166285194457,0.481592901749536,0.797954891808331,0.0850309759844095,0.238369256723672,0.650232759770006,0.353502594633028,0.785811183042824,0.652729992754757,0.93927606055513,0.994361428311095,0.145925166551024,0.697738634422421,0.415482996264473,0.0393319367431104,0.402645697817206,0.481566367670894,0.537587260594591,0.223785871639848,0.614983554696664,0.520696145948023,0.168133926577866,0.987234184751287,0.0097824358381331,0.238995593739673,0.225090604508296,0.314722883747891,0.607921391027048,0.598742834758013,0.946534684626386,0.727986477781087,0.254358413396403,0.646696562180296,0.238459100713953,0.755486029200256,0.304627046687528,0.154455327196047,0.655391657957807,0.542050196556374,0.184596294537187,0.122690328396857,0.71638058591634,0.758384864777327,0.858698170632124,0.515069191576913,0.585750369355083,0.582631298573688,0.633570759557188,0.915670695481822,0.257767337374389,0.719015491195023,0.98034235346131,0.766970147611573,0.655300444224849,0.549959753872827,0.41973748523742,0.708448683377355,0.236020009266213,0.816251322859898,0.169464266160503,0.147498002042994,0.638395310379565,0.727568881353363,0.433360015740618,0.489334655925632,0.574680645251647,0.535076242173091,0.529256675858051,0.704029829241335,0.970667426940054,0.0546365124173462,0.153729492798448,0.14595571369864,0.756075671408325,0.327704233117402,0.432823664974421,0.804344554431736,0.576219235779718,0.0460964867379516,0.636414028936997,0.502613543299958,0.0368097356986254,0.465450351126492,0.0181073015555739,0.396658016834408,0.0883630246389657,0.664650345453992,0.215422360692173,0.499699521809816,0.69342990918085,0.168001535581425,0.943062110571191,0.706669672159478,0.522674378473312],"y":[1.67557488959283,0.378680999418115,-0.275219965962349,-2.63038427421095,-1.08942142025169,-0.780277734022168,0.123298397182843,-0.563523955443394,1.95334916008276,2.47920943578145,-1.21625678893157,-1.19662388801043,-1.30331923128977,-0.3723624502001,-1.44193850931419,-0.439275671675083,0.597577114426513,-0.299729169616864,0.307153613919403,0.473240862779766,3.07490119048739,0.101960138185223,-1.61017302585042,-1.70853464750988,1.17583561488595,-0.00507841795844438,-1.38031034401856,1.85923753346587,0.549419509195026,2.75461820966397,1.17342628956965,1.20016198452569,-0.130383817609045,-2.59270102821922,1.13058941760883,1.64245288273901,-0.47687608665416,0.222086517793367,-2.55627606910987,2.41363404794254,1.29371805710264,0.24767875312517,1.52219361194373,-0.552851037049626,-1.80892990563434,1.61515584442434,0.845516400618725,-0.754711231721186,-0.899515238508864,-0.311620448127028,-0.806853047668339,-1.00893306980135,1.09950004405415,-0.130308319442244,1.12416334388255,1.81731911421303,0.930840160000386,1.07673998076901,1.71700943401116,-0.211597259075038,-1.67226569125843,-1.0873170316831,1.91716670377854,-0.053328770329038,0.499558677629585,1.63232955530833,2.52479505872128,1.15015502928855,0.453185736048852,-0.511990059704087,-0.216138420567324,1.2570688454456,1.42195835308091,-0.619291218134204,-0.421923111371635,2.1223961562992,3.80641485426102,-0.265119947748405,2.04951313022674,0.839831939573611,-0.634387989278963,-0.31358028384089,1.65842456768208,-0.180443640141801,2.14716110071129,-0.53380159973374,-1.05637463324147,1.1788341096312,-1.83692795423812,1.73045522002903,-1.41888055656476,3.1532929450687,-0.985713013456727,0.163539718984944,0.806192878413728,-0.210474329826605,0.968461297952169,0.788161841063248,1.1533507143041,-1.70563476675329],"text":["x: 0.953506899<br />y2:  1.675574890","x: 0.235431136<br />y2:  0.378680999","x: 0.285293114<br />y2: -0.275219966","x: 0.470008446<br />y2: -2.630384274","x: 0.579055471<br />y2: -1.089421420","x: 0.731847279<br />y2: -0.780277734","x: 0.593166285<br />y2:  0.123298397","x: 0.481592902<br />y2: -0.563523955","x: 0.797954892<br />y2:  1.953349160","x: 0.085030976<br />y2:  2.479209436","x: 0.238369257<br />y2: -1.216256789","x: 0.650232760<br />y2: -1.196623888","x: 0.353502595<br />y2: -1.303319231","x: 0.785811183<br />y2: -0.372362450","x: 0.652729993<br />y2: -1.441938509","x: 0.939276061<br />y2: -0.439275672","x: 0.994361428<br />y2:  0.597577114","x: 0.145925167<br />y2: -0.299729170","x: 0.697738634<br />y2:  0.307153614","x: 0.415482996<br />y2:  0.473240863","x: 0.039331937<br />y2:  3.074901190","x: 0.402645698<br />y2:  0.101960138","x: 0.481566368<br />y2: -1.610173026","x: 0.537587261<br />y2: -1.708534648","x: 0.223785872<br />y2:  1.175835615","x: 0.614983555<br />y2: -0.005078418","x: 0.520696146<br />y2: -1.380310344","x: 0.168133927<br />y2:  1.859237533","x: 0.987234185<br />y2:  0.549419509","x: 0.009782436<br />y2:  2.754618210","x: 0.238995594<br />y2:  1.173426290","x: 0.225090605<br />y2:  1.200161985","x: 0.314722884<br />y2: -0.130383818","x: 0.607921391<br />y2: -2.592701028","x: 0.598742835<br />y2:  1.130589418","x: 0.946534685<br />y2:  1.642452883","x: 0.727986478<br />y2: -0.476876087","x: 0.254358413<br />y2:  0.222086518","x: 0.646696562<br />y2: -2.556276069","x: 0.238459101<br />y2:  2.413634048","x: 0.755486029<br />y2:  1.293718057","x: 0.304627047<br />y2:  0.247678753","x: 0.154455327<br />y2:  1.522193612","x: 0.655391658<br />y2: -0.552851037","x: 0.542050197<br />y2: -1.808929906","x: 0.184596295<br />y2:  1.615155844","x: 0.122690328<br />y2:  0.845516401","x: 0.716380586<br />y2: -0.754711232","x: 0.758384865<br />y2: -0.899515239","x: 0.858698171<br />y2: -0.311620448","x: 0.515069192<br />y2: -0.806853048","x: 0.585750369<br />y2: -1.008933070","x: 0.582631299<br />y2:  1.099500044","x: 0.633570760<br />y2: -0.130308319","x: 0.915670695<br />y2:  1.124163344","x: 0.257767337<br />y2:  1.817319114","x: 0.719015491<br />y2:  0.930840160","x: 0.980342353<br />y2:  1.076739981","x: 0.766970148<br />y2:  1.717009434","x: 0.655300444<br />y2: -0.211597259","x: 0.549959754<br />y2: -1.672265691","x: 0.419737485<br />y2: -1.087317032","x: 0.708448683<br />y2:  1.917166704","x: 0.236020009<br />y2: -0.053328770","x: 0.816251323<br />y2:  0.499558678","x: 0.169464266<br />y2:  1.632329555","x: 0.147498002<br />y2:  2.524795059","x: 0.638395310<br />y2:  1.150155029","x: 0.727568881<br />y2:  0.453185736","x: 0.433360016<br />y2: -0.511990060","x: 0.489334656<br />y2: -0.216138421","x: 0.574680645<br />y2:  1.257068845","x: 0.535076242<br />y2:  1.421958353","x: 0.529256676<br />y2: -0.619291218","x: 0.704029829<br />y2: -0.421923111","x: 0.970667427<br />y2:  2.122396156","x: 0.054636512<br />y2:  3.806414854","x: 0.153729493<br />y2: -0.265119948","x: 0.145955714<br />y2:  2.049513130","x: 0.756075671<br />y2:  0.839831940","x: 0.327704233<br />y2: -0.634387989","x: 0.432823665<br />y2: -0.313580284","x: 0.804344554<br />y2:  1.658424568","x: 0.576219236<br />y2: -0.180443640","x: 0.046096487<br />y2:  2.147161101","x: 0.636414029<br />y2: -0.533801600","x: 0.502613543<br />y2: -1.056374633","x: 0.036809736<br />y2:  1.178834110","x: 0.465450351<br />y2: -1.836927954","x: 0.018107302<br />y2:  1.730455220","x: 0.396658017<br />y2: -1.418880557","x: 0.088363025<br />y2:  3.153292945","x: 0.664650345<br />y2: -0.985713013","x: 0.215422361<br />y2:  0.163539719","x: 0.499699522<br />y2:  0.806192878","x: 0.693429909<br />y2: -0.210474330","x: 0.168001536<br />y2:  0.968461298","x: 0.943062111<br />y2:  0.788161841","x: 0.706669672<br />y2:  1.153350714","x: 0.522674378<br />y2: -1.705634767"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.0097824358381331,0.0222454610593098,0.0347084862804866,0.0471715115016633,0.05963453672284,0.0720975619440167,0.0845605871651935,0.0970236123863702,0.109486637607547,0.121949662828724,0.1344126880499,0.146875713271077,0.159338738492254,0.171801763713431,0.184264788934607,0.196727814155784,0.209190839376961,0.221653864598137,0.234116889819314,0.246579915040491,0.259042940261668,0.271505965482844,0.283968990704021,0.296432015925198,0.308895041146375,0.321358066367551,0.333821091588728,0.346284116809905,0.358747142031081,0.371210167252258,0.383673192473435,0.396136217694612,0.408599242915788,0.421062268136965,0.433525293358142,0.445988318579319,0.458451343800495,0.470914369021672,0.483377394242849,0.495840419464026,0.508303444685202,0.520766469906379,0.533229495127556,0.545692520348732,0.558155545569909,0.570618570791086,0.583081596012263,0.595544621233439,0.608007646454616,0.620470671675793,0.63293369689697,0.645396722118146,0.657859747339323,0.6703227725605,0.682785797781676,0.695248823002853,0.70771184822403,0.720174873445207,0.732637898666383,0.74510092388756,0.757563949108737,0.770026974329914,0.78248999955109,0.794953024772267,0.807416049993444,0.81987907521462,0.832342100435797,0.844805125656974,0.857268150878151,0.869731176099327,0.882194201320504,0.894657226541681,0.907120251762858,0.919583276984034,0.932046302205211,0.944509327426388,0.956972352647565,0.969435377868741,0.981898403089918,0.994361428311095],"y":[2.20081306371496,2.36055533094738,2.46878338378239,2.51564267555276,2.49956311174598,2.43777083114887,2.34856787389361,2.19081617572818,1.94116576878654,1.6602099834753,1.40864366095883,1.24780244651168,1.25485985026469,1.34637773237738,1.22828231448917,1.01151860746748,0.806068343766628,0.726897050749801,0.726417228662038,0.628065747375247,0.556539899530223,0.476251784653696,0.344031597717281,0.111078438002508,-0.189299982658385,-0.458637371719426,-0.60995022898037,-0.66524381424029,-0.66026344813303,-0.623523763195123,-0.583539391963101,-0.568824966973496,-0.608991392525992,-0.705618097208897,-0.799414616146231,-0.955145894435324,-1.15084366806128,-1.23311625587027,-1.06083243870339,-0.932113681894964,-0.7170598715657,-0.777647744013448,-0.974235502476499,-0.895438659418818,-0.638824404474662,-0.208516439093324,-0.0569435955345094,-0.0910364826007103,-0.254991118601272,-0.427352464188699,-0.590054060474321,-0.745052338108922,-0.856545550471701,-0.857886504197978,-0.376790214220889,0.152453334674892,0.325756938461607,0.251445881769072,0.255287451556668,0.324455764373742,0.432913660976826,0.593717884770988,0.775320032282778,0.87060657361625,0.826039067701937,0.732497789716513,0.623843521958687,0.529846393795127,0.480276534592504,0.486652187242169,0.52718972364431,0.591713548745263,0.670267520770003,0.75289549794351,0.82964133849076,0.890782167783017,0.948074610573029,1.00868944541655,1.066512904317,1.12355431270879],"text":["x: 0.009782436<br />y2:  2.20081306","x: 0.022245461<br />y2:  2.36055533","x: 0.034708486<br />y2:  2.46878338","x: 0.047171512<br />y2:  2.51564268","x: 0.059634537<br />y2:  2.49956311","x: 0.072097562<br />y2:  2.43777083","x: 0.084560587<br />y2:  2.34856787","x: 0.097023612<br />y2:  2.19081618","x: 0.109486638<br />y2:  1.94116577","x: 0.121949663<br />y2:  1.66020998","x: 0.134412688<br />y2:  1.40864366","x: 0.146875713<br />y2:  1.24780245","x: 0.159338738<br />y2:  1.25485985","x: 0.171801764<br />y2:  1.34637773","x: 0.184264789<br />y2:  1.22828231","x: 0.196727814<br />y2:  1.01151861","x: 0.209190839<br />y2:  0.80606834","x: 0.221653865<br />y2:  0.72689705","x: 0.234116890<br />y2:  0.72641723","x: 0.246579915<br />y2:  0.62806575","x: 0.259042940<br />y2:  0.55653990","x: 0.271505965<br />y2:  0.47625178","x: 0.283968991<br />y2:  0.34403160","x: 0.296432016<br />y2:  0.11107844","x: 0.308895041<br />y2: -0.18929998","x: 0.321358066<br />y2: -0.45863737","x: 0.333821092<br />y2: -0.60995023","x: 0.346284117<br />y2: -0.66524381","x: 0.358747142<br />y2: -0.66026345","x: 0.371210167<br />y2: -0.62352376","x: 0.383673192<br />y2: -0.58353939","x: 0.396136218<br />y2: -0.56882497","x: 0.408599243<br />y2: -0.60899139","x: 0.421062268<br />y2: -0.70561810","x: 0.433525293<br />y2: -0.79941462","x: 0.445988319<br />y2: -0.95514589","x: 0.458451344<br />y2: -1.15084367","x: 0.470914369<br />y2: -1.23311626","x: 0.483377394<br />y2: -1.06083244","x: 0.495840419<br />y2: -0.93211368","x: 0.508303445<br />y2: -0.71705987","x: 0.520766470<br />y2: -0.77764774","x: 0.533229495<br />y2: -0.97423550","x: 0.545692520<br />y2: -0.89543866","x: 0.558155546<br />y2: -0.63882440","x: 0.570618571<br />y2: -0.20851644","x: 0.583081596<br />y2: -0.05694360","x: 0.595544621<br />y2: -0.09103648","x: 0.608007646<br />y2: -0.25499112","x: 0.620470672<br />y2: -0.42735246","x: 0.632933697<br />y2: -0.59005406","x: 0.645396722<br />y2: -0.74505234","x: 0.657859747<br />y2: -0.85654555","x: 0.670322773<br />y2: -0.85788650","x: 0.682785798<br />y2: -0.37679021","x: 0.695248823<br />y2:  0.15245333","x: 0.707711848<br />y2:  0.32575694","x: 0.720174873<br />y2:  0.25144588","x: 0.732637899<br />y2:  0.25528745","x: 0.745100924<br />y2:  0.32445576","x: 0.757563949<br />y2:  0.43291366","x: 0.770026974<br />y2:  0.59371788","x: 0.782490000<br />y2:  0.77532003","x: 0.794953025<br />y2:  0.87060657","x: 0.807416050<br />y2:  0.82603907","x: 0.819879075<br />y2:  0.73249779","x: 0.832342100<br />y2:  0.62384352","x: 0.844805126<br />y2:  0.52984639","x: 0.857268151<br />y2:  0.48027653","x: 0.869731176<br />y2:  0.48665219","x: 0.882194201<br />y2:  0.52718972","x: 0.894657227<br />y2:  0.59171355","x: 0.907120252<br />y2:  0.67026752","x: 0.919583277<br />y2:  0.75289550","x: 0.932046302<br />y2:  0.82964134","x: 0.944509327<br />y2:  0.89078217","x: 0.956972353<br />y2:  0.94807461","x: 0.969435378<br />y2:  1.00868945","x: 0.981898403<br />y2:  1.06651290","x: 0.994361428<br />y2:  1.12355431"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(51,102,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":30.6118721461187,"r":7.30593607305936,"b":44.5662100456621,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.039446513785515,1.04359037793474],"tickmode":"array","ticktext":["0.00","0.25","0.50","0.75","1.00"],"tickvals":[0,0.25,0.5,0.75,1],"categoryorder":"array","categoryarray":["0.00","0.25","0.50","0.75","1.00"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.95222423063455,4.12825481068462],"tickmode":"array","ticktext":["-2","0","2","4"],"tickvals":[-2,0,2,4],"categoryorder":"array","categoryarray":["-2","0","2","4"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"y2","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"1635f4e4a56a4":{"x":{},"y":{},"type":"scatter"},"1635f727e5123":{"x":{},"y":{}}},"cur_data":"1635f4e4a56a4","visdat":{"1635f4e4a56a4":["function (y) ","x"],"1635f727e5123":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+
+---
+# Themes: Add some style to your plot
+
+.left-code[
+
+```r
+p &lt;- ggplot(mtcars) +
+  geom_point(aes(x = wt, 
+                 y = mpg, 
+                 colour = factor(gear))) +
+  facet_wrap(~am)
+p
+
+```
+]
+
+.right-plot[
+&lt;img src="lecture_4b_files/figure-html/mtcars-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Theme: theme_minimal
+
+.left-code[
+
+```r
+p + 
+  theme_minimal()
+```
+]
+
+.right-plot[
+&lt;img src="lecture_4b_files/figure-html/mtcars-minimal-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+---
+# Theme: ggthemes `theme_few()`
+
+.left-code[
+
+```r
+p + 
+  theme_few() + 
+  scale_colour_few()
+```
+]
+
+.right-plot[
+&lt;img src="lecture_4b_files/figure-html/mtcars-theme-few-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Theme: ggthemes `theme_excel()` 🤧
+
+.left-code[
+
+```r
+p + 
+  theme_excel() + 
+  scale_colour_excel()
+```
+]
+
+.right-plot[
+&lt;img src="lecture_4b_files/figure-html/mtcars-theme-excel-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+---
+# Theme: for fun
+
+.left-code[
+
+```r
+library(wesanderson)
+p + 
+  scale_colour_manual(
+    values = wes_palette("Royal1")
+    )
+
+```
+]
+
+.right-plot[
+&lt;img src="lecture_4b_files/figure-html/theme-wes-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Summary: themes
+
+- The `ggthemes` package has many different styles for the plots. 
+- Other packages such as `xkcd`, `skittles`, `wesanderson`, `beyonce`, `ochre`, ....
+
+---
+# Hierarchy of mappings
+
+1. Position - common scale (BEST): axis system
+2. Position - nonaligned scale: boxes in a side-by-side boxplot
+3. Length, direction, angle: pie charts, regression lines, wind maps
+4. Area: bubble charts
+5. Volume, curvature: 3D plots
+6. Shading, color (WORST): maps, points coloured by numeric variable
+
+- [Di's crowd-sourcing expt](http://visiphilia.org/2016/08/03/CM-hierarchy)
+- Nice explanation by [Peter Aldous](http://paldhous.github.io/ucb/2016/dataviz/week2.html)
+- [General plotting advice and a book from Naomi Robbins](https://www.forbes.com/sites/naomirobbins/#2b1e20082a6a)
+
+---
+# Your Turn:
+
+- lab quiz open (requires answering questions from Lab exercise)
+- go to rstudio and check out exercise 4-B
+- If you want to use R / Rstudio on your laptop:
+  - Install R + Rstudio (see )
+  - open R
+  - type the following:
+  ```r
+  # install.packages("usethis")
+  library(usethis)
+  use_course("mida.numbat.space/exercises/4b/mida-exercise-4b.zip")
+  ```
+
+---
+
+# Resources
+
+- Kieran Healy [Data Visualization](http://socviz.co/index.html)
+- Winston Chang (2012) [Cookbook for R](graphics cookbook)
+- Antony Unwin (2014) [Graphical Data Analysis](http://www.gradaanwr.net)
+- Naomi Robbins (2013) [Creating More Effective Charts](http://www.nbr-graphs.com)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLanguage": "r",
+"highlightLines": true,
+"highlightSpans": false,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%/%total%",
+"navigation": {
+"scroll": false,
+"touch": true,
+"click": false
+},
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
