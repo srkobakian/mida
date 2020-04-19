@@ -142,7 +142,7 @@ schedule <-  read_csv("materials/schedule.csv") %>%
   # generate readings
   mutate(Readings = map2_chr(Week, Lecture, generate_readings)) 
 
-midsem_break <- 10 # after which week (but there are 2 lectures per week)
+midsem_break <- 8 # after which week (but there are 2 lectures per week)
 
 schedule %>% 
   kable(escape = FALSE, 
