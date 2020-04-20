@@ -521,14 +521,11 @@ This is because we don't know the sum of a number and NA.
 
 - Open rstudio.
 - go to `exercise-5a-intro-missing.Rmd`
-- If you want to use R / Rstudio on your laptop:
-  - Install R + Rstudio (see [Stuart Lee's Guide](https://github.com/sa-lee/installr))
-  - open RStudio
-  - type the following:
+- type the following:
   ```r
   # install.packages("usethis")
   library(usethis)
-  use_course("https://ida.numbat.space/exercises/5a/ida-exercise-5a.zip")
+  use_course("https://mida.numbat.space/exercises/5a/mida-exercise-5a.zip")
   ```
 
 ---
