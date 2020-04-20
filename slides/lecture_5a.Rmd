@@ -756,21 +756,6 @@ This powerful visualisation shows the number of combinations of missing values t
 An upset plot of the `airquality` dataset shows there are only missing values in Ozone and Solar.R, with 35 in only Ozone, 5 in Solar.R, and in both Ozone and Solar.R, there are 2 missing cases.
 
 
-<!-- --- -->
-<!-- # Visualizing factors of missingness -->
-
-<!-- ```{r, eval = FALSE} -->
-<!-- gg_miss_fct(x = dat_sf_clean, fct = month) -->
-<!-- ``` -->
-
-<!-- ??? -->
-
-<!-- To explore how missingness in each variable changes across a factor, use `gg_miss_fct`.  -->
-
-<!-- This displays a heatmap visualisation showing the factors on the x axis,  each other variable on the y axis, and the amount of missingness coloured from dark purple to yellow.  -->
-
-<!-- `gg_miss_fct` does not support facetting. -->
-
 ---
 class: transition
 
@@ -994,6 +979,7 @@ ggplot(dat_sf_clean,
 ```
 
 ---
+class: transition
 # Exploring imputed values
 
 
@@ -1055,13 +1041,6 @@ bind_shadow(dat_sf_clean) %>% #<<
 
 ```{r print-tao}
 oceanbuoys
-```
-
----
-# Start looking at missing values
-
-```{r visdat-ocean}
-vis_dat(oceanbuoys)
 ```
 
 ---
@@ -1327,7 +1306,7 @@ What do we learn?
 # Your Turn:
 
 - lab quiz open (requires answering questions from Lab exercise)
-- go to rstudio and finish final exercise
+- go to rstudio.cloud and finish final exercise
 
 ---
 
@@ -1337,4 +1316,5 @@ What do we learn?
 - [R-miss-Tastic](https://rmisstastic.netlify.com)
 - [naniar](http://naniar.njtierney.com/)
 - [visdat](http://visdat.njtierney.com/)
+
 
