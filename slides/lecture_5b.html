@@ -7,8 +7,6 @@
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
     <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
     <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
-    <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
-    <script src="libs/countdown-0.3.5/countdown.js"></script>
     <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
     -->
@@ -234,11 +232,71 @@ foo_foo %&gt;%
 - read more at: https://r4ds.had.co.nz/pipes.html 
 
 ---
+---
 class: transition
-# Take 3 minutes to think about these concepts
 
-- What are pipes
-- What is assignment?
+# Assignment `&lt;-`
+
+"gets"
+
+---
+# Assignment
+
+We can perform calculations in R:
+
+```r
+1 + 1
+read_csv("data.csv")
+```
+
+---
+# Assignment
+
+But what if we want to use that information later?
+
+```r
+1 + 1
+read_csv("data.csv")
+```
+
+---
+# Assignment
+
+We can assign these things to an object using `&lt;-`
+
+This reads as "gets".
+
+```r
+x &lt;- 1 + 1
+my_data &lt;- read_csv("data.csv")
+```
+
+--
+
+- x 'gets' 1+1
+- my_data 'gets' the output of read_csv...
+---
+# Assignment
+
+Then we can use those things in other calculations
+
+```r
+x &lt;- 1 + 1
+my_data &lt;- read_csv("data.csv")
+
+x * x
+
+my_data %&gt;% 
+  select(age, height, weight) %&gt;% 
+  mutate(bmi = weight / height^2)
+```
+
+---
+class: transition
+# Take 3 minutes to discuss these two concepts with your breakout room
+
+- What are pipes `%&gt;%`
+- What is assignment? `&lt;-`
 
 ---
 class: transition
@@ -383,9 +441,6 @@ Abba is just different from everyone else!
 -   "What format is the data in an audio file?"
 -   "How is Abba different from the other music clips?",
 
-<div class="countdown" id="timer_5e9e7143" style="right:0;bottom:0;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
-</div>
 
 ---
 # Why look at audio data?
@@ -433,6 +488,116 @@ Most of the data on the web is still largely available as HTML - while it is str
 ```
 
 ---
+# What if we want to extract parts of this text out?
+
+```html
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p align="center"&gt;Hello world!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+--
+
+- `read_html()`: read HTML in (like `read_csv` and co!)
+
+--
+
+- `html_nodes()`: select specified nodes from the HTML document using CSS selectors.
+
+---
+# Let's read it in with `read_html`
+
+
+```r
+example &lt;- read_html(here::here("slides/data/example.html"))
+example
+## {html_document}
+## &lt;html&gt;
+## [1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
+## [2] &lt;body&gt;\n    &lt;p align="center"&gt;Hello world!&lt;/p&gt;\n  &lt;/body&gt;
+```
+
+--
+
+- We have two parts - head and body - which makes sense:
+
+```html
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p align="center"&gt;Hello world!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+
+
+---
+# Now let's get the title
+
+
+```r
+example %&gt;% 
+  html_nodes("title")
+## {xml_nodeset (1)}
+## [1] &lt;title&gt;This is a title&lt;/title&gt;
+```
+
+--
+
+```html
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p align="center"&gt;Hello world!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+
+---
+# Now let's get the paragraph text
+
+
+```r
+example %&gt;% 
+  html_nodes("p")
+## {xml_nodeset (1)}
+## [1] &lt;p align="center"&gt;Hello world!&lt;/p&gt;
+```
+
+--
+
+```html
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p align="center"&gt;Hello world!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+
+---
+# Rough summary
+
+- `read_html` - read in a html file
+- `html_nodes` - select the parts of the html file we want to look at
+    - This requires knowing about the website structure
+    - But it turns out website are much...much more complicated than out little example file
+
+---
 class: transition
 # rvest + polite: 
 
@@ -453,6 +618,7 @@ Simplify processing and manipulating HTML data
 ---
 # SelectorGadget: css selectors
 
+.small[
 Selector          |  Example         |     Description
 ------------      |------------------|      ------------------------------------------------
 element           |  `p`             |      Select all &amp;lt;p&amp;gt; elements
@@ -462,6 +628,7 @@ element&gt;element   |  `div &gt; p`       |      Select all &amp;lt;p&amp;gt; e
 \#id              |  `.name`         |      Select all elements with id="name"
 [attribute]       |  `[class]`       |      Select all elements with a class attribute
 [attribute=value] |  `[class=title]` |      Select all elements with class="title"
+]
 
 ---
 # SelectorGadget
@@ -494,7 +661,8 @@ http://www.imdb.com/chart/top
 
 
 ```r
-# install.packages("polite")
+# install.packages("remotes")
+# remotes::install_github("dmi3kno/polite")
 library(polite)
 bow("http://www.imdb.com")
 ## &lt;polite session&gt; http://www.imdb.com
@@ -508,20 +676,26 @@ bow("http://www.imdb.com")
 
 
 ```r
-bow("http://www.google.com")
-## &lt;polite session&gt; http://www.google.com
+bow("http://www.facebook.com")
+## &lt;polite session&gt; http://www.facebook.com
 ##     User-agent: polite R package - https://github.com/dmi3kno/polite
-##     robots.txt: 275 rules are defined for 4 bots
+##     robots.txt: 438 rules are defined for 20 bots
 ##    Crawl delay: 5 sec
-##   The path is scrapable for this user-agent
+##   The path is not scrapable for this user-agent
 ```
 
 ---
 # Join in
 
-Go to [rstudio.cloud](https://rstudio.cloud/) `\(\rightarrow\)` Lecture 5B `\(\rightarrow\)` Make a copy `\(\rightarrow\)` `lecture-5B.Rmd`
+- Open rstudio and download today's exercises 
+```r
+# install.packages("usethis")
+library(usethis)
+use_course("https://ida.numbat.space/exercises/5b/ida-exercise-5b.zip")
+```
 
 ---
+
 # Demo
 
 Let's go to http://www.imdb.com/chart/top
@@ -835,12 +1009,12 @@ imdb_data %&gt;%
 ## [242] "The Terminator"                                                      
 ## [243] "Lagaan: Once Upon a Time in India"                                   
 ## [244] "Butch Cassidy and the Sundance Kid"                                  
-## [245] "Aladdin"                                                             
-## [246] "Akira"                                                               
+## [245] "Akira"                                                               
+## [246] "Aladdin"                                                             
 ## [247] "PK"                                                                  
 ## [248] "Kis Uykusu"                                                          
 ## [249] "Fanny och Alexander"                                                 
-## [250] "Throne of Blood"
+## [250] "Hera Pheri"
 ```
 
 ---
@@ -922,8 +1096,8 @@ imdb_data %&gt;%
 ## [217] "(2011)" "(1989)" "(1959)" "(2006)" "(2004)" "(2000)" "(1984)" "(2015)"
 ## [225] "(2016)" "(1940)" "(1976)" "(2019)" "(2001)" "(1995)" "(1934)" "(2000)"
 ## [233] "(2012)" "(2004)" "(1987)" "(2011)" "(1951)" "(1984)" "(1948)" "(2016)"
-## [241] "(2015)" "(1984)" "(2001)" "(1969)" "(1992)" "(1988)" "(2014)" "(2014)"
-## [249] "(1982)" "(1957)"
+## [241] "(2015)" "(1984)" "(2001)" "(1969)" "(1988)" "(1992)" "(2014)" "(2014)"
+## [249] "(1982)" "(2000)"
 ```
 
 ---
@@ -934,8 +1108,8 @@ imdb_data %&gt;%
 imdb_data %&gt;%
   html_nodes(".secondaryInfo") %&gt;%
   html_text() %&gt;%
-  str_replace("\\(", "") %&gt;% # remove (
-  str_replace("\\)", "") %&gt;% # remove )
+  str_remove("\\(") %&gt;% # remove (
+  str_remove("\\)") %&gt;% # remove )
   as.numeric()
 ##   [1] 1994 1972 1974 2008 1957 1993 2003 1994 1966 2001 1999 1994 2010 1980 2002
 ##  [16] 1999 1990 1975 1954 1995 2002 1997 1991 1946 1977 2019 1998 2001 1999 2014
@@ -953,7 +1127,7 @@ imdb_data %&gt;%
 ## [196] 1926 2002 1924 2013 2013 1967 2015 1986 1976 1953 1975 2007 2004 1979 1986
 ## [211] 2009 1959 2013 1966 2017 1928 2011 1989 1959 2006 2004 2000 1984 2015 2016
 ## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 1948 2016
-## [241] 2015 1984 2001 1969 1992 1988 2014 2014 1982 1957
+## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 2000
 ```
 
 ---
@@ -981,7 +1155,7 @@ imdb_data %&gt;%
 ## [196] 1926 2002 1924 2013 2013 1967 2015 1986 1976 1953 1975 2007 2004 1979 1986
 ## [211] 2009 1959 2013 1966 2017 1928 2011 1989 1959 2006 2004 2000 1984 2015 2016
 ## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 1948 2016
-## [241] 2015 1984 2001 1969 1992 1988 2014 2014 1982 1957
+## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 2000
 ```
 
 ---
@@ -992,8 +1166,8 @@ imdb_data %&gt;%
 years &lt;- imdb_data %&gt;%
   html_nodes(".secondaryInfo") %&gt;%
   html_text() %&gt;%
-  str_replace("\\(", "") %&gt;% # remove (
-  str_replace("\\)", "") %&gt;% # remove )
+  str_remove("\\(") %&gt;% # remove (
+  str_remove("\\)") %&gt;% # remove )
   as.numeric()
 ```
 
@@ -1005,26 +1179,26 @@ years &lt;- imdb_data %&gt;%
 imdb_data %&gt;%
   html_nodes(".imdbRating strong")
 ## {xml_nodeset (250)}
-##  [1] &lt;strong title="9.2 based on 2,223,263 user ratings"&gt;9.2&lt;/strong&gt;
-##  [2] &lt;strong title="9.1 based on 1,532,054 user ratings"&gt;9.1&lt;/strong&gt;
-##  [3] &lt;strong title="9.0 based on 1,072,472 user ratings"&gt;9.0&lt;/strong&gt;
-##  [4] &lt;strong title="9.0 based on 2,197,819 user ratings"&gt;9.0&lt;/strong&gt;
-##  [5] &lt;strong title="8.9 based on 649,736 user ratings"&gt;8.9&lt;/strong&gt;
-##  [6] &lt;strong title="8.9 based on 1,157,919 user ratings"&gt;8.9&lt;/strong&gt;
-##  [7] &lt;strong title="8.9 based on 1,575,391 user ratings"&gt;8.9&lt;/strong&gt;
-##  [8] &lt;strong title="8.8 based on 1,744,108 user ratings"&gt;8.8&lt;/strong&gt;
-##  [9] &lt;strong title="8.8 based on 657,801 user ratings"&gt;8.8&lt;/strong&gt;
-## [10] &lt;strong title="8.8 based on 1,588,110 user ratings"&gt;8.8&lt;/strong&gt;
-## [11] &lt;strong title="8.8 based on 1,772,037 user ratings"&gt;8.8&lt;/strong&gt;
-## [12] &lt;strong title="8.8 based on 1,715,105 user ratings"&gt;8.8&lt;/strong&gt;
-## [13] &lt;strong title="8.7 based on 1,949,573 user ratings"&gt;8.7&lt;/strong&gt;
-## [14] &lt;strong title="8.7 based on 1,111,625 user ratings"&gt;8.7&lt;/strong&gt;
-## [15] &lt;strong title="8.7 based on 1,422,851 user ratings"&gt;8.7&lt;/strong&gt;
-## [16] &lt;strong title="8.6 based on 1,597,570 user ratings"&gt;8.6&lt;/strong&gt;
-## [17] &lt;strong title="8.6 based on 967,629 user ratings"&gt;8.6&lt;/strong&gt;
-## [18] &lt;strong title="8.6 based on 874,272 user ratings"&gt;8.6&lt;/strong&gt;
-## [19] &lt;strong title="8.6 based on 300,628 user ratings"&gt;8.6&lt;/strong&gt;
-## [20] &lt;strong title="8.6 based on 1,369,059 user ratings"&gt;8.6&lt;/strong&gt;
+##  [1] &lt;strong title="9.2 based on 2,223,323 user ratings"&gt;9.2&lt;/strong&gt;
+##  [2] &lt;strong title="9.1 based on 1,532,092 user ratings"&gt;9.1&lt;/strong&gt;
+##  [3] &lt;strong title="9.0 based on 1,072,495 user ratings"&gt;9.0&lt;/strong&gt;
+##  [4] &lt;strong title="9.0 based on 2,197,863 user ratings"&gt;9.0&lt;/strong&gt;
+##  [5] &lt;strong title="8.9 based on 649,758 user ratings"&gt;8.9&lt;/strong&gt;
+##  [6] &lt;strong title="8.9 based on 1,157,936 user ratings"&gt;8.9&lt;/strong&gt;
+##  [7] &lt;strong title="8.9 based on 1,575,420 user ratings"&gt;8.9&lt;/strong&gt;
+##  [8] &lt;strong title="8.8 based on 1,744,145 user ratings"&gt;8.8&lt;/strong&gt;
+##  [9] &lt;strong title="8.8 based on 657,806 user ratings"&gt;8.8&lt;/strong&gt;
+## [10] &lt;strong title="8.8 based on 1,588,149 user ratings"&gt;8.8&lt;/strong&gt;
+## [11] &lt;strong title="8.8 based on 1,772,071 user ratings"&gt;8.8&lt;/strong&gt;
+## [12] &lt;strong title="8.8 based on 1,715,141 user ratings"&gt;8.8&lt;/strong&gt;
+## [13] &lt;strong title="8.7 based on 1,949,620 user ratings"&gt;8.7&lt;/strong&gt;
+## [14] &lt;strong title="8.7 based on 1,111,641 user ratings"&gt;8.7&lt;/strong&gt;
+## [15] &lt;strong title="8.7 based on 1,422,877 user ratings"&gt;8.7&lt;/strong&gt;
+## [16] &lt;strong title="8.6 based on 1,597,597 user ratings"&gt;8.6&lt;/strong&gt;
+## [17] &lt;strong title="8.6 based on 967,647 user ratings"&gt;8.6&lt;/strong&gt;
+## [18] &lt;strong title="8.6 based on 874,279 user ratings"&gt;8.6&lt;/strong&gt;
+## [19] &lt;strong title="8.6 based on 300,634 user ratings"&gt;8.6&lt;/strong&gt;
+## [20] &lt;strong title="8.6 based on 1,369,102 user ratings"&gt;8.6&lt;/strong&gt;
 ## ...
 ```
 ---
@@ -1052,7 +1226,7 @@ imdb_data %&gt;%
 ## [169] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1"
 ## [181] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1"
 ## [193] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1"
-## [205] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.0" "8.0" "8.0"
+## [205] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.0" "8.0"
 ## [217] "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0"
 ## [229] "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0"
 ## [241] "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0"
@@ -1077,7 +1251,7 @@ imdb_data %&gt;%
 ## [145] 8.2 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1
 ## [163] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1
 ## [181] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1
-## [199] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.0 8.0 8.0
+## [199] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.0 8.0
 ## [217] 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0
 ## [235] 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0
 ```
@@ -1176,36 +1350,6 @@ imdb_top_250
    &lt;td style="text-align:left;"&gt; The Good, the Bad and the Ugly &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 1966 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; The Lord of the Rings: The Fellowship of the Ring &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 2001 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Fight Club &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1999 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Forrest Gump &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1994 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Inception &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 2010 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Star Wars: Episode V - The Empire Strikes Back &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1980 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; The Lord of the Rings: The Two Towers &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 2002 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; ... &lt;/td&gt;
@@ -1348,42 +1492,6 @@ imdb_top_250 %&gt;%
    &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; The Lord of the Rings: The Fellowship of the Ring &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 2001 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 10 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Fight Club &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1999 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 11 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Forrest Gump &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1994 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.8 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Inception &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 2010 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Star Wars: Episode V - The Empire Strikes Back &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1980 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 14 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; The Lord of the Rings: The Two Towers &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 2002 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8.7 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 15 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; ... &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; ... &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; ... &lt;/td&gt;
@@ -1394,14 +1502,9 @@ imdb_top_250 %&gt;%
 
 
 ---
-class: transition
+# Your Turn: Which 1995 movies made the list?
 
-# Your Turn
-
-How would you go about answering this question: Which 1995 movies made the list?
-
----
-
+--
 
 
 ```r
@@ -1421,10 +1524,7 @@ imdb_top_250 %&gt;%
 ```
 
 ---
-# Your turn
-
-
-How would you go about answering this question: Which years have the most movies on the list?
+# Your turn:  Which years have the most movies on the list?
 
 --
 
@@ -1439,17 +1539,14 @@ imdb_top_250 %&gt;%
 ##    year total
 ##   &lt;dbl&gt; &lt;int&gt;
 ## 1  1995     8
-## 2  1957     7
+## 2  2000     7
 ## 3  2014     7
 ## 4  2019     7
-## 5  2000     6
+## 5  1957     6
 ```
 
 ---
-# Your Turn
-
-
-How would you go about creating this visualization: Visualize the average yearly score for movies that made it on the top 250 list over time.
+# Your Turn: Visualize top 250 yearly mean score over time
 
 --
 
@@ -1530,6 +1627,7 @@ mydf
 &gt; Compare the display of information at [gumtree melbourne](https://www.gumtree.com.au/s-monash/l3001600) to the list on the IMDB top 250 list. What challenges can you foresee in scraping a list of the available apartments?
 ]
 
+
 ---
 # Further exploring
 
@@ -1539,6 +1637,16 @@ People write R packages to access online data! Check out:
 - [rwalkr by Earo Wang](https://github.com/earowang/rwalkr)
 - [fitzRoy for AFL data](https://github.com/jimmyday12/fitzRoy/)
 - [Top 40 lists of R packages by Joe Rickert](https://rviews.rstudio.com/2019/07/24/june-2019-top-40-r-packages/) - they usually include a "data" section.
+
+
+--- 
+
+# A note on midsemester test
+
+- Will be made available next Wednesday after class
+- This will be a multiple choice and short answer exam
+- The test will be conducted on Moodle
+- More details to come soon!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>
