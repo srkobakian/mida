@@ -305,6 +305,19 @@ class: transition
 # Data as an audio file
 
 
+```r
+library(tuneR)
+wv_data &lt;- readWave("data/data3.wav") %&gt;% 
+    extractWave(from = 25000, to = 75000)
+df_wav_data &lt;- tibble(
+  t = seq_len(length(wv_obj)),
+  left = wv_obj@left,
+  right = wv_obj@right,
+  word = "data"
+)
+```
+
+
 ```
 ## Rows: 100,002
 ## Columns: 4
@@ -642,8 +655,7 @@ http://www.imdb.com/chart/top
 
 
 ```r
-# install.packages("remotes")
-# remotes::install_github("dmi3kno/polite")
+# install.packages("polite")
 library(polite)
 bow("http://www.imdb.com")
 ## &lt;polite session&gt; http://www.imdb.com
@@ -672,7 +684,7 @@ bow("http://www.google.com")
 ```r
 # install.packages("usethis")
 library(usethis)
-use_course("https://ida.numbat.space/exercises/5b/ida-exercise-5b.zip")
+use_course("https://mida.numbat.space/exercises/5b/mida-exercise-5b.zip")
 ```
 
 ---
@@ -826,8 +838,8 @@ imdb_data %&gt;%
 ##  [78] "1917"                                                                
 ##  [79] "Das Boot"                                                            
 ##  [80] "3 Idiots"                                                            
-##  [81] "Toy Story"                                                           
-##  [82] "Tengoku to jigoku"                                                   
+##  [81] "Tengoku to jigoku"                                                   
+##  [82] "Toy Story"                                                           
 ##  [83] "Taare Zameen Par"                                                    
 ##  [84] "Star Wars: Episode VI - Return of the Jedi"                          
 ##  [85] "Amadeus"                                                             
@@ -941,8 +953,8 @@ imdb_data %&gt;%
 ## [193] "Mr. Smith Goes to Washington"                                        
 ## [194] "How to Train Your Dragon"                                            
 ## [195] "Before Sunrise"                                                      
-## [196] "Catch Me If You Can"                                                 
-## [197] "The General"                                                         
+## [196] "The General"                                                         
+## [197] "Catch Me If You Can"                                                 
 ## [198] "Sherlock Jr."                                                        
 ## [199] "Prisoners"                                                           
 ## [200] "12 Years a Slave"                                                    
@@ -959,9 +971,9 @@ imdb_data %&gt;%
 ## [211] "Hachi: A Dog's Tale"                                                 
 ## [212] "Ben-Hur"                                                             
 ## [213] "Rush"                                                                
-## [214] "Logan"                                                               
-## [215] "La passion de Jeanne d'Arc"                                          
-## [216] "Andrei Rublev"                                                       
+## [214] "La passion de Jeanne d'Arc"                                          
+## [215] "Andrei Rublev"                                                       
+## [216] "Logan"                                                               
 ## [217] "Harry Potter and the Deathly Hallows: Part 2"                        
 ## [218] "Dead Poets Society"                                                  
 ## [219] "Les quatre cents coups"                                              
@@ -971,8 +983,8 @@ imdb_data %&gt;%
 ## [223] "Kaze no tani no Naushika"                                            
 ## [224] "Spotlight"                                                           
 ## [225] "Ah-ga-ssi"                                                           
-## [226] "Rebecca"                                                             
-## [227] "Rocky"                                                               
+## [226] "Rocky"                                                               
+## [227] "Rebecca"                                                             
 ## [228] "Portrait of a Lady on Fire"                                          
 ## [229] "Monsters, Inc."                                                      
 ## [230] "La haine"                                                            
@@ -1057,7 +1069,7 @@ imdb_data %&gt;%
 ##  [57] "(1940)" "(2006)" "(2012)" "(1957)" "(1980)" "(2018)" "(2008)" "(1950)"
 ##  [65] "(2018)" "(1997)" "(1964)" "(2003)" "(1957)" "(2019)" "(2012)" "(1984)"
 ##  [73] "(1986)" "(2016)" "(2017)" "(1999)" "(1995)" "(2019)" "(1981)" "(2009)"
-##  [81] "(1995)" "(1963)" "(2007)" "(1983)" "(1984)" "(1992)" "(2009)" "(1997)"
+##  [81] "(1963)" "(1995)" "(2007)" "(1983)" "(1984)" "(1992)" "(2009)" "(1997)"
 ##  [89] "(1968)" "(2000)" "(1958)" "(1931)" "(2016)" "(2004)" "(1941)" "(2012)"
 ##  [97] "(2018)" "(1987)" "(1959)" "(1971)" "(2000)" "(1921)" "(1948)" "(1952)"
 ## [105] "(1983)" "(1976)" "(2001)" "(1962)" "(1973)" "(2010)" "(1927)" "(1965)"
@@ -1071,11 +1083,11 @@ imdb_data %&gt;%
 ## [169] "(1957)" "(2003)" "(1949)" "(1954)" "(1979)" "(1996)" "(2003)" "(1998)"
 ## [177] "(2008)" "(1953)" "(1978)" "(2003)" "(2014)" "(1996)" "(2018)" "(2019)"
 ## [185] "(1998)" "(2009)" "(1993)" "(2014)" "(2016)" "(2014)" "(2019)" "(1966)"
-## [193] "(1939)" "(2010)" "(1995)" "(2002)" "(1926)" "(1924)" "(2013)" "(2013)"
+## [193] "(1939)" "(2010)" "(1995)" "(1926)" "(2002)" "(1924)" "(2013)" "(2013)"
 ## [201] "(1967)" "(2015)" "(1976)" "(1986)" "(1953)" "(1975)" "(2007)" "(2004)"
-## [209] "(1979)" "(1986)" "(2009)" "(1959)" "(2013)" "(2017)" "(1928)" "(1966)"
+## [209] "(1979)" "(1986)" "(2009)" "(1959)" "(2013)" "(1928)" "(1966)" "(2017)"
 ## [217] "(2011)" "(1989)" "(1959)" "(2006)" "(2004)" "(2000)" "(1984)" "(2015)"
-## [225] "(2016)" "(1940)" "(1976)" "(2019)" "(2001)" "(1995)" "(1934)" "(2000)"
+## [225] "(2016)" "(1976)" "(1940)" "(2019)" "(2001)" "(1995)" "(1934)" "(2000)"
 ## [233] "(2012)" "(2004)" "(1987)" "(2011)" "(1951)" "(1984)" "(2016)" "(1948)"
 ## [241] "(2015)" "(1984)" "(2001)" "(1969)" "(1988)" "(1992)" "(2014)" "(2014)"
 ## [249] "(1982)" "(1957)"
@@ -1097,7 +1109,7 @@ imdb_data %&gt;%
 ##  [31] 1994 1995 1962 1994 1998 2002 1991 1985 1936 1960 2000 1931 2011 2006 2014
 ##  [46] 2006 1968 1988 1942 2019 1988 1954 1979 1979 2000 1981 1940 2006 2012 1957
 ##  [61] 1980 2018 2008 1950 2018 1997 1964 2003 1957 2019 2012 1984 1986 2016 2017
-##  [76] 1999 1995 2019 1981 2009 1995 1963 2007 1983 1984 1992 2009 1997 1968 2000
+##  [76] 1999 1995 2019 1981 2009 1963 1995 2007 1983 1984 1992 2009 1997 1968 2000
 ##  [91] 1958 1931 2016 2004 1941 2012 2018 1987 1959 1971 2000 1921 1948 1952 1983
 ## [106] 1976 2001 1962 1973 2010 1927 1965 1952 2011 1944 1960 1962 2010 1989 2009
 ## [121] 1997 1975 1995 1950 1988 1961 2005 2018 2004 1992 1985 1997 1959 2004 1985
@@ -1105,9 +1117,9 @@ imdb_data %&gt;%
 ## [151] 1925 1974 1954 2005 1957 2015 2007 2011 2010 1996 1980 1999 1982 2015 1939
 ## [166] 1993 1982 1957 1957 2003 1949 1954 1979 1996 2003 1998 2008 1953 1978 2003
 ## [181] 2014 1996 2018 2019 1998 2009 1993 2014 2016 2014 2019 1966 1939 2010 1995
-## [196] 2002 1926 1924 2013 2013 1967 2015 1976 1986 1953 1975 2007 2004 1979 1986
-## [211] 2009 1959 2013 2017 1928 1966 2011 1989 1959 2006 2004 2000 1984 2015 2016
-## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 2016 1948
+## [196] 1926 2002 1924 2013 2013 1967 2015 1976 1986 1953 1975 2007 2004 1979 1986
+## [211] 2009 1959 2013 1928 1966 2017 2011 1989 1959 2006 2004 2000 1984 2015 2016
+## [226] 1976 1940 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 2016 1948
 ## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 1957
 ```
 
@@ -1125,7 +1137,7 @@ imdb_data %&gt;%
 ##  [31] 1994 1995 1962 1994 1998 2002 1991 1985 1936 1960 2000 1931 2011 2006 2014
 ##  [46] 2006 1968 1988 1942 2019 1988 1954 1979 1979 2000 1981 1940 2006 2012 1957
 ##  [61] 1980 2018 2008 1950 2018 1997 1964 2003 1957 2019 2012 1984 1986 2016 2017
-##  [76] 1999 1995 2019 1981 2009 1995 1963 2007 1983 1984 1992 2009 1997 1968 2000
+##  [76] 1999 1995 2019 1981 2009 1963 1995 2007 1983 1984 1992 2009 1997 1968 2000
 ##  [91] 1958 1931 2016 2004 1941 2012 2018 1987 1959 1971 2000 1921 1948 1952 1983
 ## [106] 1976 2001 1962 1973 2010 1927 1965 1952 2011 1944 1960 1962 2010 1989 2009
 ## [121] 1997 1975 1995 1950 1988 1961 2005 2018 2004 1992 1985 1997 1959 2004 1985
@@ -1133,9 +1145,9 @@ imdb_data %&gt;%
 ## [151] 1925 1974 1954 2005 1957 2015 2007 2011 2010 1996 1980 1999 1982 2015 1939
 ## [166] 1993 1982 1957 1957 2003 1949 1954 1979 1996 2003 1998 2008 1953 1978 2003
 ## [181] 2014 1996 2018 2019 1998 2009 1993 2014 2016 2014 2019 1966 1939 2010 1995
-## [196] 2002 1926 1924 2013 2013 1967 2015 1976 1986 1953 1975 2007 2004 1979 1986
-## [211] 2009 1959 2013 2017 1928 1966 2011 1989 1959 2006 2004 2000 1984 2015 2016
-## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 2016 1948
+## [196] 1926 2002 1924 2013 2013 1967 2015 1976 1986 1953 1975 2007 2004 1979 1986
+## [211] 2009 1959 2013 1928 1966 2017 2011 1989 1959 2006 2004 2000 1984 2015 2016
+## [226] 1976 1940 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 2016 1948
 ## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 1957
 ```
 
@@ -1160,26 +1172,26 @@ years &lt;- imdb_data %&gt;%
 imdb_data %&gt;%
   html_nodes(".imdbRating strong")
 ## {xml_nodeset (250)}
-##  [1] &lt;strong title="9.2 based on 2,223,821 user ratings"&gt;9.2&lt;/strong&gt;
-##  [2] &lt;strong title="9.1 based on 1,532,457 user ratings"&gt;9.1&lt;/strong&gt;
-##  [3] &lt;strong title="9.0 based on 1,072,718 user ratings"&gt;9.0&lt;/strong&gt;
-##  [4] &lt;strong title="9.0 based on 2,198,206 user ratings"&gt;9.0&lt;/strong&gt;
-##  [5] &lt;strong title="8.9 based on 649,936 user ratings"&gt;8.9&lt;/strong&gt;
-##  [6] &lt;strong title="8.9 based on 1,158,141 user ratings"&gt;8.9&lt;/strong&gt;
-##  [7] &lt;strong title="8.9 based on 1,575,650 user ratings"&gt;8.9&lt;/strong&gt;
-##  [8] &lt;strong title="8.8 based on 1,744,462 user ratings"&gt;8.8&lt;/strong&gt;
-##  [9] &lt;strong title="8.8 based on 657,898 user ratings"&gt;8.8&lt;/strong&gt;
-## [10] &lt;strong title="8.8 based on 1,588,379 user ratings"&gt;8.8&lt;/strong&gt;
-## [11] &lt;strong title="8.8 based on 1,772,374 user ratings"&gt;8.8&lt;/strong&gt;
-## [12] &lt;strong title="8.8 based on 1,715,479 user ratings"&gt;8.8&lt;/strong&gt;
-## [13] &lt;strong title="8.7 based on 1,950,012 user ratings"&gt;8.7&lt;/strong&gt;
-## [14] &lt;strong title="8.7 based on 1,111,785 user ratings"&gt;8.7&lt;/strong&gt;
-## [15] &lt;strong title="8.7 based on 1,423,084 user ratings"&gt;8.7&lt;/strong&gt;
-## [16] &lt;strong title="8.6 based on 1,597,852 user ratings"&gt;8.6&lt;/strong&gt;
-## [17] &lt;strong title="8.6 based on 967,824 user ratings"&gt;8.6&lt;/strong&gt;
-## [18] &lt;strong title="8.6 based on 874,402 user ratings"&gt;8.6&lt;/strong&gt;
-## [19] &lt;strong title="8.6 based on 300,677 user ratings"&gt;8.6&lt;/strong&gt;
-## [20] &lt;strong title="8.6 based on 1,369,370 user ratings"&gt;8.6&lt;/strong&gt;
+##  [1] &lt;strong title="9.2 based on 2,223,871 user ratings"&gt;9.2&lt;/strong&gt;
+##  [2] &lt;strong title="9.1 based on 1,532,498 user ratings"&gt;9.1&lt;/strong&gt;
+##  [3] &lt;strong title="9.0 based on 1,072,747 user ratings"&gt;9.0&lt;/strong&gt;
+##  [4] &lt;strong title="9.0 based on 2,198,238 user ratings"&gt;9.0&lt;/strong&gt;
+##  [5] &lt;strong title="8.9 based on 649,952 user ratings"&gt;8.9&lt;/strong&gt;
+##  [6] &lt;strong title="8.9 based on 1,158,162 user ratings"&gt;8.9&lt;/strong&gt;
+##  [7] &lt;strong title="8.9 based on 1,575,677 user ratings"&gt;8.9&lt;/strong&gt;
+##  [8] &lt;strong title="8.8 based on 1,744,483 user ratings"&gt;8.8&lt;/strong&gt;
+##  [9] &lt;strong title="8.8 based on 657,904 user ratings"&gt;8.8&lt;/strong&gt;
+## [10] &lt;strong title="8.8 based on 1,588,407 user ratings"&gt;8.8&lt;/strong&gt;
+## [11] &lt;strong title="8.8 based on 1,772,401 user ratings"&gt;8.8&lt;/strong&gt;
+## [12] &lt;strong title="8.8 based on 1,715,513 user ratings"&gt;8.8&lt;/strong&gt;
+## [13] &lt;strong title="8.7 based on 1,950,039 user ratings"&gt;8.7&lt;/strong&gt;
+## [14] &lt;strong title="8.7 based on 1,111,799 user ratings"&gt;8.7&lt;/strong&gt;
+## [15] &lt;strong title="8.7 based on 1,423,109 user ratings"&gt;8.7&lt;/strong&gt;
+## [16] &lt;strong title="8.6 based on 1,597,884 user ratings"&gt;8.6&lt;/strong&gt;
+## [17] &lt;strong title="8.6 based on 967,841 user ratings"&gt;8.6&lt;/strong&gt;
+## [18] &lt;strong title="8.6 based on 874,414 user ratings"&gt;8.6&lt;/strong&gt;
+## [19] &lt;strong title="8.6 based on 300,682 user ratings"&gt;8.6&lt;/strong&gt;
+## [20] &lt;strong title="8.6 based on 1,369,407 user ratings"&gt;8.6&lt;/strong&gt;
 ## ...
 ```
 ---

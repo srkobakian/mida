@@ -305,6 +305,19 @@ class: transition
 # Data as an audio file
 
 
+```r
+library(tuneR)
+wv_data &lt;- readWave("data/data3.wav") %&gt;% 
+    extractWave(from = 25000, to = 75000)
+df_wav_data &lt;- tibble(
+  t = seq_len(length(wv_obj)),
+  left = wv_obj@left,
+  right = wv_obj@right,
+  word = "data"
+)
+```
+
+
 ```
 ## Rows: 100,002
 ## Columns: 4
@@ -642,8 +655,7 @@ http://www.imdb.com/chart/top
 
 
 ```r
-# install.packages("remotes")
-# remotes::install_github("dmi3kno/polite")
+# install.packages("polite")
 library(polite)
 bow("http://www.imdb.com")
 ## &lt;polite session&gt; http://www.imdb.com
