@@ -112,12 +112,8 @@ Past Example projects from ETC1010:
 	- [Looking at Seinfeld dialogues using #tidytext](https://pradeepadhokshaja.wordpress.com/2018/08/06/looking-at-seinfeld-dialogues-using-tidytext/)
 	- [Twitter Coverage of the useR Conference 2018](https://github.com/neilfws/Twitter/blob/master/user2018/code/R/user2018.md)
 
-## Exam information
+## Midsemester test information
+
+Past test:
 
 - [Midterm 2019](exam/midterm2019.pdf) [(solution)](exam/midterm2019_solution.pdf)
-
-- [Formula sheet](exam/formula_sheet.pdf)
-
-- [Final Exam for 2018 Semester 1](exam/exam2018.pdf) [(solution)](exam/exam2018_solution.pdf)
-- [Final Exam for 2018 Semester 2](exam/exam2018_S2.pdf) [(solution)](exam/exam2018_S2_solution.pdf)
-- [Final Exam for 2019 Semester 1](exam/exam2019-s1.pdf)
