@@ -232,7 +232,6 @@ foo_foo %&gt;%
 - read more at: https://r4ds.had.co.nz/pipes.html 
 
 ---
----
 class: transition
 
 # Assignment `&lt;-`
@@ -293,7 +292,7 @@ my_data %&gt;%
 
 ---
 class: transition
-# Take 3 minutes to discuss these two concepts with your breakout room
+# Take 3 minutes to think about these two concepts
 
 - What are pipes `%&gt;%`
 - What is assignment? `&lt;-`
@@ -335,11 +334,7 @@ Oh, same sound is on both channels! A tad drab.
 # Compute statistics
 
 
-```r
-df_wavs &lt;- df_wavs %&gt;% 
-  pivot_longer(cols = c(left,right),
-               names_to = "channel") 
-df_wavs
+```
 ## # A tibble: 200,004 x 4
 ##        t word  channel value
 ##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;
@@ -354,20 +349,6 @@ df_wavs
 ##  9     5 data  left       22
 ## 10     5 data  right      18
 ## # … with 199,994 more rows
-```
-
-
-```r
-df_wavs %&gt;%
-  filter(channel == "left") %&gt;%
-  group_by(word) %&gt;%
-  summarise(
-    m = mean(value),
-    s = sd(value),
-    mx = max(value),
-    mn = min(value)
-  ) %&gt;%
-  as_table()
 ```
 
 &lt;table&gt;
@@ -676,12 +657,12 @@ bow("http://www.imdb.com")
 
 
 ```r
-bow("http://www.facebook.com")
-## &lt;polite session&gt; http://www.facebook.com
+bow("http://www.google.com")
+## &lt;polite session&gt; http://www.google.com
 ##     User-agent: polite R package - https://github.com/dmi3kno/polite
-##     robots.txt: 438 rules are defined for 20 bots
+##     robots.txt: 275 rules are defined for 4 bots
 ##    Crawl delay: 5 sec
-##   The path is not scrapable for this user-agent
+##   The path is scrapable for this user-agent
 ```
 
 ---
@@ -960,15 +941,15 @@ imdb_data %&gt;%
 ## [193] "Mr. Smith Goes to Washington"                                        
 ## [194] "How to Train Your Dragon"                                            
 ## [195] "Before Sunrise"                                                      
-## [196] "The General"                                                         
-## [197] "Catch Me If You Can"                                                 
+## [196] "Catch Me If You Can"                                                 
+## [197] "The General"                                                         
 ## [198] "Sherlock Jr."                                                        
 ## [199] "Prisoners"                                                           
 ## [200] "12 Years a Slave"                                                    
 ## [201] "Cool Hand Luke"                                                      
 ## [202] "Mad Max: Fury Road"                                                  
-## [203] "Stand by Me"                                                         
-## [204] "Network"                                                             
+## [203] "Network"                                                             
+## [204] "Stand by Me"                                                         
 ## [205] "Le salaire de la peur"                                               
 ## [206] "Barry Lyndon"                                                        
 ## [207] "Into the Wild"                                                       
@@ -978,9 +959,9 @@ imdb_data %&gt;%
 ## [211] "Hachi: A Dog's Tale"                                                 
 ## [212] "Ben-Hur"                                                             
 ## [213] "Rush"                                                                
-## [214] "Andrei Rublev"                                                       
-## [215] "Logan"                                                               
-## [216] "La passion de Jeanne d'Arc"                                          
+## [214] "Logan"                                                               
+## [215] "La passion de Jeanne d'Arc"                                          
+## [216] "Andrei Rublev"                                                       
 ## [217] "Harry Potter and the Deathly Hallows: Part 2"                        
 ## [218] "Dead Poets Society"                                                  
 ## [219] "Les quatre cents coups"                                              
@@ -1003,8 +984,8 @@ imdb_data %&gt;%
 ## [236] "The Help"                                                            
 ## [237] "Ace in the Hole"                                                     
 ## [238] "Paris, Texas"                                                        
-## [239] "The Red Shoes"                                                       
-## [240] "The Invisible Guest"                                                 
+## [239] "The Invisible Guest"                                                 
+## [240] "The Red Shoes"                                                       
 ## [241] "Drishyam"                                                            
 ## [242] "The Terminator"                                                      
 ## [243] "Lagaan: Once Upon a Time in India"                                   
@@ -1014,7 +995,7 @@ imdb_data %&gt;%
 ## [247] "PK"                                                                  
 ## [248] "Kis Uykusu"                                                          
 ## [249] "Fanny och Alexander"                                                 
-## [250] "Hera Pheri"
+## [250] "Throne of Blood"
 ```
 
 ---
@@ -1090,14 +1071,14 @@ imdb_data %&gt;%
 ## [169] "(1957)" "(2003)" "(1949)" "(1954)" "(1979)" "(1996)" "(2003)" "(1998)"
 ## [177] "(2008)" "(1953)" "(1978)" "(2003)" "(2014)" "(1996)" "(2018)" "(2019)"
 ## [185] "(1998)" "(2009)" "(1993)" "(2014)" "(2016)" "(2014)" "(2019)" "(1966)"
-## [193] "(1939)" "(2010)" "(1995)" "(1926)" "(2002)" "(1924)" "(2013)" "(2013)"
-## [201] "(1967)" "(2015)" "(1986)" "(1976)" "(1953)" "(1975)" "(2007)" "(2004)"
-## [209] "(1979)" "(1986)" "(2009)" "(1959)" "(2013)" "(1966)" "(2017)" "(1928)"
+## [193] "(1939)" "(2010)" "(1995)" "(2002)" "(1926)" "(1924)" "(2013)" "(2013)"
+## [201] "(1967)" "(2015)" "(1976)" "(1986)" "(1953)" "(1975)" "(2007)" "(2004)"
+## [209] "(1979)" "(1986)" "(2009)" "(1959)" "(2013)" "(2017)" "(1928)" "(1966)"
 ## [217] "(2011)" "(1989)" "(1959)" "(2006)" "(2004)" "(2000)" "(1984)" "(2015)"
 ## [225] "(2016)" "(1940)" "(1976)" "(2019)" "(2001)" "(1995)" "(1934)" "(2000)"
-## [233] "(2012)" "(2004)" "(1987)" "(2011)" "(1951)" "(1984)" "(1948)" "(2016)"
+## [233] "(2012)" "(2004)" "(1987)" "(2011)" "(1951)" "(1984)" "(2016)" "(1948)"
 ## [241] "(2015)" "(1984)" "(2001)" "(1969)" "(1988)" "(1992)" "(2014)" "(2014)"
-## [249] "(1982)" "(2000)"
+## [249] "(1982)" "(1957)"
 ```
 
 ---
@@ -1124,10 +1105,10 @@ imdb_data %&gt;%
 ## [151] 1925 1974 1954 2005 1957 2015 2007 2011 2010 1996 1980 1999 1982 2015 1939
 ## [166] 1993 1982 1957 1957 2003 1949 1954 1979 1996 2003 1998 2008 1953 1978 2003
 ## [181] 2014 1996 2018 2019 1998 2009 1993 2014 2016 2014 2019 1966 1939 2010 1995
-## [196] 1926 2002 1924 2013 2013 1967 2015 1986 1976 1953 1975 2007 2004 1979 1986
-## [211] 2009 1959 2013 1966 2017 1928 2011 1989 1959 2006 2004 2000 1984 2015 2016
-## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 1948 2016
-## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 2000
+## [196] 2002 1926 1924 2013 2013 1967 2015 1976 1986 1953 1975 2007 2004 1979 1986
+## [211] 2009 1959 2013 2017 1928 1966 2011 1989 1959 2006 2004 2000 1984 2015 2016
+## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 2016 1948
+## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 1957
 ```
 
 ---
@@ -1152,10 +1133,10 @@ imdb_data %&gt;%
 ## [151] 1925 1974 1954 2005 1957 2015 2007 2011 2010 1996 1980 1999 1982 2015 1939
 ## [166] 1993 1982 1957 1957 2003 1949 1954 1979 1996 2003 1998 2008 1953 1978 2003
 ## [181] 2014 1996 2018 2019 1998 2009 1993 2014 2016 2014 2019 1966 1939 2010 1995
-## [196] 1926 2002 1924 2013 2013 1967 2015 1986 1976 1953 1975 2007 2004 1979 1986
-## [211] 2009 1959 2013 1966 2017 1928 2011 1989 1959 2006 2004 2000 1984 2015 2016
-## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 1948 2016
-## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 2000
+## [196] 2002 1926 1924 2013 2013 1967 2015 1976 1986 1953 1975 2007 2004 1979 1986
+## [211] 2009 1959 2013 2017 1928 1966 2011 1989 1959 2006 2004 2000 1984 2015 2016
+## [226] 1940 1976 2019 2001 1995 1934 2000 2012 2004 1987 2011 1951 1984 2016 1948
+## [241] 2015 1984 2001 1969 1988 1992 2014 2014 1982 1957
 ```
 
 ---
@@ -1179,26 +1160,26 @@ years &lt;- imdb_data %&gt;%
 imdb_data %&gt;%
   html_nodes(".imdbRating strong")
 ## {xml_nodeset (250)}
-##  [1] &lt;strong title="9.2 based on 2,223,323 user ratings"&gt;9.2&lt;/strong&gt;
-##  [2] &lt;strong title="9.1 based on 1,532,092 user ratings"&gt;9.1&lt;/strong&gt;
-##  [3] &lt;strong title="9.0 based on 1,072,495 user ratings"&gt;9.0&lt;/strong&gt;
-##  [4] &lt;strong title="9.0 based on 2,197,863 user ratings"&gt;9.0&lt;/strong&gt;
-##  [5] &lt;strong title="8.9 based on 649,758 user ratings"&gt;8.9&lt;/strong&gt;
-##  [6] &lt;strong title="8.9 based on 1,157,936 user ratings"&gt;8.9&lt;/strong&gt;
-##  [7] &lt;strong title="8.9 based on 1,575,420 user ratings"&gt;8.9&lt;/strong&gt;
-##  [8] &lt;strong title="8.8 based on 1,744,145 user ratings"&gt;8.8&lt;/strong&gt;
-##  [9] &lt;strong title="8.8 based on 657,806 user ratings"&gt;8.8&lt;/strong&gt;
-## [10] &lt;strong title="8.8 based on 1,588,149 user ratings"&gt;8.8&lt;/strong&gt;
-## [11] &lt;strong title="8.8 based on 1,772,071 user ratings"&gt;8.8&lt;/strong&gt;
-## [12] &lt;strong title="8.8 based on 1,715,141 user ratings"&gt;8.8&lt;/strong&gt;
-## [13] &lt;strong title="8.7 based on 1,949,620 user ratings"&gt;8.7&lt;/strong&gt;
-## [14] &lt;strong title="8.7 based on 1,111,641 user ratings"&gt;8.7&lt;/strong&gt;
-## [15] &lt;strong title="8.7 based on 1,422,877 user ratings"&gt;8.7&lt;/strong&gt;
-## [16] &lt;strong title="8.6 based on 1,597,597 user ratings"&gt;8.6&lt;/strong&gt;
-## [17] &lt;strong title="8.6 based on 967,647 user ratings"&gt;8.6&lt;/strong&gt;
-## [18] &lt;strong title="8.6 based on 874,279 user ratings"&gt;8.6&lt;/strong&gt;
-## [19] &lt;strong title="8.6 based on 300,634 user ratings"&gt;8.6&lt;/strong&gt;
-## [20] &lt;strong title="8.6 based on 1,369,102 user ratings"&gt;8.6&lt;/strong&gt;
+##  [1] &lt;strong title="9.2 based on 2,223,821 user ratings"&gt;9.2&lt;/strong&gt;
+##  [2] &lt;strong title="9.1 based on 1,532,457 user ratings"&gt;9.1&lt;/strong&gt;
+##  [3] &lt;strong title="9.0 based on 1,072,718 user ratings"&gt;9.0&lt;/strong&gt;
+##  [4] &lt;strong title="9.0 based on 2,198,206 user ratings"&gt;9.0&lt;/strong&gt;
+##  [5] &lt;strong title="8.9 based on 649,936 user ratings"&gt;8.9&lt;/strong&gt;
+##  [6] &lt;strong title="8.9 based on 1,158,141 user ratings"&gt;8.9&lt;/strong&gt;
+##  [7] &lt;strong title="8.9 based on 1,575,650 user ratings"&gt;8.9&lt;/strong&gt;
+##  [8] &lt;strong title="8.8 based on 1,744,462 user ratings"&gt;8.8&lt;/strong&gt;
+##  [9] &lt;strong title="8.8 based on 657,898 user ratings"&gt;8.8&lt;/strong&gt;
+## [10] &lt;strong title="8.8 based on 1,588,379 user ratings"&gt;8.8&lt;/strong&gt;
+## [11] &lt;strong title="8.8 based on 1,772,374 user ratings"&gt;8.8&lt;/strong&gt;
+## [12] &lt;strong title="8.8 based on 1,715,479 user ratings"&gt;8.8&lt;/strong&gt;
+## [13] &lt;strong title="8.7 based on 1,950,012 user ratings"&gt;8.7&lt;/strong&gt;
+## [14] &lt;strong title="8.7 based on 1,111,785 user ratings"&gt;8.7&lt;/strong&gt;
+## [15] &lt;strong title="8.7 based on 1,423,084 user ratings"&gt;8.7&lt;/strong&gt;
+## [16] &lt;strong title="8.6 based on 1,597,852 user ratings"&gt;8.6&lt;/strong&gt;
+## [17] &lt;strong title="8.6 based on 967,824 user ratings"&gt;8.6&lt;/strong&gt;
+## [18] &lt;strong title="8.6 based on 874,402 user ratings"&gt;8.6&lt;/strong&gt;
+## [19] &lt;strong title="8.6 based on 300,677 user ratings"&gt;8.6&lt;/strong&gt;
+## [20] &lt;strong title="8.6 based on 1,369,370 user ratings"&gt;8.6&lt;/strong&gt;
 ## ...
 ```
 ---
@@ -1226,7 +1207,7 @@ imdb_data %&gt;%
 ## [169] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1"
 ## [181] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1"
 ## [193] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1"
-## [205] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.0" "8.0"
+## [205] "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.1" "8.0" "8.0" "8.0"
 ## [217] "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0"
 ## [229] "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0"
 ## [241] "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0" "8.0"
@@ -1251,7 +1232,7 @@ imdb_data %&gt;%
 ## [145] 8.2 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1
 ## [163] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1
 ## [181] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1
-## [199] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.0 8.0
+## [199] 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.1 8.0 8.0 8.0
 ## [217] 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0
 ## [235] 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0 8.0
 ```
@@ -1539,10 +1520,10 @@ imdb_top_250 %&gt;%
 ##    year total
 ##   &lt;dbl&gt; &lt;int&gt;
 ## 1  1995     8
-## 2  2000     7
+## 2  1957     7
 ## 3  2014     7
 ## 4  2019     7
-## 5  1957     6
+## 5  2000     6
 ```
 
 ---

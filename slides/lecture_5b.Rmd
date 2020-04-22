@@ -226,7 +226,6 @@ foo_foo %>%
 - read more at: https://r4ds.had.co.nz/pipes.html 
 
 ---
----
 class: transition
 
 # Assignment `<-`
@@ -287,7 +286,7 @@ my_data %>%
 
 ---
 class: transition
-# Take 3 minutes to discuss these two concepts with your breakout room
+# Take 3 minutes to think about these two concepts
 
 - What are pipes `%>%`
 - What is assignment? `<-`
@@ -333,14 +332,14 @@ Oh, same sound is on both channels! A tad drab.
 ---
 # Compute statistics
 
-```{r wavs}
+```{r wavs, echo = FALSE}
 df_wavs <- df_wavs %>% 
   pivot_longer(cols = c(left,right),
                names_to = "channel") 
 df_wavs
 ```
 
-```{r print-summary}
+```{r print-summary, echo = FALSE}
 df_wavs %>%
   filter(channel == "left") %>%
   group_by(word) %>%
@@ -613,7 +612,7 @@ bow("http://www.imdb.com")
 --
 
 ```{r show-paths-allowed, warning=FALSE}
-bow("http://www.facebook.com")
+bow("http://www.google.com")
 ```
 
 ---
