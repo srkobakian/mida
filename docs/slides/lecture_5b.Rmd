@@ -633,7 +633,7 @@ bow("http://www.google.com")
 ```r
 # install.packages("usethis")
 library(usethis)
-use_course("https://ida.numbat.space/exercises/5b/ida-exercise-5b.zip")
+use_course("https://mida.numbat.space/exercises/5b/mida-exercise-5b.zip")
 ```
 
 ---
