@@ -546,7 +546,7 @@ map_dbl(mtcars, .f = ~(max(.) - min(.)))
 ```
 
 ---
-# Your Turn: rstudio.cloud
+# Your Turn!
 
 Take the lab quiz!
 
