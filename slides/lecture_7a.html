@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>ETC1010: Introduction to Data Analysis</title>
+    <title>ETC5510: Introduction to Data Analysis</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Nicholas Tierney" />
-    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <meta name="author" content="Nicholas Tierney &amp; Stuart Lee" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
     <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
     <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
+    <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown-0.3.5/countdown.js"></script>
     <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
     -->
-    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>    
+    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>
     <link rel="stylesheet" href="assets/animate.css" type="text/css" />
     <link rel="stylesheet" href="assets/monash-logo.css" type="text/css" />
     <link rel="stylesheet" href="assets/monash-brand.css" type="text/css" />
@@ -26,12 +27,11 @@
   
 
 
-background-color: #006DAE
-class: middle center hide-slide-number
-
+&lt;!-- background-color: #006DAE --&gt;
+&lt;!-- class: middle center hide-slide-number --&gt;
 
 &lt;div class="shade_black"  style="width:60%;right:0;bottom:0;padding:10px;border: dashed 4px white;margin: auto;"&gt;
-&lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See &lt;a href=/&gt;here for PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;. 
+&lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See &lt;a href=/&gt;here for PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;.
 &lt;/div&gt;
 
 &lt;br&gt;
@@ -39,7 +39,6 @@ class: middle center hide-slide-number
 .white[Press the **right arrow** to progress to the next slide!]
 
 ---
-
 
 background-image: url(images/bg1.jpg)
 background-size: cover
@@ -50,7 +49,7 @@ count: false
 
 &lt;br&gt;
 
-# .monash-blue.outline-text[ETC1010: Introduction to Data Analysis]
+# .monash-blue.outline-text[ETC5510: Introduction to Data Analysis]
 
 &lt;h2 class="monash-blue2 outline-text" style="font-size: 30pt!important;"&gt;Week 7, part A&lt;/h2&gt;
 
@@ -60,13 +59,13 @@ count: false
 
 .bottom_abs.width100[
 
-Lecturer: *Nicholas Tierney*
+Lecturer: *Nicholas Tierney &amp; Stuart Lee*
 
 Department of Econometrics and Business Statistics
 
 <span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  nicholas.tierney@monash.edu
 
-April 2020
+May 2020
 
 &lt;br&gt;
 ]
@@ -91,6 +90,32 @@ April 2020
 
 
 
+
+---
+
+--- 
+# Midsemester test
+
+- Thanks for completing on time!
+- Note that final grade reported by Moodle is not your final grade!
+- Will put together the final grades over the next week!
+
+---
+# Assignment 2 notes
+
+- Will be posted on the website on Monday.
+- Some questions might seem a bit strange - this is normal! 
+- Sometimes you can't answer the exact question with the data you have.
+- Steer away from the idea of "correct code" and reframe this as "code that works". There is no one single answer - remember the Tower of Babel example from the start of class, there are many ways to do the same thing in R.
+
+---
+# Assignment 2 notes
+
+ 
+- Our marking advice: Describe how you think the solution you have provided helps answer the question.
+  - Show us a plot
+  - Explain what you see in the plot - what do you think we can learn from the information we have?
+  - Describe what other information you might like to have
 
 
 ---
@@ -120,9 +145,9 @@ class: transition
 # Packages
 
 .left-code[
-![](images/tidyverse.png)
+&lt;img src="images/tidyverse.png", width="50%"&gt;
 
-![](images/broom.png)
+&lt;img src="images/broom.png", width ="50%"&gt;
 ]
 
 .right-plot[
@@ -134,14 +159,16 @@ class: transition
 
 ---
 class: transition
-Data: Paris Paintings
+
+# Data: Paris Paintings
 
 ---
 # Paris Paintings
 
 
 ```r
-pp &lt;- read_csv(here::here("slides/data/paris-paintings.csv"), na = c("n/a", "", "NA"))
+pp &lt;- read_csv(here::here("slides/data/paris-paintings.csv"), 
+               na = c("n/a", "", "NA"))
 pp
 ## # A tibble: 3,393 x 61
 ##    name  sale  lot   position dealer  year origin_author origin_cat school_pntg
@@ -191,6 +218,7 @@ PhD students in the Duke Art, Law, and Markets Initiative in 2013
 
 - Source: Printed catalogues of 28 auction sales in Paris, 1764- 1780
 - 3,393 paintings, their prices, and descriptive details from sales catalogues over 60 variables
+]
 
 ---
 # Auctions today
@@ -199,14 +227,14 @@ PhD students in the Duke Art, Law, and Markets Initiative in 2013
 ---
 # Auctions back in the day
 
-&lt;img src="images/old-auction.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/old-auction.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 Pierre-Antoine de Machy, Public Sale at the Hôtel Bullion, Musée Carnavalet, Paris (18th century)
 
 ---
 # Paris auction market
 
-&lt;img src="images/auction-trend-paris.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/auction-trend-paris.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: transition
@@ -222,7 +250,7 @@ ggplot(data = pp, aes(x = price)) +
   geom_histogram(binwidth = 1000)
 ```
 
-&lt;img src="lecture_7a_files/figure-html/gg-price-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-price-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Models as functions
@@ -255,7 +283,7 @@ anon(5)
 
 Describe the relationship between height and width of paintings.
 
-&lt;img src="lecture_7a_files/figure-html/gg-price-point-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-price-point-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Visualizing the linear model
@@ -267,10 +295,12 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
   geom_smooth(method = "lm") # lm for linear model
 ```
 
-&lt;img src="lecture_7a_files/figure-html/gg-point-smooth-lm-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-point-smooth-lm-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
-# Visualizing the linear model (without the measure of uncertainty around the line)
+# Visualizing the linear model 
+
+(without the measure of uncertainty around the line)
 
 
 ```r
@@ -279,7 +309,7 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
   geom_smooth(method = "lm", se = FALSE) # lm for linear model
 ```
 
-&lt;img src="lecture_7a_files/figure-html/gg-point-lm-no-se-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-point-lm-no-se-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Visualizing the linear model (style the line)
@@ -294,7 +324,7 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
               lwd = 3)      # line weight
 ```
 
-&lt;img src="lecture_7a_files/figure-html/gg-smooth-change-line-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-smooth-change-line-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Vocabulary
@@ -327,11 +357,11 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
 - Which paintings on the plot have have negative 
 residuals, those below or above the line?
 
-&lt;img src="lecture_7a_files/figure-html/gg-price-height-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-price-height-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
-&lt;img src="lecture_7a_files/figure-html/gg-alpha-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-alpha-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -345,18 +375,18 @@ The plot below displays the relationship between height and width of paintings. 
 ---
 # Landscape vs portait paintings
 
-.pull-left
+.pull-left[
 - Landscape painting is the depiction in art of landscapes – natural scenery such as mountains, valleys, trees, rivers, and forests, especially where the main subject is a wide view – with its elements arranged into a coherent composition.&lt;sup&gt;1&lt;/sup&gt;
 
 - Landscape paintings tend to be wider than longer.
 ]
 
-.pull-right
+.pull-right[
 
 - Portrait painting is a genre in painting, where the intent is to depict a human subject.&lt;sup&gt;2&lt;/sup&gt;
 
 - Portrait paintings tend to be longer than wider.
-
+]
 .footnote[
 [1] Source: Wikipedia, [Landscape painting](https://en.wikipedia.org/wiki/Landscape_painting)
 
@@ -379,7 +409,7 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in,
   labs(color = "landscape")
 ```
 
-&lt;img src="lecture_7a_files/figure-html/gg-landscape-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/gg-landscape-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Models - upsides and downsides
@@ -413,9 +443,22 @@ the size of the scatter around the model. (We'll talk more about this later.)
 2. Prediction: Plug in `\(x\)`, get the predicted `\(y\)`
 
 ---
-# Your Turn: go to rstudio.cloud and start exercise 7a
+class: transition
+# Your Turn: go to Rstudio and begin the excercise 7a
+
+
+```r
+library(countdown)
+countdown(minutes = 6)
+```
+
+<div class="countdown" id="timer_5eae1af5" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
 
 ---
+class: transition
 # Characterizing relationships with models
 
 ---
@@ -475,17 +518,17 @@ then, the regression line minimizes `\(\sum_{i = 1}^n e_i^2\)`.
 ---
 # Visualizing residuals
 
-&lt;img src="lecture_7a_files/figure-html/vis-resid-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/vis-resid-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Visualizing residuals (cont.)
 
-&lt;img src="lecture_7a_files/figure-html/vis-resid-line-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/vis-resid-line-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Visualizing residuals (cont.)
 
-&lt;img src="lecture_7a_files/figure-html/vis-redis-segment-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/vis-redis-segment-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Properties of the least squares regression line
@@ -499,11 +542,13 @@ then, the regression line minimizes `\(\sum_{i = 1}^n e_i^2\)`.
 
 ---
 
-# Properties of the least squares regression line
+# Assumptions of least squares regression line
 
 
 - The sum of the residuals is zero: 
 `$$\sum_{i = 1}^n e_i = 0$$`
+
+- The residuals have constant variance (homoskedastic errors)
 
 - The residuals and `\(x\)` values are uncorrelated.
 
@@ -647,7 +692,7 @@ learn about measuring the variability around the prediction later.)
 On average, how tall are paintings that are 400 inches wide?
 `$$\widehat{Height_{in}} = 3.62 + 0.78~Width_{in}$$`
 
-&lt;img src="lecture_7a_files/figure-html/extrapolate-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lecture_7a_files/figure-html/extrapolate-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 # Watch out for extrapolation!
@@ -661,6 +706,7 @@ Stephen Colbert, April 6th, 2010
 ]
 
 (OpenIntro Statistics. "Extrapolation is treacherous." OpenIntro Statistics.)
+
 
 ---
 class: transition
@@ -707,7 +753,8 @@ glance(m_ht_lands)$r.squared
 ```
 
 ---
-# Your Turn: go to rstudio.cloud
+class: transition
+# Your Turn: Go to Rstudio and complete the lab exercise
 
 ---
 # References
@@ -716,6 +763,8 @@ glance(m_ht_lands)$r.squared
 
 ---
   
+
+
 
 background-image: url(images/bg1.jpg)
 background-size: cover
@@ -730,12 +779,12 @@ count: false
 
 .bottom_abs.width100[
 
-Lecturer: Nicholas Tierney
+Lecturer: Nicholas Tierney &amp; Stuart Lee
 
 Department of Econometrics and Business Statistics&lt;br&gt;
 <span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  nicholas.tierney@monash.edu
 
-April 2020
+May 2020
 
 
 ]
@@ -817,6 +866,42 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -834,17 +919,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

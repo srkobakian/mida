@@ -1,10 +1,10 @@
 ---
-title: "ETC1010: Introduction to Data Analysis"
+title: "ETC5510: Introduction to Data Analysis"
 week: "Week 7, part A"
 subtitle: "Linear Models"
-author: "Nicholas Tierney"
+author: "Nicholas Tierney & Stuart Lee"
 email: "nicholas.tierney@monash.edu"
-date: "April 2020"
+date: "May 2020"
 pdflink: ""
 bgimg: "images/bg1.jpg"
 output:
@@ -17,7 +17,7 @@ output:
       - "assets/monash-fonts.css"
       - "assets/styles.css" # small improvements
       - "assets/custom.css" # add your own CSS here!
-      - "assets/demo.css" # this should be removed
+      - "assets/demo.css"
     self_contained: false 
     seal: false 
     chakra: 'libs/remark-latest.min.js'
@@ -56,6 +56,7 @@ opts_chunk$set(echo = TRUE,
                fig.width = 8,
                out.width = "100%",
                fig.align = "center",
+               dpi = 300,
                cache = FALSE)
 
 as_table <- function(...) knitr::kable(..., format='html', digits = 3)
@@ -70,24 +71,31 @@ color_palette <- list(gray = "#999999",
                       red = "#D55E00", 
                       purple = "#CC79A7")
 ```
+---
+
+--- 
+# Midsemester test
+
+- Thanks for completing on time!
+- Note that final grade reported by Moodle is not your final grade!
+- Will put together the final grades over the next week!
 
 ---
 # Assignment 2 notes
 
+- Will be posted on the website on Monday.
 - Some questions might seem a bit strange - this is normal! 
 - Sometimes you can't answer the exact question with the data you have.
-- It might be frustrating - that's OK!
 - Steer away from the idea of "correct code" and reframe this as "code that works". There is no one single answer - remember the Tower of Babel example from the start of class, there are many ways to do the same thing in R.
 
 ---
 # Assignment 2 notes
 
-- For the last two question about combining the crime data with income data, **Rest assured** there is no "trick" - the data isn't perfect here. 
+ 
 - Our marking advice: Describe how you think the solution you have provided helps answer the question.
   - Show us a plot
   - Explain what you see in the plot - what do you think we can learn from the information we have?
   - Describe what other information you might like to have
-
 
 
 ---
@@ -117,9 +125,9 @@ class: transition
 # Packages
 
 .left-code[
-![](images/tidyverse.png)
+<img src="images/tidyverse.png", width="50%">
 
-![](images/broom.png)
+<img src="images/broom.png", width ="50%">
 ]
 
 .right-plot[
@@ -171,7 +179,7 @@ PhD students in the Duke Art, Law, and Markets Initiative in 2013
 ---
 # Auctions back in the day
 
-```{r auctions-include, echo = FALSE}
+```{r auctions-include, echo = FALSE, out.width="70%"}
 include_graphics("images/old-auction.png")
 ```
 
@@ -180,7 +188,7 @@ Pierre-Antoine de Machy, Public Sale at the Hôtel Bullion, Musée Carnavalet, P
 ---
 # Paris auction market
 
-```{r paris-auction-market, echo = FALSE}
+```{r paris-auction-market, echo = FALSE, out.width="70%"}
 include_graphics("images/auction-trend-paris.png")
 ```
 
@@ -241,7 +249,9 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
 ```
 
 ---
-# Visualizing the linear model (without the measure of uncertainty around the line)
+# Visualizing the linear model 
+
+(without the measure of uncertainty around the line)
 
 ```{r gg-point-lm-no-se, warning = FALSE, fig.height = 2.25, fig.width=5}
 ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
@@ -317,18 +327,18 @@ The plot below displays the relationship between height and width of paintings. 
 ---
 # Landscape vs portait paintings
 
-.pull-left
+.pull-left[
 - Landscape painting is the depiction in art of landscapes – natural scenery such as mountains, valleys, trees, rivers, and forests, especially where the main subject is a wide view – with its elements arranged into a coherent composition.<sup>1</sup>
 
 - Landscape paintings tend to be wider than longer.
 ]
 
-.pull-right
+.pull-right[
 
 - Portrait painting is a genre in painting, where the intent is to depict a human subject.<sup>2</sup>
 
 - Portrait paintings tend to be longer than wider.
-
+]
 .footnote[
 [1] Source: Wikipedia, [Landscape painting](https://en.wikipedia.org/wiki/Landscape_painting)
 
@@ -383,7 +393,7 @@ the size of the scatter around the model. (We'll talk more about this later.)
 
 ---
 class: transition
-# Your Turn: go to rstudio.cloud and start exercise 7a
+# Your Turn: go to Rstudio and begin the excercise 7a
 
 ```{r cd-6}
 library(countdown)
@@ -492,11 +502,13 @@ $$\beta_1 = r \frac{s_y}{s_x}$$
 
 ---
 
-# Properties of the least squares regression line
+# Assumptions of least squares regression line
 
 
 - The sum of the residuals is zero: 
 $$\sum_{i = 1}^n e_i = 0$$
+
+- The residuals have constant variance (homoskedastic errors)
 
 - The residuals and $x$ values are uncorrelated.
 
@@ -638,12 +650,6 @@ Stephen Colbert, April 6th, 2010
 
 (OpenIntro Statistics. "Extrapolation is treacherous." OpenIntro Statistics.)
 
----
-# Aside: How to make equations
-
-Make sure we explicitly flag this as extension material (maybe a special “orange/red” slide class to flag this.
-
-
 
 ---
 class: transition
@@ -682,7 +688,7 @@ glance(m_ht_lands)$r.squared
 
 ---
 class: transition
-# Your Turn: go to rstudio.cloud
+# Your Turn: Go to Rstudio and complete the lab exercise
 
 ---
 # References
