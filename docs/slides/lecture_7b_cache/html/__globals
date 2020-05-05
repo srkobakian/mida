@@ -1,0 +1,59 @@
+pkg-load	library
+create-cor	.	%>%	~	$	as_tibble	bind_rows	c	library	map	map_dbl	matrix	mutate	rep	return	rmvnorm	seq	split	tibble
+fun-gg-xy-cor	==	~	aes	facet_wrap	filter	geom_point	ggplot	if	is.null	labs	length	r	theme	V1	V2
+plot-strong-pos-corr	df_cor	gg_xy_cor
+plot-pos-corr	df_cor	gg_xy_cor
+plot-meh-corr	df_cor	gg_xy_cor
+plot-neg-corr	df_cor	gg_xy_cor
+plot-strong-neg-corr	df_cor	gg_xy_cor
+gganim-cor	aes	animate	df_cor	ease_aes	geom_point	ggplot	ggtitle	labs	library	r	scale_colour_scico	theme	theme_dark	transition_states	V1	V2
+read-paris	c	read_csv
+gg-paris	aes	geom_point	geom_smooth	ggplot	Height_in	pp	Width_in
+fit-paris	~	lm	pp
+tidy-paris	m_ht_wt	tidy
+vis-resid	$	aes	c	geom_point	ggplot	Height_in	labs	lims	m_ht_wt	theme_bw	tibble	Width_in
+vis-resid-line	$	aes	color_palette	geom_point	geom_smooth	labs	pred
+vis-redis-segment	$	aes	color_palette	geom_segment	labs	p	pred	Width_in
+glance-paris	glance	m_ht_wt
+aug-ht-wt	augment	m_ht_wt
+show-elephant	include_graphics
+show-gapminder	gapminder	glimpse	library
+gg-gapminder-line	%>%	aes	country	gapminder	geom_line	ggplot	lifeExp	year
+gapminder-oz	%>%	==	country	filter	gapminder
+plot-gapminder-oz	aes	geom_line	ggplot	lifeExp	oz	year
+lm-oz-gapminder	~	lm	oz
+tidy-oz-gapminder	oz_lm	tidy
+center-eyar	%>%	==	country	filter	gapminder	mutate	year
+oz-gapminder-centered-year	~	lm	oz
+tidy-oz-gapminder-centered-year	oz_lm	tidy
+oz-gapminder-augment	augment	oz	oz_lm
+oz-gap-aug	.fitted	aes	geom_line	geom_point	ggplot	lifeExp	oz_aug	year
+oz-gap-year-resid	.std.resid	aes	geom_hline	geom_line	ggplot	oz_aug	year
+lm-nz	%>%	==	~	country	filter	gap	lm
+lm-japan	%>%	==	~	country	filter	gap	lm
+lm-italy	%>%	==	~	country	filter	gap	lm
+nest	%>%	continent	country	gap	group_by	lifeExp	nest	select	year1950
+show-nest	[[	$	by_country
+fit-many-model	[[	~	$	by_country	lm
+mapped-lm	~	$	by_country	lm	map
+map-country	%>%	~	by_country	data	lm	map	mutate
+map-country-short	%>%	~	by_country	data	map	mutate
+print-model	[[	$	country_model
+tidy-printed-model	[[	$	country_model	tidy
+tidy-many-printed-model	[[	$	country_model	tidy
+unnamed-chunk-1	%>%	country_model	map	model	mutate	tidy
+map-tidy-model	%>%	continent	country	country_model	estimate	map	model	mutate	select	term	tidy	unnest
+tidy-unnested-coefs	(Intercept)	%>%	c	continent	country	country_coefs	estimate	pivot_wider	rename	term
+oz-unnested-coef	%>%	==	country	filter	tidy_country_coefs
+augmente-many-countries	%>%	augment	augmented	country_model	map	model	mutate	unnest
+plot-gapminder-data	.fitted	%>%	aes	country	country_aug	gapminder	geom_line	ggplot	labs	lifeExp	year	year1950
+plot-print-gapminder	grid.arrange	p1	p2
+ggplotly-aug-coef	aes	continent	country	geom_point	ggplot	intercept	scale_color_brewer	tidy_country_coefs	year1950
+model-coef-again	p
+ggplotly-aug-data	ggplotly	library	p
+glance-country	%>%	country_model	glance	map	model	mutate	unnest
+country-fit	aes	country_glance	geom_histogram	ggplot	r.squared
+show-bad-fit	%>%	<=	~	$	aes	c	country	country_glance	facet_wrap	filter	gap	geom_point	geom_smooth	ggplot	lifeExp	r.squared	scale_x_continuous	seq	year
+gg-show-bad-fit	gg_bad_fit
+variance	answer	question	quiz
+plot-rsquared	%>%	~	$	$<-	aes	as.character	b1	df	facet_wrap	fct_relevel	geom_point	geom_smooth	geom_text	ggplot	mutate	names	paste0	r	round	rs	sample_r	theme	tibble	V1	V2	xlab	ylab

@@ -1,0 +1,59 @@
+pkg-load	
+create-cor	b1	df	df_cor	sample_r	smp	vfun
+fun-gg-xy-cor	gg_xy_cor
+plot-strong-pos-corr	
+plot-pos-corr	
+plot-meh-corr	
+plot-neg-corr	
+plot-strong-neg-corr	
+gganim-cor	anim	p_cor
+read-paris	pp
+gg-paris	
+fit-paris	m_ht_wt
+tidy-paris	
+vis-resid	d	p
+vis-resid-line	p
+vis-redis-segment	
+glance-paris	
+aug-ht-wt	
+show-elephant	
+show-gapminder	
+gg-gapminder-line	
+gapminder-oz	oz
+plot-gapminder-oz	
+lm-oz-gapminder	oz_lm
+tidy-oz-gapminder	
+center-eyar	gap	oz
+oz-gapminder-centered-year	oz_lm
+tidy-oz-gapminder-centered-year	
+oz-gapminder-augment	oz_aug
+oz-gap-aug	
+oz-gap-year-resid	
+lm-nz	nz	nz_lm
+lm-japan	japan	japan_lm
+lm-italy	italy	italy_lm
+nest	by_country
+show-nest	
+fit-many-model	lm_afganistan	lm_albania	lm_algeria
+mapped-lm	mapped_lm
+map-country	country_model
+map-country-short	country_model
+print-model	
+tidy-printed-model	
+tidy-many-printed-model	
+unnamed-chunk-1	
+map-tidy-model	country_coefs
+tidy-unnested-coefs	tidy_country_coefs
+oz-unnested-coef	
+augmente-many-countries	country_aug
+plot-gapminder-data	p1	p2
+plot-print-gapminder	
+ggplotly-aug-coef	p
+model-coef-again	
+ggplotly-aug-data	.lecture_7b_cache/html/ggplotly-aug-data_189142e88fb02976aca1df8e7c467952_meta
+glance-country	country_glance
+country-fit	
+show-bad-fit	badfit	gap_bad	gg_bad_fit
+gg-show-bad-fit	
+variance	
+plot-rsquared	
