@@ -12,7 +12,7 @@ library(kableExtra)
 ```
 
 The project is designed to give you experience collecting or finding your own dataset, determining the
-appropriate questions to answer about the data, and planning how to execute analysis of the data.  The project involves several parts. The project represents 20\% of your final grade for ETC5510.
+appropriate questions to answer about the data, and planning how to execute analysis of the data.  The project involves several parts. The project represents 30\% of your final grade for ETC5510.
 
 1. Locate a suitable data source and determine appropriate questions that could be answered using this data. It cannot be data set from kaggle. It needs to be from an original source. If it is is csv format, there need to be more than one file or multiple sheets. Challenge yourself to work with data addressing a problem in today's world!
 
