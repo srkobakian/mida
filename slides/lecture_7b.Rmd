@@ -20,7 +20,7 @@ output:
       - "assets/demo.css" # this should be removed
     self_contained: false 
     seal: false 
-    #chakra: 'libs/remark-latest.min.js'
+    chakra: 'libs/remark-latest.min.js'
     lib_dir: libs
     includes:
       in_header: "assets/custom.html"

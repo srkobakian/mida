@@ -61,7 +61,7 @@ count: false
 
 &lt;br&gt;
 
-&lt;h2 style="font-weight:900!important;"&gt;Week of introduction&lt;/h2&gt;
+&lt;h2 style="font-weight:900!important;"&gt;&lt;/h2&gt;
 
 .bottom_abs.width100[
 
@@ -408,7 +408,7 @@ class: transition
 ---
 # Gapminder
 
-- Hans Rosling was a Swedish doctor, academic and statistician, Professor of International Health at Karolinska Institute. Sadley he passed away in 2017. 
+- Hans Rosling was a Swedish doctor, academic and statistician, Professor of International Health at Karolinska Institute. Sadly he passed away in 2017. 
 - He developed a keen interest in health and wealth across the globe, and the relationship with other factors like agriculture, education, energy. 
 - You can play with the gapminder data using animations at https://www.gapminder.org/tools/. 
 
@@ -552,7 +552,7 @@ oz &lt;- gap %&gt;%  filter(country == "Australia")
 
 
 ---
-# Model for centered year
+# Model for centred year
 
 
 ```r
@@ -2648,7 +2648,7 @@ ggplot(country_glance,
 ---
 # Countries with worst fit
 
-Examine the countries with the worst fit, countries with `\(R^2&lt;0.45\)`, by making scatterplots of the data, with the linear model overlaid. 
+Examine the countries with the worst fit, countries with `\(R^2&lt;0.45\)`, by making scatter plots of the data, with the linear model overlaid. 
 
 
 ```r
@@ -2683,7 +2683,7 @@ class: transition
 # Your Turn:
 
 .large[
-- Use google to explain these dips using world history and current affairs information. 
+- Use Google to explain these dips using world history and current affairs information. 
 - finish the lab exercise (with new data)
 - remember the project deadline: **Find team members, and potential topics to study (List of groups will be posted here)**
 ]
@@ -2772,30 +2772,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
