@@ -1,7 +1,7 @@
 ---
 title: "ETC5510: Introduction to Data Analysis"
 week: "Week 7, part B"
-subtitle: "Week of introduction"
+subtitle: ""
 author: "Nicholas Tierney & Stuart Lee"
 email: "ETC5510.Clayton-x@monash.edu"
 date: "May 2020"
@@ -20,7 +20,7 @@ output:
       - "assets/demo.css" # this should be removed
     self_contained: false 
     seal: false 
-    chakra: 'libs/remark-latest.min.js'
+    #chakra: 'libs/remark-latest.min.js'
     lib_dir: libs
     includes:
       in_header: "assets/custom.html"
@@ -432,7 +432,7 @@ class: transition
 ---
 # Gapminder
 
-- Hans Rosling was a Swedish doctor, academic and statistician, Professor of International Health at Karolinska Institute. Sadley he passed away in 2017. 
+- Hans Rosling was a Swedish doctor, academic and statistician, Professor of International Health at Karolinska Institute. Sadly he passed away in 2017. 
 - He developed a keen interest in health and wealth across the globe, and the relationship with other factors like agriculture, education, energy. 
 - You can play with the gapminder data using animations at https://www.gapminder.org/tools/. 
 
@@ -526,7 +526,7 @@ oz <- gap %>%  filter(country == "Australia")
 
 
 ---
-# Model for centered year
+# Model for centred year
 
 ```{r oz-gapminder-centered-year}
 oz_lm <- lm(lifeExp ~ year1950, data = oz)
@@ -880,7 +880,7 @@ ggplot(country_glance,
 ---
 # Countries with worst fit
 
-Examine the countries with the worst fit, countries with $R^2<0.45$, by making scatterplots of the data, with the linear model overlaid. 
+Examine the countries with the worst fit, countries with $R^2<0.45$, by making scatter plots of the data, with the linear model overlaid. 
 
 ```{r show-bad-fit}
 badfit <- country_glance %>% filter(r.squared <= 0.45)
@@ -916,7 +916,7 @@ class: transition
 # Your Turn:
 
 .large[
-- Use google to explain these dips using world history and current affairs information. 
+- Use Google to explain these dips using world history and current affairs information. 
 - finish the lab exercise (with new data)
 - remember the project deadline: **Find team members, and potential topics to study (List of groups will be posted here)**
 ]
