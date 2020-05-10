@@ -1,0 +1,202 @@
+---
+title: "Tidy text analysis"
+author: "Your Name"
+date: "10/05/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidytext)
+```
+
+# Tokenising text
+
+```{r}
+text <- c("This will be an uncertain time for us my love",
+          "I can hear the echo of your voice in my head",
+          "Singing my love",
+          "I can see your face there in my hands my love",
+          "I have been blessed by your grace and care my love",
+          "Singing my love")
+
+text
+text_df <- tibble(line = seq_along(text), text = text)
+
+text_df
+```
+
+`unnest_tokens` takes a character vector and unests into a tidy data frame.
+
+What's going on these examples?
+
+```{r}
+text_df %>%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "words" # default option
+  ) 
+```
+
+```{r}
+text_df %>%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "characters"
+  )
+```
+
+```{r}
+text_df %>%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "ngrams",
+    n = 2
+  )
+```
+
+```{r}
+text_df %>%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "ngrams",
+    n = 3
+  )
+```
+
+## Your Turn
+
+Use `unnest_tokens` to help you answer the following questions from
+the two paragraphs of text below:
+
+```{r}
+dickens <- "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way - in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only."
+
+burns <- c("This is a thousand monkeys working at a thousand typewriters. Soon, they'll have finished the greatest novel known to man. 
+'All right, let's see... It was the best of times, it was the BLURST of times?' You stupid monkey.")
+
+quotes_df <- tibble(from = c("Dickens", "Simpsons"),
+                    text = c(dickens, burns))
+```
+
+How many words are in each quote?
+
+How man times does the trigram `it was the` occur?
+
+
+# Stop Words
+
+
+- In computing, stop words are words which are filtered out before or after processing of natural language data (text).
+- They usually refer to the most common words in a language, but there is not a single list of stop words used by all natural language processing tools.
+
+Let's look at the list of stop words from the tidytext package
+
+```{r}
+stopwords_english <- get_stopwords()
+stopwords_english
+```
+
+And an alternative dictionary of stop words
+
+```{r}
+stopwords_smart <- get_stopwords(source = "smart")
+stopwords_smart
+```
+
+In the sentence "This will be an uncertain time for us my love", how many 
+stop words are there.
+
+```{r}
+uncertain <- text_df %>% 
+  filter(line == 1) %>% 
+  unnest_tokens(word, text) 
+uncertain
+```
+
+Remove the stop words with an anti join from `dplyr`
+
+```{r}
+uncertain %>% 
+  anti_join(stopwords_english)
+```
+
+Using the quotes data frame we defined earlier, answer the following questions:
+
+- How many words are in each quote after removing stop words?
+- What is the most frequent word in the quotes after removing stop words? 
+
+## Sentiment
+
+- One way to analyze the sentiment of a text is to consider the text as a combination of its individual words 
+
+- and the sentiment content of the whole text as the sum of the sentiment content of the individual words
+
+- essentially a dictionary where different words are categorised either as
+positive or negative or on a numeric scale
+
+```{r}
+afinn <- get_sentiments("afinn") # numeric
+bing <- get_sentiments("bing") # categorical
+```
+
+
+After tokenising into words, use a left/inner join to get the words sentiments.
+
+Here's what the sentiment "This will be an uncertain time for us my love"
+
+```{r}
+text_df %>% 
+  filter(line == 1) %>% 
+  unnest_tokens(word, text) %>% 
+  left_join(afinn)
+```
+
+```{r}
+text_df %>% 
+  filter(line == 1) %>% 
+  unnest_tokens(word, text) %>% 
+  left_join(bing)
+```
+
+## Your turn
+
+Using the quotes we looked at above use the "afinn" lexicon to compute the
+average sentiment of each quote. Which one is considered more positive?
+
+
+
+
+# Your turn: Analysing reviews of a video game
+
+This is a continuation of the example we looked at in the lecture:
+
+- User and critic reviews for the game [Animal Crossing](https://www.nintendo.com/games/detail/animal-crossing-new-horizons-switch/) scraped from Metacritc
+
+- This data comes from a [#TidyTuesday challenge](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md). 
+
+We can read the data into R directly using the following URLs:
+
+_(Note this requires an internet connection to work)_
+
+```{r}
+critics <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
+
+user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
+```
+
+Go through the process of using the critics data to look at the following:
+
+- what are the most used words over the collection of reviews?
+- what are the most used words, after removing stop words?
+- plot the distrubtion of word frequencies over the collection of reviews
+- what is the longest review? what is the shortest review?
+- Using the "afinn" add sentiment values to each word in a review
+  - for each publication compute the average sentiment for the review
+  - are longer reviews more positive?
+  - do the grades correlate with the review score, are there any reviews
+  with negative sentiments but high scores?
