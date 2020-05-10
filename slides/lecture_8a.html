@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ETC5510: Introduction to Data Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Nicholas Tierney &amp; Stuart Lee" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+    <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
+    <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+    -->
+    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>
+    <link rel="stylesheet" href="assets/animate.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-logo.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-brand.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="assets/styles.css" type="text/css" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets/demo.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+  
+
+
+&lt;!-- background-color: #006DAE --&gt;
+&lt;!-- class: middle center hide-slide-number --&gt;
+
+&lt;div class="shade_black"  style="width:60%;right:0;bottom:0;padding:10px;border: dashed 4px white;margin: auto;"&gt;
+&lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. See &lt;a href=/&gt;here for PDF &lt;i class="fas fa-file-pdf"&gt;&lt;/i&gt;&lt;/a&gt;.
+&lt;/div&gt;
+
+&lt;br&gt;
+
+.white[Press the **right arrow** to progress to the next slide!]
+
+---
+
+background-image: url(images/bg1.jpg)
+background-size: cover
+class: hide-slide-number split-70 title-slide
+count: false
+
+.column.shade_black[.content[
+
+&lt;br&gt;
+
+# .monash-blue.outline-text[ETC5510: Introduction to Data Analysis]
+
+&lt;h2 class="monash-blue2 outline-text" style="font-size: 30pt!important;"&gt;Week 8, part A&lt;/h2&gt;
+
+&lt;br&gt;
+
+&lt;h2 style="font-weight:900!important;"&gt;Text analysis&lt;/h2&gt;
+
+.bottom_abs.width100[
+
+Lecturer: *Nicholas Tierney &amp; Stuart Lee*
+
+Department of Econometrics and Business Statistics
+
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
+
+May 2020
+
+&lt;br&gt;
+]
+
+
+]]
+
+
+
+&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
+&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
+&lt;svg class="clip-svg absolute"&gt;
+&lt;defs&gt;
+&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
+&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
+&lt;/clipPath&gt;
+&lt;/defs&gt;	
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+---
+class: refresher
+# recap
+
+- linear models (are awesome)
+- many models
+
+---
+# Announcements
+
+- Assignment
+- Project
+- Peer review marking
+
+---
+# Tidytext analysis
+
+background-image: url(images/text_analysis.png)
+background-size: contain
+background-position: 50% 50%
+class: center, bottom, white
+
+---
+# Why text analysis?
+
+- Predict Melbourne house prices from realtor descriptions
+- Determine the extent of public discontent with train stoppages in Melbourne
+- The differences between Darwin's first edition of the Origin of the Species and the 6th edition
+- Does the sentiment of posts on Newcastle Jets public facebook page reflect their win/loss record?
+
+---
+# Typical Process
+
+1. Read in text
+2. Pre-processing: remove punctuation signs, remove numbers, stop words, stem words
+3. Tokenise: words, sentences, ngrams, chapters
+4. Summarise
+5. model
+
+---
+# Packages
+
+In addition to `tidyverse` we will be using three other packages today
+
+
+```r
+library(tidytext)
+library(gutenbergr)
+```
+
+---
+# Tidytext
+
+- Using tidy data principles can make many text mining tasks easier, more effective, and consistent with tools already in wide use.
+- Learn more at https://www.tidytextmining.com/, by Julia Silge and David Robinson.
+
+---
+# What is tidy text?
+
+
+```r
+text &lt;- c("This will be an uncertain time for us my love",
+          "I can hear the echo of your voice in my head",
+          "Singing my love",
+          "I can see your face there in my hands my love",
+          "I have been blessed by your grace and care my love",
+          "Singing my love")
+
+text
+## [1] "This will be an uncertain time for us my love"     
+## [2] "I can hear the echo of your voice in my head"      
+## [3] "Singing my love"                                   
+## [4] "I can see your face there in my hands my love"     
+## [5] "I have been blessed by your grace and care my love"
+## [6] "Singing my love"
+```
+
+---
+# What is tidy text?
+
+
+```r
+text_df &lt;- tibble(line = seq_along(text), text = text)
+
+text_df
+## # A tibble: 6 x 2
+##    line text                                              
+##   &lt;int&gt; &lt;chr&gt;                                             
+## 1     1 This will be an uncertain time for us my love     
+## 2     2 I can hear the echo of your voice in my head      
+## 3     3 Singing my love                                   
+## 4     4 I can see your face there in my hands my love     
+## 5     5 I have been blessed by your grace and care my love
+## 6     6 Singing my love
+```
+
+---
+# What is tidy text?
+
+
+```r
+text_df %&gt;%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "words" # default option
+  ) 
+## # A tibble: 49 x 2
+##     line word     
+##    &lt;int&gt; &lt;chr&gt;    
+##  1     1 this     
+##  2     1 will     
+##  3     1 be       
+##  4     1 an       
+##  5     1 uncertain
+##  6     1 time     
+##  7     1 for      
+##  8     1 us       
+##  9     1 my       
+## 10     1 love     
+## # … with 39 more rows
+```
+
+---
+# What is unnesting?
+
+
+```r
+text_df %&gt;%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "characters"
+  )
+## # A tibble: 171 x 2
+##     line word 
+##    &lt;int&gt; &lt;chr&gt;
+##  1     1 t    
+##  2     1 h    
+##  3     1 i    
+##  4     1 s    
+##  5     1 w    
+##  6     1 i    
+##  7     1 l    
+##  8     1 l    
+##  9     1 b    
+## 10     1 e    
+## # … with 161 more rows
+```
+
+---
+# What is unnesting - ngrams length 2
+
+
+```r
+text_df %&gt;%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "ngrams",
+    n = 2
+  )
+## # A tibble: 43 x 2
+##     line word          
+##    &lt;int&gt; &lt;chr&gt;         
+##  1     1 this will     
+##  2     1 will be       
+##  3     1 be an         
+##  4     1 an uncertain  
+##  5     1 uncertain time
+##  6     1 time for      
+##  7     1 for us        
+##  8     1 us my         
+##  9     1 my love       
+## 10     2 i can         
+## # … with 33 more rows
+```
+
+---
+# What is unnesting - ngrams length 3
+
+
+```r
+text_df %&gt;%
+  unnest_tokens(
+    output = word,
+    input = text,
+    token = "ngrams",
+    n = 3
+  )
+## # A tibble: 37 x 2
+##     line word              
+##    &lt;int&gt; &lt;chr&gt;             
+##  1     1 this will be      
+##  2     1 will be an        
+##  3     1 be an uncertain   
+##  4     1 an uncertain time 
+##  5     1 uncertain time for
+##  6     1 time for us       
+##  7     1 for us my         
+##  8     1 us my love        
+##  9     2 i can hear        
+## 10     2 can hear the      
+## # … with 27 more rows
+```
+
+---
+class: transition
+
+# Analyzing user reviews for Animal Crossing: New Horizons
+
+---
+# About the data
+
+- User and critic reviews for the game [Animal Crossing](https://www.nintendo.com/games/detail/animal-crossing-new-horizons-switch/) scraped from Metacritc
+
+- This data comes from a [#TidyTuesday challenge](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md). 
+
+
+
+---
+# What do the user reviews look like?
+
+
+```r
+acnh_user_reviews &lt;- read_tsv(here::here("slides/data/acnh_user_reviews.tsv"))
+glimpse(acnh_user_reviews)
+## Rows: 2,999
+## Columns: 4
+## $ grade     &lt;dbl&gt; 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ user_name &lt;chr&gt; "mds27272", "lolo2178", "Roachant", "Houndf", "ProfessorFox…
+## $ text      &lt;chr&gt; "My gf started playing before me. No option to create my ow…
+## $ date      &lt;date&gt; 2020-03-20, 2020-03-20, 2020-03-20, 2020-03-20, 2020-03-20…
+```
+
+
+---
+# Let's look at the grade distrubtion
+
+&lt;img src="lecture_8a_files/figure-html/review-grades-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Read a few of the positive reviews
+
+.left_code[
+
+```r
+set.seed(1999)
+acnh_user_reviews %&gt;% 
+  filter(grade &gt; 8) %&gt;% 
+  sample_n(3) %&gt;% 
+  pull(text)
+```
+]
+
+.pull_right[
+
+```
+## [1] "The game is absolutely fantastic and everything we have been waiting for for seven long years. The ability to truly customize your island and all of the quality of life upgrade make this game so very worth the money. It’s a slow relaxing game that any fan of past Animal Crossing games would love."                                                  
+## [2] "I've never played an Animal Crossing before and I can't stop playing it now! Amazing! there are lots of things to do! The characters are all charming, you can visit other islands, customize everything...It's a infinit game. People who are giving 0 problably never played the game. And a 0 ?? come on guys, not everybody will like it but a 0?"      
+## [3] "This review contains spoilers, click expand to view.                                                                                            Ich liebe alles an diesem Spiel. Auch das neue Craften ist so eine gute idee gewesen. Die Musik ist auch wie in allen Vorgängern schön und beruhigend. Es fühlt sich einfach an ein perfektes Spiel… Expand"
+```
+]
+
+
+---
+# And some negative reviews
+
+.left_code[
+
+```r
+set.seed(2099)
+acnh_user_reviews %&gt;% 
+  filter(grade == 0) %&gt;% 
+  sample_n(3) %&gt;% 
+  pull(text)
+```
+]
+
+.pull_right[
+
+```
+## [1] "It's just a typical mobile grind-game with time-wall. And poor interface. Worst game of the year."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+## [2] "One island per console, very family friendly. How unbelievably greedy by Nintendo."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+## [3] "Separate islands for each profile should be a given. I'm not buying another switch just to have my own island. I'm also not going to play on my kid's island because it's not my island. This limitation should be in bold print and all caps on the cover of this game so people know what they're walking into. Nintendo will do nothing to address this and as a lifelong Nintendo player it's crazySeparate islands for each profile should be a given. I'm not buying another switch just to have my own island. I'm also not going to play on my kid's island because it's not my island. This limitation should be in bold print and all caps on the cover of this game so people know what they're walking into. Nintendo will do nothing to address this and as a lifelong Nintendo player it's crazy frustrating. Never looked at Metacritic in my life, but heard this is where to go to vent.… Expand"
+```
+]
+
+---
+# Looks like the scraping is messed up a bit
+
+Long reviews are compressed from the scraping procedure...
+
+```r
+acnh_user_reviews_parsed &lt;- acnh_user_reviews %&gt;% 
+  mutate(text = str_remove(text, "Expand$"))
+```
+
+We will remove these characters from the text..
+
+---
+# Tidy up the reviews!
+
+
+```r
+user_reviews_words &lt;- acnh_user_reviews_parsed %&gt;%
+  unnest_tokens(output = word, input = text)
+
+user_reviews_words
+## # A tibble: 362,729 x 4
+##    grade user_name date       word   
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;date&gt;     &lt;chr&gt;  
+##  1     4 mds27272  2020-03-20 my     
+##  2     4 mds27272  2020-03-20 gf     
+##  3     4 mds27272  2020-03-20 started
+##  4     4 mds27272  2020-03-20 playing
+##  5     4 mds27272  2020-03-20 before 
+##  6     4 mds27272  2020-03-20 me     
+##  7     4 mds27272  2020-03-20 no     
+##  8     4 mds27272  2020-03-20 option 
+##  9     4 mds27272  2020-03-20 to     
+## 10     4 mds27272  2020-03-20 create 
+## # … with 362,719 more rows
+```
+
+---
+# Distribution of words per review?
+
+
+```r
+user_reviews_words %&gt;% 
+  count(user_name) %&gt;% 
+  ggplot(aes(x = n)) +
+  geom_histogram()
+```
+
+&lt;img src="lecture_8a_files/figure-html/word-histogram-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+# What are the most common words?
+
+
+```r
+user_reviews_words %&gt;%
+  count(word, sort = TRUE)
+## # A tibble: 13,454 x 2
+##    word      n
+##    &lt;chr&gt; &lt;int&gt;
+##  1 the   17739
+##  2 to    11857
+##  3 game   8769
+##  4 and    8740
+##  5 a      8330
+##  6 i      7211
+##  7 is     6858
+##  8 this   5777
+##  9 of     5383
+## 10 it     4711
+## # … with 13,444 more rows
+```
+
+---
+# Stop words
+
+- In computing, stop words are words which are filtered out before or after processing of natural language data (text).
+- They usually refer to the most common words in a language, but there is not a single list of stop words used by all natural language processing tools.
+
+---
+# English stop words
+
+
+```r
+get_stopwords()
+## # A tibble: 175 x 2
+##    word      lexicon 
+##    &lt;chr&gt;     &lt;chr&gt;   
+##  1 i         snowball
+##  2 me        snowball
+##  3 my        snowball
+##  4 myself    snowball
+##  5 we        snowball
+##  6 our       snowball
+##  7 ours      snowball
+##  8 ourselves snowball
+##  9 you       snowball
+## 10 your      snowball
+## # … with 165 more rows
+```
+
+---
+# Spanish stop words
+
+
+```r
+get_stopwords(language = "es")
+## # A tibble: 308 x 2
+##    word  lexicon 
+##    &lt;chr&gt; &lt;chr&gt;   
+##  1 de    snowball
+##  2 la    snowball
+##  3 que   snowball
+##  4 el    snowball
+##  5 en    snowball
+##  6 y     snowball
+##  7 a     snowball
+##  8 los   snowball
+##  9 del   snowball
+## 10 se    snowball
+## # … with 298 more rows
+```
+
+---
+# Various lexicons
+
+See `?get_stopwords` for more info.
+
+
+```r
+get_stopwords(source = "smart")
+## # A tibble: 571 x 2
+##    word        lexicon
+##    &lt;chr&gt;       &lt;chr&gt;  
+##  1 a           smart  
+##  2 a's         smart  
+##  3 able        smart  
+##  4 about       smart  
+##  5 above       smart  
+##  6 according   smart  
+##  7 accordingly smart  
+##  8 across      smart  
+##  9 actually    smart  
+## 10 after       smart  
+## # … with 561 more rows
+```
+
+---
+# What are the most common words?
+
+
+```r
+user_reviews_words %&gt;%
+  count(word, sort = TRUE)
+## # A tibble: 13,454 x 2
+##    word      n
+##    &lt;chr&gt; &lt;int&gt;
+##  1 the   17739
+##  2 to    11857
+##  3 game   8769
+##  4 and    8740
+##  5 a      8330
+##  6 i      7211
+##  7 is     6858
+##  8 this   5777
+##  9 of     5383
+## 10 it     4711
+## # … with 13,444 more rows
+```
+
+---
+# What are the most common words?
+
+
+```r
+stopwords_smart &lt;- get_stopwords(source = "smart")
+
+user_reviews_words %&gt;%
+  anti_join(stopwords_smart) 
+## # A tibble: 145,444 x 4
+##    grade user_name date       word   
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;date&gt;     &lt;chr&gt;  
+##  1     4 mds27272  2020-03-20 gf     
+##  2     4 mds27272  2020-03-20 started
+##  3     4 mds27272  2020-03-20 playing
+##  4     4 mds27272  2020-03-20 option 
+##  5     4 mds27272  2020-03-20 create 
+##  6     4 mds27272  2020-03-20 island 
+##  7     4 mds27272  2020-03-20 guys   
+##  8     4 mds27272  2020-03-20 2nd    
+##  9     4 mds27272  2020-03-20 player 
+## 10     4 mds27272  2020-03-20 start  
+## # … with 145,434 more rows
+```
+
+---
+## Aside: the anti-join
+
+- A type of filtering join, will return all rows on the left when there
+are no matches on the right
+- Only keeps columns on the left 
+
+---
+## As a picture
+
+&lt;img src="gifs/anti-join.gif" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+# What are the most common words?
+
+
+```r
+user_reviews_words %&gt;%
+  anti_join(stopwords_smart) %&gt;%
+  count(word, sort = TRUE) 
+## # A tibble: 12,938 x 2
+##    word         n
+##    &lt;chr&gt;    &lt;int&gt;
+##  1 game      8769
+##  2 island    3974
+##  3 switch    2214
+##  4 play      2176
+##  5 player    1844
+##  6 nintendo  1694
+##  7 console   1489
+##  8 crossing  1371
+##  9 animal    1369
+## 10 people    1045
+## # … with 12,928 more rows
+```
+
+---
+# What are the most common words?
+
+
+```r
+user_reviews_words %&gt;%
+  anti_join(stopwords_smart) %&gt;%
+  count(word) %&gt;%
+  arrange(-n) %&gt;%
+  top_n(20) %&gt;%
+  ggplot(aes(fct_reorder(word, n), n)) +
+  geom_col() +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Frequency of words in user reviews",
+       subtitle = "",
+       y = "",
+       x = "")
+```
+
+---
+
+&lt;img src="lecture_8a_files/figure-html/gg-common-words-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Sentiment analysis
+
+- One way to analyze the sentiment of a text is to consider the text as a combination of its individual words 
+
+- and the sentiment content of the whole text as the sum of the sentiment content of the individual words
+
+---
+# Sentiment lexicons
+
+.pull-left[
+
+```r
+get_sentiments("afinn")
+## # A tibble: 2,477 x 2
+##    word       value
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 abandon       -2
+##  2 abandoned     -2
+##  3 abandons      -2
+##  4 abducted      -2
+##  5 abduction     -2
+##  6 abductions    -2
+##  7 abhor         -3
+##  8 abhorred      -3
+##  9 abhorrent     -3
+## 10 abhors        -3
+## # … with 2,467 more rows
+```
+]
+
+.pull-right[
+
+```r
+get_sentiments("bing")
+## # A tibble: 6,786 x 2
+##    word        sentiment
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 2-faces     negative 
+##  2 abnormal    negative 
+##  3 abolish     negative 
+##  4 abominable  negative 
+##  5 abominably  negative 
+##  6 abominate   negative 
+##  7 abomination negative 
+##  8 abort       negative 
+##  9 aborted     negative 
+## 10 aborts      negative 
+## # … with 6,776 more rows
+```
+]
+
+---
+# Sentiment lexicons
+
+.pull-left[
+
+```r
+get_sentiments(lexicon = "bing")
+## # A tibble: 6,786 x 2
+##    word        sentiment
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 2-faces     negative 
+##  2 abnormal    negative 
+##  3 abolish     negative 
+##  4 abominable  negative 
+##  5 abominably  negative 
+##  6 abominate   negative 
+##  7 abomination negative 
+##  8 abort       negative 
+##  9 aborted     negative 
+## 10 aborts      negative 
+## # … with 6,776 more rows
+```
+]
+
+.pull-right[
+
+```r
+get_sentiments(lexicon = "loughran")
+## # A tibble: 4,150 x 2
+##    word         sentiment
+##    &lt;chr&gt;        &lt;chr&gt;    
+##  1 abandon      negative 
+##  2 abandoned    negative 
+##  3 abandoning   negative 
+##  4 abandonment  negative 
+##  5 abandonments negative 
+##  6 abandons     negative 
+##  7 abdicated    negative 
+##  8 abdicates    negative 
+##  9 abdicating   negative 
+## 10 abdication   negative 
+## # … with 4,140 more rows
+```
+]
+
+---
+# Sentiments in the reviews
+
+
+```r
+sentiments_bing &lt;- get_sentiments("bing")
+
+user_reviews_words %&gt;%
+  inner_join(sentiments_bing) %&gt;%
+  count(sentiment, word, sort = TRUE) 
+## # A tibble: 1,622 x 3
+##    sentiment word         n
+##    &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
+##  1 positive  like      1357
+##  2 positive  fun        760
+##  3 positive  great      661
+##  4 positive  progress   556
+##  5 positive  good       486
+##  6 positive  enjoy      405
+##  7 positive  love       403
+##  8 positive  best       368
+##  9 negative  bad        316
+## 10 positive  amazing    304
+## # … with 1,612 more rows
+```
+
+---
+# Visualising sentiments
+
+&lt;img src="lecture_8a_files/figure-html/gg-sentiment-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Visualising sentiments
+
+
+```r
+user_reviews_words %&gt;%
+  inner_join(sentiments_bing) %&gt;%
+  count(sentiment, word, sort = TRUE) %&gt;%
+  arrange(desc(n)) %&gt;%
+  group_by(sentiment) %&gt;%
+  top_n(10) %&gt;%
+  ungroup() %&gt;%
+  ggplot(aes(fct_reorder(word, n), n, fill = sentiment)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~sentiment, scales = "free") +
+  theme_minimal() +
+  labs(
+    title = "Sentiments in user reviews",
+    x = ""
+  )
+```
+
+
+---
+
+# Common words over grades "user"
+
+
+```r
+user_reviews_words %&gt;%
+  anti_join(stopwords_smart) %&gt;%
+  count(grade, word, sort = TRUE) 
+## # A tibble: 29,010 x 3
+##    grade word         n
+##    &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;
+##  1     0 game      2989
+##  2     0 island    1783
+##  3    10 game      1685
+##  4     0 switch    1058
+##  5     0 play      1027
+##  6     0 player     921
+##  7     0 nintendo   902
+##  8     1 game       898
+##  9     9 game       802
+## 10     0 console    738
+## # … with 29,000 more rows
+```
+
+---
+# Common review words by grade - With stop words:
+
+
+```r
+user_reviews_words %&gt;%
+  count(grade, word, sort = TRUE)
+## # A tibble: 33,237 x 3
+##    grade word      n
+##    &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;
+##  1     0 the    5865
+##  2     0 to     4421
+##  3     0 game   2989
+##  4    10 the    2896
+##  5     0 and    2767
+##  6     0 a      2663
+##  7     0 i      2656
+##  8     0 is     2304
+##  9     0 this   2171
+## 10     9 the    1913
+## # … with 33,227 more rows
+```
+
+---
+# What is a document about?
+
+## How do we measure the importance of a word to a document in a collection of documents?
+
+i.e a novel in a collection of novels or a review in a set of reviews...
+
+We combine the following statistics:
+
+- Term frequency
+- Inverse document frequency
+
+---
+
+# Term frequency
+
+The raw frequency of a word `\(w\)` in a document `\(d\)`. It is a function of the word and the document. 
+
+$$tf(w, d) = \frac{\text{count of w in d}}{\text{total count in d}} $$
+
+---
+# Term frequency
+
+For our reviews a document is a single user's review.
+
+
+```r
+document &lt;- user_reviews_words %&gt;% 
+    anti_join(stopwords_smart) %&gt;% 
+    filter(user_name == "Discoduckasaur")
+document
+## # A tibble: 372 x 4
+##    grade user_name      date       word      
+##    &lt;dbl&gt; &lt;chr&gt;          &lt;date&gt;     &lt;chr&gt;     
+##  1     4 Discoduckasaur 2020-04-23 start     
+##  2     4 Discoduckasaur 2020-04-23 game      
+##  3     4 Discoduckasaur 2020-04-23 incredibly
+##  4     4 Discoduckasaur 2020-04-23 fun       
+##  5     4 Discoduckasaur 2020-04-23 base      
+##  6     4 Discoduckasaur 2020-04-23 asinine   
+##  7     4 Discoduckasaur 2020-04-23 decisions 
+##  8     4 Discoduckasaur 2020-04-23 made      
+##  9     4 Discoduckasaur 2020-04-23 nintendo  
+## 10     4 Discoduckasaur 2020-04-23 simply    
+## # … with 362 more rows
+```
+
+
+---
+# Term frequency
+
+The term frequency for each word is the number of times that word occurs
+divided by the total number of words in the document.
+
+
+```r
+tbl_tf &lt;- document %&gt;% 
+  count(word, sort = TRUE) %&gt;% 
+  mutate(tf = n / sum(n))
+tbl_tf %&gt;% 
+  arrange(desc(tf))
+## # A tibble: 246 x 3
+##    word           n     tf
+##    &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;
+##  1 game          15 0.0403
+##  2 time          14 0.0376
+##  3 it’s           7 0.0188
+##  4 nintendo       6 0.0161
+##  5 i’m            5 0.0134
+##  6 bad            4 0.0108
+##  7 fun            4 0.0108
+##  8 give           4 0.0108
+##  9 incredibly     4 0.0108
+## 10 means          4 0.0108
+## # … with 236 more rows
+```
+
+## Inverse-document frequency
+
+The inverse document frequency tells how common or rare a word is accross a collection of documents. It is a function of a word `\(w\)`, and the collection of documents `\(\mathcal{D}\)`.
+
+`$$idf(w, \mathcal{D}) = \log{\left(\frac{\text{size of } \mathcal{D}}{\text{number of documents that contain } w}\right)}$$`
+---
+## Inverse document frequency
+
+For the reviews data set, our collection is all the reviews. You could
+compute this in a somewhat roundabout as follows:
+
+
+```r
+tbl_idf &lt;- user_reviews_words %&gt;% 
+    anti_join(stopwords_smart) %&gt;%
+    mutate(collection_size = n_distinct(user_name)) %&gt;% 
+    group_by(collection_size, word) %&gt;% 
+    summarise(times_word_used = n_distinct(user_name)) %&gt;% 
+    mutate(freq = collection_size / times_word_used,
+           idf = log(freq)) 
+arrange(tbl_idf, idf)
+## # A tibble: 12,938 x 5
+## # Groups:   collection_size [1]
+##    collection_size word     times_word_used  freq   idf
+##              &lt;int&gt; &lt;chr&gt;              &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1            2999 game                2354  1.27 0.242
+##  2            2999 island              1671  1.79 0.585
+##  3            2999 switch              1123  2.67 0.982
+##  4            2999 play                1049  2.86 1.05 
+##  5            2999 nintendo             984  3.05 1.11 
+##  6            2999 console              788  3.81 1.34 
+##  7            2999 player               745  4.03 1.39 
+##  8            2999 animal               734  4.09 1.41 
+##  9            2999 crossing             721  4.16 1.43 
+## 10            2999 people               576  5.21 1.65 
+## # … with 12,928 more rows
+```
+
+---
+## Putting it together term frequency, inverse document frequency
+
+Multiply tf and idf together. This is a function of a word `\(w\)`, a document `\(d\)`,
+and the collection of documents `\(\mathcal{D}\)`:
+
+$$ tf\_idf(w, d, \mathcal{D}) = tf(w,d) \times idf(w, \mathcal{D})$$
+High value of `\(tf\_idf\)` that a word has a high frequency within a document
+but is quite rare over all documents. Likewise if a word occurs in a lot
+of documents idf will be close to zero, so `\(tf\_idf\)` will be small.
+
+---
+## Putting it together, tf-idf 
+
+We illustrate the example for a single user review:
+
+
+```r
+tbl_tf %&gt;% 
+    left_join(tbl_idf) %&gt;% 
+    select(word, tf, idf) %&gt;% 
+    mutate(tf_idf = tf * idf) %&gt;% 
+    arrange(desc(tf_idf))
+## # A tibble: 246 x 4
+##    word            tf   idf tf_idf
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 turnips    0.0108   6.62 0.0712
+##  2 time       0.0376   1.78 0.0669
+##  3 zone       0.00806  7.31 0.0590
+##  4 it’s       0.0188   2.81 0.0528
+##  5 i’m        0.0134   3.64 0.0489
+##  6 you’ll     0.00806  5.70 0.0460
+##  7 incredibly 0.0108   4.05 0.0436
+##  8 hurting    0.00538  8.01 0.0430
+##  9 means      0.0108   3.62 0.0390
+## 10 accepted   0.00538  6.91 0.0371
+## # … with 236 more rows
+```
+---
+# Calculating tf-idf: Perhaps not that exciting...
+
+Instead of rolling our own, we can use `tidytext`
+
+
+```r
+user_reviews_counts &lt;- user_reviews_words %&gt;%
+      anti_join(stopwords_smart) %&gt;% 
+      count(user_name, word, sort = TRUE) %&gt;% 
+      bind_tf_idf(term = word, document = user_name, n = n)
+
+user_reviews_counts
+## # A tibble: 93,540 x 6
+##    user_name    word        n     tf   idf tf_idf
+##    &lt;chr&gt;        &lt;chr&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Melondrea    island     49 0.5    0.585 0.292 
+##  2 Melondrea    console    48 0.490  1.34  0.655 
+##  3 ScissorSheep game       29 0.254  0.242 0.0616
+##  4 ScissorSheep bombing    28 0.246  3.62  0.890 
+##  5 ScissorSheep review     28 0.246  2.19  0.538 
+##  6 ScissorSheep stop       28 0.246  3.36  0.826 
+##  7 Interruptor  eggs       27 0.203  5.70  1.16  
+##  8 Ditobi       de         26 0.0568 3.44  0.195 
+##  9 Lucishungry  game       26 0.0912 0.242 0.0221
+## 10 Teacol       game       21 0.084  0.242 0.0203
+## # … with 93,530 more rows
+```
+
+---
+
+# What words were important to (a sample of) users that had positive reviews?
+
+&lt;img src="lecture_8a_files/figure-html/gg-tf-idf-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Your Turn:
+
+- Go to Rstudio and extend the analyses done in the lecture
+- This time we will look at critics reviews
+
+---
+class: transition
+
+# Part Two: Tidy Text analysis on Books
+
+---
+# Getting some books to study
+
+The [Gutenberg project](http://www.gutenberg.org/wiki/Main_Page) provides the text of over 57000 books free online. 
+
+Let's explore The Origin of the Species by Charles Darwin using the `gutenbergr` R package.
+
+--
+
+We need to know the `id` of the book, which means looking this up online anyway. 
+- The first edition is `1228`
+- The sixth edition is `2009`
+
+---
+# Packages used
+
+- We need the `tm` package to remove numbers from the page, and `gutenbergr` to access the books.
+
+
+```r
+# The tm package is needed because the book has numbers
+# in the text, that need to be removed, and the
+# install.packages("tm")
+library(tm)
+library(gutenbergr)
+```
+
+---
+# Download darwin
+
+
+```r
+darwin1 &lt;- gutenberg_download(1228)
+darwin1
+## # A tibble: 15,819 x 2
+##    gutenberg_id text                                                            
+##           &lt;int&gt; &lt;chr&gt;                                                           
+##  1         1228 "ON THE ORIGIN OF SPECIES."                                     
+##  2         1228 ""                                                              
+##  3         1228 "OR THE PRESERVATION OF FAVOURED RACES IN THE STRUGGLE FOR LIFE…
+##  4         1228 ""                                                              
+##  5         1228 ""                                                              
+##  6         1228 "By Charles Darwin, M.A.,"                                      
+##  7         1228 ""                                                              
+##  8         1228 "Fellow Of The Royal, Geological, Linnaean, Etc., Societies;"   
+##  9         1228 ""                                                              
+## 10         1228 "Author Of 'Journal Of Researches During H.M.S. Beagle's Voyage…
+## # … with 15,809 more rows
+# remove the numbers from the text
+darwin1$text &lt;- removeNumbers(darwin1$text)
+```
+
+---
+# Tokenize
+
+.pull-left[
+- break into one word per line
+- remove the stop words
+- count the words
+- find the length of the words
+]
+
+.pull-right[
+
+```r
+darwin1_words &lt;- darwin1 %&gt;%
+  unnest_tokens(word, text) %&gt;%
+  anti_join(stop_words) %&gt;%
+  count(word, sort = TRUE) %&gt;%
+  mutate(len = str_length(word))
+
+darwin1_words
+## # A tibble: 6,395 x 3
+##    word          n   len
+##    &lt;chr&gt;     &lt;int&gt; &lt;int&gt;
+##  1 species    1541     7
+##  2 varieties   434     9
+##  3 selection   414     9
+##  4 forms       403     5
+##  5 natural     382     7
+##  6 plants      335     6
+##  7 life        306     4
+##  8 animals     297     7
+##  9 nature      260     6
+## 10 distinct    257     8
+## # … with 6,385 more rows
+```
+]
+
+---
+# Analyse tokens
+
+
+```r
+quantile(
+  darwin1_words$n,
+  probs = seq(0.9, 1, 0.01)
+)
+##     90%     91%     92%     93%     94%     95%     96%     97%     98%     99% 
+##   19.00   21.00   24.00   26.00   31.00   36.00   43.00   52.00   66.00  101.06 
+##    100% 
+## 1541.00
+```
+
+---
+# Analyse tokens
+
+.left-code[
+
+```r
+darwin1_words %&gt;%
+  top_n(n = 20,
+        wt = n) %&gt;%
+  ggplot(aes(x = n,
+             y = fct_reorder(word, n))) +
+  geom_point() +
+  ylab("")
+```
+]
+
+.right-plot[
+&lt;img src="lecture_8a_files/figure-html/gg-analyse-text-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Download and tokenize the 6th edition.
+
+
+```r
+darwin6 &lt;- gutenberg_download(2009)
+
+darwin6$text &lt;- removeNumbers(darwin6$text)
+```
+
+---
+# show tokenized words
+
+
+```r
+darwin6_words &lt;- darwin6 %&gt;%
+  unnest_tokens(word, text) %&gt;%
+  anti_join(stop_words) %&gt;%
+  count(word, sort = TRUE) %&gt;%
+  mutate(len = str_length(word))
+
+darwin6_words
+## # A tibble: 8,335 x 3
+##    word          n   len
+##    &lt;chr&gt;     &lt;int&gt; &lt;int&gt;
+##  1 species    1922     7
+##  2 forms       565     5
+##  3 selection   559     9
+##  4 natural     533     7
+##  5 varieties   486     9
+##  6 plants      471     6
+##  7 animals     436     7
+##  8 distinct    359     8
+##  9 life        350     4
+## 10 nature      325     6
+## # … with 8,325 more rows
+```
+
+---
+# show tokenized words
+
+```r
+quantile(darwin6_words$n, probs = seq(0.9, 1, 0.01))
+##     90%     91%     92%     93%     94%     95%     96%     97%     98%     99% 
+##   20.00   22.00   25.00   28.00   32.00   38.00   45.00   57.00   75.00  109.66 
+##    100% 
+## 1922.00
+```
+
+---
+# show tokenized words
+
+```r
+darwin6_words %&gt;%
+  top_n(n = 20,
+        wt = n) %&gt;%
+  ggplot(aes(x = n, y = fct_reorder(word, n))) + geom_point() +
+  ylab("")
+```
+
+&lt;img src="lecture_8a_files/figure-html/gg-second-edition-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# Compare the word frequency
+
+.left-code[
+
+```r
+darwin &lt;- full_join(
+  darwin1_words, 
+  darwin6_words, 
+  by = "word"
+  ) %&gt;%
+  rename(
+    n_ed1 = n.x, 
+    len_ed1 = len.x, 
+    n_ed6 = n.y, 
+    len_ed6 = len.y
+  )
+```
+]
+
+.right-plot[
+
+```r
+darwin
+## # A tibble: 8,604 x 5
+##    word      n_ed1 len_ed1 n_ed6 len_ed6
+##    &lt;chr&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt;   &lt;int&gt;
+##  1 species    1541       7  1922       7
+##  2 varieties   434       9   486       9
+##  3 selection   414       9   559       9
+##  4 forms       403       5   565       5
+##  5 natural     382       7   533       7
+##  6 plants      335       6   471       6
+##  7 life        306       4   350       4
+##  8 animals     297       7   436       7
+##  9 nature      260       6   325       6
+## 10 distinct    257       8   359       8
+## # … with 8,594 more rows
+```
+]
+
+
+
+---
+# plot the word frequency
+
+.left-code[
+
+```r
+ggplot(darwin, 
+            aes(x = n_ed1, 
+                y = n_ed6, 
+                label = word)) +
+  geom_abline(intercept = 0, 
+              slope = 1) +
+  geom_point(alpha = 0.5) +
+  xlab("First edition") + 
+  ylab("6th edition") +
+  scale_x_log10() + 
+  scale_y_log10() + 
+  theme(aspect.ratio = 1)
+```
+]
+
+.right-plot[
+&lt;img src="lecture_8a_files/figure-html/plot-word-freq-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Your turn:
+
+- Does it look like the 6th edition was an expanded version of the first?
+- What word is most frequent in both editions?
+- Find some words that are not in the first edition but appear in the 6th.
+- Find some words that are used the first edition but not in the 6th.
+- Using a linear regression model find the top few words that appear more often than expected, based on the frequency in the first edition. Find the top few words that appear less often than expected. 
+
+---
+# Book comparison
+
+Idea: Find the important words for the content of each document by decreasing the weight of commonly used words and increasing the weight for words that are not used very much in a collection or corpus of documents.
+
+---
+# Term frequency, inverse document frequency (`tf_idf`).
+
+Helps measure word importance of a document in a collection of documents.
+
+Recall:
+
+$$ tf\_idf(w, d, \mathcal{D}) = tf(w,d) \times idf(w, \mathcal{D})$$
+
+
+---
+# Bind the editions:
+
+```r
+darwin &lt;- bind_rows("first" = darwin1_words, 
+                    "sixth" = darwin6_words,
+                    .id = "edition")
+
+darwin
+## # A tibble: 14,730 x 4
+##    edition word          n   len
+##    &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt; &lt;int&gt;
+##  1 first   species    1541     7
+##  2 first   varieties   434     9
+##  3 first   selection   414     9
+##  4 first   forms       403     5
+##  5 first   natural     382     7
+##  6 first   plants      335     6
+##  7 first   life        306     4
+##  8 first   animals     297     7
+##  9 first   nature      260     6
+## 10 first   distinct    257     8
+## # … with 14,720 more rows
+```
+
+---
+# Compute tf-idf
+
+
+```r
+darwin_tf_idf &lt;- darwin %&gt;% bind_tf_idf(word, edition, n)
+
+darwin_tf_idf %&gt;% arrange(desc(tf_idf))
+## # A tibble: 14,730 x 7
+##    edition word              n   len       tf   idf   tf_idf
+##    &lt;chr&gt;   &lt;chr&gt;         &lt;int&gt; &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1 sixth   mivart           28     6 0.000361 0.693 0.000250
+##  2 sixth   prof             28     4 0.000361 0.693 0.000250
+##  3 sixth   cambrian         27     8 0.000348 0.693 0.000241
+##  4 sixth   illegitimate     21    12 0.000271 0.693 0.000188
+##  5 sixth   lamellae         21     8 0.000271 0.693 0.000188
+##  6 sixth   pedicellariae    19    13 0.000245 0.693 0.000170
+##  7 sixth   dimorphic        18     9 0.000232 0.693 0.000161
+##  8 sixth   orchids          17     7 0.000219 0.693 0.000152
+##  9 sixth   fittest          16     7 0.000206 0.693 0.000143
+## 10 first   deg              11     3 0.000194 0.693 0.000135
+## # … with 14,720 more rows
+```
+
+---
+# Plot the results for top words
+
+
+```r
+gg_darwin_1_vs_6 &lt;-
+darwin_tf_idf %&gt;%
+  arrange(desc(tf_idf)) %&gt;%
+  mutate(word = factor(word,
+                       levels = rev(unique(word)))) %&gt;%
+  group_by(edition) %&gt;%
+  top_n(15) %&gt;%
+  ungroup() %&gt;%
+  ggplot(aes(x = word, 
+             y = tf_idf, 
+             fill = edition)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = NULL, 
+       y = "tf-idf") +
+  facet_wrap(~edition, 
+             ncol = 2, 
+             scales = "free") +
+  coord_flip() + 
+  scale_fill_brewer(palette = "Dark2")
+```
+
+---
+
+&lt;img src="lecture_8a_files/figure-html/gg-rawin-tf-idf-out-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+# What do we learn?
+
+- Mr Mivart appears in the 6th edition, multiple times
+
+
+```r
+str_which(darwin6$text, "Mivart")
+##  [1]  5435  6973  7982  7987  7990  7998  8003  8011  8026  8059  8081  8194
+## [13]  8204  8229  8234  8268  8413  8466  8506  8532  8575  8581  8603  8612
+## [25]  8677  8684  8759  9001  9014  9025  9055  9063  9125 16240 20456
+darwin6[5435, ]
+## # A tibble: 1 x 2
+##   gutenberg_id text                                                             
+##          &lt;int&gt; &lt;chr&gt;                                                            
+## 1         2009 to this rule, as Mr. Mivart has remarked, that it has little val…
+```
+
+---
+# What do we learn?
+
+- Prof title is used more often in the 6th edition
+- There is a tendency for latin names 
+- Mistletoe was mispelled in the 1st edition
+
+---
+# Lab exercise (bonus!)
+
+Text Mining with R has an example comparing historical physics textbooks:  *Discourse on Floating Bodies* by Galileo Galilei, *Treatise on Light* by Christiaan Huygens, *Experiments with Alternate Currents of High Potential and High Frequency* by Nikola Tesla, and *Relativity: The Special and General Theory* by Albert Einstein. All are available on the Gutenberg project. 
+
+Work your way through the [comparison of physics books](https://www.tidytextmining.com/tfidf.html#a-corpus-of-physics-texts). It is section 3.4.
+
+---
+# Thanks
+
+- Dr. Mine Çetinkaya-Rundel
+- Dr. Julia Silge: https://github.com/juliasilge/tidytext-tutorial
+- Dr. Julia Silge and Dr. David Robinson: https://www.tidytextmining.com/
+- Josiah Parry: https://github.com/JosiahParry/genius
+
+---
+  
+
+
+
+background-image: url(images/bg1.jpg)
+background-size: cover
+class: hide-slide-number split-70
+count: false
+
+.column.shade_black[.content[
+
+&lt;br&gt;&lt;br&gt;
+
+# That's it!
+
+.bottom_abs.width100[
+
+Lecturer: Nicholas Tierney &amp; Stuart Lee
+
+Department of Econometrics and Business Statistics&lt;br&gt;
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  ETC5510.Clayton-x@monash.edu
+
+May 2020
+
+
+]
+
+&lt;br /&gt;
+This work is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"&gt;Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License&lt;/a&gt;.
+
+&lt;a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"&gt;&lt;img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /&gt;&lt;/a&gt;
+
+
+]]
+
+
+
+&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
+&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
+&lt;svg class="clip-svg absolute"&gt;
+&lt;defs&gt;
+&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
+&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
+&lt;/clipPath&gt;
+&lt;/defs&gt;	
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLanguage": "r",
+"highlightLines": true,
+"highlightSpans": false,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%/%total%",
+"navigation": {
+"scroll": false,
+"touch": true,
+"click": false
+},
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
