@@ -481,7 +481,7 @@ user_reviews_words %>%
 
 ---
 
-# Common words over grades "user"
+# Common words over grades 
 
 ```{r common-user-words-stop}
 user_reviews_words %>%
