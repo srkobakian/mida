@@ -105,14 +105,6 @@ class: refresher
 - Peer review marking
 
 ---
-# Tidytext analysis
-
-background-image: url(images/text_analysis.png)
-background-size: contain
-background-position: 50% 50%
-class: center, bottom, white
-
----
 # Why text analysis?
 
 - Predict Melbourne house prices from realtor descriptions
@@ -1144,8 +1136,7 @@ quantile(
 
 ```r
 darwin1_words %&gt;%
-  top_n(n = 20,
-        wt = n) %&gt;%
+  top_n(n = 20, wt = n) %&gt;%
   ggplot(aes(x = n,
              y = fct_reorder(word, n))) +
   geom_point() +
@@ -1341,9 +1332,11 @@ darwin
 
 
 ```r
-darwin_tf_idf &lt;- darwin %&gt;% bind_tf_idf(word, edition, n)
+darwin_tf_idf &lt;- darwin %&gt;% 
+  bind_tf_idf(word, edition, n)
 
-darwin_tf_idf %&gt;% arrange(desc(tf_idf))
+darwin_tf_idf %&gt;% 
+  arrange(desc(tf_idf))
 ## # A tibble: 14,730 x 7
 ##    edition word              n   len       tf   idf   tf_idf
 ##    &lt;chr&gt;   &lt;chr&gt;         &lt;int&gt; &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;

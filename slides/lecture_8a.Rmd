@@ -78,14 +78,6 @@ class: refresher
 - Peer review marking
 
 ---
-# Tidytext analysis
-
-background-image: url(images/text_analysis.png)
-background-size: contain
-background-position: 50% 50%
-class: center, bottom, white
-
----
 # Why text analysis?
 
 - Predict Melbourne house prices from realtor descriptions
@@ -865,9 +857,11 @@ darwin
 # Compute tf-idf
 
 ```{r darwin-tf-idf}
-darwin_tf_idf <- darwin %>% bind_tf_idf(word, edition, n)
+darwin_tf_idf <- darwin %>% 
+  bind_tf_idf(word, edition, n)
 
-darwin_tf_idf %>% arrange(desc(tf_idf))
+darwin_tf_idf %>% 
+  arrange(desc(tf_idf))
 ```
 
 ---
