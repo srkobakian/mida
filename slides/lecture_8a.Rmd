@@ -58,6 +58,7 @@ opts_chunk$set(echo = TRUE,
                fig.height = 4,
                fig.width = 8,
                fig.align = "center",
+               dpi = 300,
                cache = FALSE)
 
 as_table <- function(...) knitr::kable(..., format='html', digits = 3)
@@ -610,7 +611,7 @@ user_reviews_counts
 
 # What words were important to (a sample of) users that had positive reviews?
 
-```{r gg-tf-idf, echo=FALSE,message=FALSE, fig.height = 5}
+```{r gg-tf-idf, echo=FALSE,message=FALSE, out.width="50%"}
 pos_reviews <- acnh_user_reviews_parsed %>% 
     select(user_name, grade) %>% 
     filter(grade > 8) %>% 
