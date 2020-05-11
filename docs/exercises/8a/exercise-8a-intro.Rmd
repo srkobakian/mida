@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(tidytext)
+library(textdata)
 ```
 
 # Tokenising text
@@ -167,8 +168,6 @@ text_df %>%
 
 Using the quotes we looked at above use the "afinn" lexicon to compute the
 average sentiment of each quote. Which one is considered more positive?
-
-
 
 
 # Your turn: Analysing reviews of a video game
