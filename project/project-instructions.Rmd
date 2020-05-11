@@ -66,5 +66,23 @@ kable(df_project) %>%
   column_spec(3, width = "20em")
 ```
 
+## Marking Guide
+
+To help you complete the project, below is a rubric to guide you what we
+are expecting to in your final dashboard:
+
+```{r, echo = FALSE, message=FALSE}
+rubric <- readr::read_tsv(here::here("project/rubric.tsv")) %>% 
+  dplyr::rename(description = text)
+
+kable(rubric) %>%
+  kable_styling(full_width = FALSE) %>% 
+  column_spec(1, bold = TRUE) %>% 
+  column_spec(2, border_right = TRUE) %>% 
+  column_spec(3, width = "20em") %>% 
+  column_spec(4, width = "20em") %>% 
+  column_spec(5, width = "20em") %>% 
+  column_spec(6, width = "20em")
+```
 
 ## No late turn-ins accepted
