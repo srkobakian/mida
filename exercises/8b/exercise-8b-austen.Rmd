@@ -1,0 +1,53 @@
+---
+title: "The books of Jane Austen"
+author: "Your Name"
+output: html_document
+---
+
+```{r setup}
+library(tidyverse)
+library(tidytext)
+```
+
+In this lab exercise we will analyse the sentiment of Austen's books. 
+
+Below is the code to tokenise the books and add line numbers and chapters.
+
+```{r tidy-books}
+library(janeaustenr)
+
+tidy_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(linenumber = row_number(),
+         chapter = cumsum(str_detect(text, 
+                                     regex("^chapter [\\divxlc]", 
+                                           ignore_case = TRUE)))) %>%
+  ungroup() %>%
+  unnest_tokens(word, text)
+```
+
+Add sentiment categories to all the books using the nrc lexicon.
+
+```{r nrc}
+nrc <- get_sentiments("nrc")
+```
+
+
+- What are the most common "anger" words used in Emma?
+- What are the most common "surprise" words used in Emma?
+
+```{r}
+tidy_books %>% 
+  filter()
+  ...
+```
+
+
+Using another lexicon (bing, or afinn) compute the proportion of 
+positive words in each of Austen's books.
+
+- Which book is the most positive? negative?
+
+```{r}
+# add code for next lexicon here
+```
