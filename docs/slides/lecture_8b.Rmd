@@ -1,10 +1,10 @@
 ---
-title: "ETC1010: Introduction to Data Analysis"
+title: "ETC5510: Introduction to Data Analysis"
 week: "Week 8, part B"
-subtitle: "Text analysis and linear models"
-author: "Nicholas Tierney"
-email: "nicholas.tierney@monash.edu"
-date: "April 2020"
+subtitle: "Text analysis Part 2"
+author: "Nicholas Tierney & Stuart Lee"
+email: "ETC5510.Clayton-x@monash.edu"
+date: "May 2020"
 pdflink: ""
 bgimg: "images/bg1.jpg"
 output:
@@ -44,14 +44,9 @@ output:
 
 
 ```{r setup, include=FALSE}
-library(emo)
 library(tidyverse)
-library(tidytext)
 library(knitr)
-library(lubridate)
-library(gridExtra)
-library(plotly)
-library(broom)
+library(tidytext)
 opts_chunk$set(echo = TRUE,   
                message = FALSE,
                warning = FALSE,
@@ -59,8 +54,10 @@ opts_chunk$set(echo = TRUE,
                fig.height = 4,
                fig.width = 8,
                fig.align = "center",
+               fig.retina = 2,
                cache = FALSE)
 
+theme_set(theme_bw())
 as_table <- function(...) knitr::kable(..., format='html', digits = 3)
 ```
 
@@ -76,283 +73,6 @@ class: refresher
 # Overview
 
 - tidy text continued
-
----
-class: transition
-
-# Part Two: Tidy Text analysis on Books
-
----
-# Getting some books to study
-
-The [Gutenberg project](http://www.gutenberg.org/wiki/Main_Page) provides the text of over 57000 books free online. 
-
-Let's explore The Origin of the Species by Charles Darwin using the `gutenbergr` R package.
-
---
-
-We need to know the `id` of the book, which means looking this up online anyway. 
-- The first edition is `1228`
-- The sixth edition is `2009`
-
----
-# Packages used
-
-- We need the `tm` package to remove numbers from the page, and `gutenbergr` to access the books.
-
-```{r load-extra-pkgs}
-# The tm package is needed because the book has numbers
-# in the text, that need to be removed, and the
-# install.packages("tm")
-library(tm)
-library(gutenbergr)
-```
-
----
-# Download darwin
-
-```{r download-darwin}
-darwin1 <- gutenberg_download(1228)
-darwin1
-# remove the numbers from the text
-darwin1$text <- removeNumbers(darwin1$text)
-```
-
----
-# Tokenize
-
-.pull-left[
-- break into one word per line
-- remove the stop words
-- count the words
-- find the length of the words
-]
-
-.pull-right[
-```{r tokenize-text}
-darwin1_words <- darwin1 %>%
-  unnest_tokens(word, text) %>%
-  anti_join(stop_words) %>%
-  count(word, sort = TRUE) %>%
-  mutate(len = str_length(word))
-
-darwin1_words
-```
-]
-
----
-# Analyse tokens
-
-```{r analyse-text}
-quantile(
-  darwin1_words$n,
-  probs = seq(0.9, 1, 0.01)
-)
-```
-
----
-# Analyse tokens
-
-.left-code[
-```{r gg-analyse-text, eval = FALSE}
-darwin1_words %>%
-  top_n(n = 20, wt = n) %>%
-  ggplot(aes(x = n,
-             y = fct_reorder(word, n))) +
-  geom_point() +
-  ylab("")
-```  
-]
-
-.right-plot[
-```{r gg-analyse-text-out, ref.label = 'gg-analyse-text', echo = FALSE, out.width = "100%"}
-
-```
-]
-
----
-# Download and tokenize the 6th edition.
-
-```{r dl-second-edition}
-darwin6 <- gutenberg_download(2009)
-
-darwin6$text <- removeNumbers(darwin6$text)
-```
-
----
-# show tokenized words
-
-```{r table-second-edition}
-darwin6_words <- darwin6 %>%
-  unnest_tokens(word, text) %>%
-  anti_join(stop_words) %>%
-  count(word, sort = TRUE) %>%
-  mutate(len = str_length(word))
-
-darwin6_words
-```
-
----
-# show tokenized words
-```{r quantile-second-edition}
-quantile(darwin6_words$n, probs = seq(0.9, 1, 0.01))
-```
-
----
-# show tokenized words
-```{r gg-second-edition}
-darwin6_words %>%
-  top_n(n = 20,
-        wt = n) %>%
-  ggplot(aes(x = n, y = fct_reorder(word, n))) + geom_point() +
-  ylab("")
-```
-
----
-# Compare the word frequency
-
-.left-code[
-```{r full-join-darwin}
-darwin <- full_join(
-  darwin1_words, 
-  darwin6_words, 
-  by = "word"
-  ) %>%
-  rename(
-    n_ed1 = n.x, 
-    len_ed1 = len.x, 
-    n_ed6 = n.y, 
-    len_ed6 = len.y
-  )
-```
-]
-
-.right-plot[
-```{r full-join-darwin-out}
-darwin
-```
-]
-
-
-
----
-# plot the word frequency
-
-.left-code[
-```{r plot-word-freq, eval = FALSE}
-ggplot(darwin, 
-            aes(x = n_ed1, 
-                y = n_ed6, 
-                label = word)) +
-  geom_abline(intercept = 0, 
-              slope = 1) +
-  geom_point(alpha = 0.5) +
-  xlab("First edition") + 
-  ylab("6th edition") +
-  scale_x_log10() + 
-  scale_y_log10() + 
-  theme(aspect.ratio = 1)
-```
-]
-
-.right-plot[
-```{r plot-word-freq-out, ref.label = 'plot-word-freq', echo = FALSE, out.width = "100%"}
-
-```
-]
-
----
-# Your turn:
-
-- Does it look like the 6th edition was an expanded version of the first?
-- What word is most frequent in both editions?
-- Find some words that are not in the first edition but appear in the 6th.
-- Find some words that are used the first edition but not in the 6th.
-- Using a linear regression model find the top few words that appear more often than expected, based on the frequency in the first edition. Find the top few words that appear less often than expected. 
-
----
-# Book comparison
-
-Idea: Find the important words for the content of each document by decreasing the weight of commonly used words and increasing the weight for words that are not used very much in a collection or corpus of documents.
-
----
-# Term frequency, inverse document frequency (`tf_idf`).
-
-Helps measure word importance of a document in a collection of documents.
-
-Recall:
-
-$$ tf\_idf(w, d, \mathcal{D}) = tf(w,d) \times idf(w, \mathcal{D})$$
-
-
----
-# Bind the editions:
-```{r bind-rows-darwin}
-darwin <- bind_rows("first" = darwin1_words, 
-                    "sixth" = darwin6_words,
-                    .id = "edition")
-
-darwin
-```
-
----
-# Compute tf-idf
-
-```{r darwin-tf-idf}
-darwin_tf_idf <- darwin %>% 
-  bind_tf_idf(word, edition, n)
-
-darwin_tf_idf %>% 
-  arrange(desc(tf_idf))
-```
-
----
-# Plot the results for top words
-
-```{r gg-rawin-tf-idf}
-gg_darwin_1_vs_6 <-
-darwin_tf_idf %>%
-  arrange(desc(tf_idf)) %>%
-  mutate(word = factor(word,
-                       levels = rev(unique(word)))) %>%
-  group_by(edition) %>%
-  top_n(15) %>%
-  ungroup() %>%
-  ggplot(aes(x = word, 
-             y = tf_idf, 
-             fill = edition)) +
-  geom_col(show.legend = FALSE) +
-  labs(x = NULL, 
-       y = "tf-idf") +
-  facet_wrap(~edition, 
-             ncol = 2, 
-             scales = "free") +
-  coord_flip() + 
-  scale_fill_brewer(palette = "Dark2")
-```  
-
----
-
-```{r gg-rawin-tf-idf-out, echo = FALSE}
-gg_darwin_1_vs_6
-```
-
----
-# What do we learn?
-
-- Mr Mivart appears in the 6th edition, multiple times
-
-```{r show-mivart}
-str_which(darwin6$text, "Mivart")
-darwin6[5435, ]
-```
-
----
-# What do we learn?
-
-- Prof title is used more often in the 6th edition
-- There is a tendency for latin names 
-- Mistletoe was mispelled in the 1st edition
 
 ---
 class: transition
@@ -467,12 +187,6 @@ All make sense until you see "found".
 Is "found" a joyful word?
 
 ---
-# Your turn: go to rstudio.cloud
-
-- What are the most common "anger" words used in Emma?
-- What are the most common "surprise" words used in Emma?
-
----
 # Comparing lexicons
 
 .pull-left[
@@ -539,14 +253,15 @@ emma_afinn %>%
 
 ---
 class: transition
-# Your turn: Exercise 2
+# Your Turn: Sentiment of Austen
 
-- Using your choice of lexicon (nrc, bing, or afinn) compute the proportion of positive words in each of Austen's books.
+- What are the most common "anger" words used in Emma?
+- What are the most common "surprise" words used in Emma?
 - Which book is the most positive? negative?
-
+- Using your choice of lexicon (nrc, bing, or afinn) compute the proportion of positive words in each of Austen's books.
 
 ---
-# Example: Simpsons
+# Lab exercise: The Simpsons
 
 Data from the popular animated TV series, The Simpsons, has been made available on [kaggle](https://www.kaggle.com/wcukierski/the-simpsons-by-the-data/data). 
 
@@ -554,242 +269,12 @@ Data from the popular animated TV series, The Simpsons, has been made available 
 - `simpsons_characters.csv`: Contains character names and a character id
 
 ---
-# The Simpsons
+# Lab exercise (bonus) Origin of Species
 
-```{r read-scripts}
-scripts <- read_csv("data/simpsons_script_lines.csv")
-chs <- read_csv("data/simpsons_characters.csv")
-sc <- left_join(scripts, chs, by = c("character_id" = "id"))
-
-sc
-```
-
----
-# count the number of times a character speaks
-
-```{r count-names}
-sc %>% count(name, sort = TRUE)
-```
-
----
-# missing name?
-
-```{r explore-missing}
-sc %>% filter(is.na(name))
-```
-
-
----
-# Simpsons Pre-process the text
-
-```{r process-simpsons-s1}
-sc %>%
-  unnest_tokens(output = word, 
-                input = spoken_words)
-```
-
----
-# Simpsons Pre-process the text
-
-```{r process-simpsons-s2}
-sc %>%
-  unnest_tokens(output = word, 
-                input = spoken_words) %>%
-  anti_join(stop_words)
-```
-
----
-# Simpsons Pre-process the text
-
-```{r process-simpsons-s3}
-sc %>%
-  unnest_tokens(output = word, 
-                input = spoken_words) %>%
-  anti_join(stop_words) %>%
-  count(word, sort = TRUE) %>%
-  filter(!is.na(word))
-```
-
----
-# Simpsons Pre-process the text
-
-```{r process-simpsons-s4}
-sc_top_20 <- sc %>%
-  unnest_tokens(output = word, 
-                input = spoken_words) %>%
-  anti_join(stop_words) %>%
-  count(word, sort = TRUE) %>%
-  filter(!is.na(word)) %>%
-  mutate(word = factor(word, 
-                       levels = rev(unique(word)))) %>%
-  top_n(20)
-```
-
----
-# Simpsons plot most common words
-
-.left-code[
-```{r process-simpsons-s5, eval = FALSE}
-ggplot(sc_top_20,
-       aes(x = word, 
-           y = n)) +
-  geom_col() +
-  labs(x = '', 
-       y = 'count', 
-       title = 'Top 20 words') +
-  coord_flip() + 
-  theme_bw()
-```  
-]
-
-
-.right-plot[
-```{r process-simpsons-s5-out, ref.label = 'process-simpsons-s5', echo = FALSE, out.width = "100%"}
-
-```
-]
-
----
-# Tag the words with sentiments
-
-
-Using AFINN words will be tagged on a negative to positive scale of -1 to 5.
-]
-
-.pull-left[
-```{r tag-sentiments}
-sc_word <- sc %>%
-  unnest_tokens(output = word, 
-                input = spoken_words) %>%
-  anti_join(stop_words) %>%
-  count(name, word) %>%
-  filter(!is.na(word))
-```
-]
-
-.pull-right[
-```{r tag-sentiments-print}
-sc_word
-```
-]
-
----
-# Tag the words with sentiments
-```{r tag-sentiments2}
-sc_s <- sc_word %>% 
-  inner_join(get_sentiments("afinn"), by = "word")
-
-sc_s
-```
-
----
-# Examine Simpsons characters
-
-```{r summarise-simpsons-characters}
-sc_s %>% 
-  group_by(name) %>% 
-  summarise(m = mean(value)) %>% 
-  arrange(desc(m))
-```
-
----
-# Examine Simpsons characters: Focus on the main characters.
-
-```{r keep-main-chars}
-keep <- sc %>% count(name, 
-                     sort=TRUE) %>%
-  filter(!is.na(name)) %>%
-  filter(n > 999)
-
-sc_s %>% 
-  filter(name %in% keep$name) %>% 
-  group_by(name) %>% 
-  summarise(m = mean(value)) %>% 
-  arrange(m)
-```
-
----
-class: transition
-# Your turn: Exercise 3
-
-1. Bart Simpson is featured at various ages. How has the sentiment of his words changed over his life?
-
-2. Repeat the sentiment analysis with the NRC lexicon. What character is the most "angry"? "joyful"?
-
----
-# (if time) Example: AFL Finals tweets
-
-The `rtweet` package allows you to pull tweets from the archive. It gives only the last 6-9 days worth of data. You need to have a twitter account, and you need to create an app (its really basic) in order to pull twitter data. The instructions that come from this package (https://rtweet.info) are pretty simple to follow.
-
----
-# (if time) Example: AFL Finals tweets
-
-
-Given that it is AFL final week, I thought it might be interesting to look at tweets that use the hashtag "#AFLFinals". Once you have a developer account, this is as simple as 
-
-```
-afl <- search_tweets(
-  "#AFLFinals", n = 20000, include_rts = FALSE
-)
-```
-
----
-# (if time) Example: AFL Finals tweets
-
-Here is the data collected in the previous year's AFL finals.
-
-```{r load-afl}
-afl <- read_rds("data/afl_twitter_past.rds")
-afl
-```
-
----
-# Your turn
-
-- When was the final played last year?
-- What is the range of dates of this data?
-- Who is the most frequent tweeter using this hashtag?
-- Are there some days that have more tweets than others?
-- Are there some hours of the day that are more common tweet times?
-]
-
----
-# Your Turn: Sentiment analysis
-
-We need to break text of each tweet into words, tag words with sentiments, and make a cumulative score for each tweet.
-
-- Which tweeter is the most positive? negative?
-- Is there a day that spirits were higher in the tweets? Or when tweets were more negative?
-- Does the tweeter `aflratings` have a trend in positivity or negativity?
-
+- Downloading books from gutenberg
+- Using tf-idf to look at how editions of the Darwin's book have changed
 
 ---
   
 ```{r endslide, child="components/endslide.Rmd"}
 ```
-
-???
-
-
-```{r pipeline, eval=FALSE, echo = FALSE}
-quiz(
-  question("How would you describe the relationship between science score and time spent studying?",
-    answer("Weak", correct = TRUE),
-    answer("Moderate"), 
-    answer("Strong")),
-  question("What do these lines of code do?   `filter(science_fun < 5) %>%
-  filter(!is.na(science_time))`", 
-    answer("Remove missing values", correct = TRUE),
-    answer("Remove extreme values, and missing values"),
-    answer("I have no idea")),
-  question("Why was `science_time` transformed to a log scale?",
-    answer("It has a right-skewed distribution.", correct = TRUE),
-    answer("It has a left-skewed distribution."),
-    answer("It is symmetric")),
-  question("Why were 0 values of `science_time` removed?",
-    answer("It could be argued that these are most likely missing values", correct = TRUE),
-    answer("They are outliers affecting the modeling"),
-    answer("No-one would be able to study science 0 minutes per week"))
-)
-```
-

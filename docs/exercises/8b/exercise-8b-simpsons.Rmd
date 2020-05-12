@@ -1,0 +1,117 @@
+---
+title: "The Simpson's"
+author: "YOUR NAME"
+output: html_document
+---
+
+# The Simpsons
+```{r read-scripts}
+scripts <- read_csv("data/simpsons_script_lines.csv")
+chs <- read_csv("data/simpsons_characters.csv")
+sc <- left_join(scripts, chs, by = c("character_id" = "id"))
+sc
+```
+
+
+## Count the number of times a character speaks
+
+```{r count-names}
+sc %>% 
+  count(---, sort = TRUE)
+```
+
+## Are there missing names
+```{r explore-missing}
+sc %>% 
+  filter(---)
+```
+
+## Pre-process the text
+```{r process-simpsons-s1}
+# steps 1. unnest tokens for spoken words
+# step 2. remove stop words
+sc_long <- sc %>%
+  unnest_tokens(---) %>% 
+  anti_join(---)
+```
+
+
+## Count the words
+
+```{r process-simpsons-s3}
+sc_words <- sc_long %>%
+  count(---, sort = TRUE) %>%
+  # remove any missing words
+  filter(---)
+```
+
+
+## Plot the top 20 spoken words
+```{r process-simpsons-s4}
+sc_words %>% 
+  top_n(20, wt = n) %>% 
+  ggplot(aes(x = fct_reorder(word, ---), y = n)) +
+  geom_col() +
+  labs(x = '', 
+       y = 'count', 
+       title = 'Top 20 words') +
+  coord_flip() 
+```
+
+
+# Tag the words with sentiments
+
+Count words spoken by each character
+
+```{r tag-sentiments}
+sc_word_by_character <- sc_long %>% 
+  count(---, word) %>%
+  filter(!is.na(word))
+```
+
+
+Using AFINN words will be tagged on a negative to positive scale of -5 to 5.
+
+
+```{r tag-sentiments2}
+sc_s <- sc_word_by_character %>% 
+  inner_join(get_sentiments("afinn"), by = "word")
+sc_s
+```
+
+Compute the mean sentiment for each character.
+
+```{r summarise-simpsons-characters}
+sc_s %>% 
+  group_by(name) %>% 
+  summarise(---) %>% 
+  arrange(desc(m))
+```
+
+# Focus on the main characters, instead of all characters.
+
+Keep characters that have spoken at least 999 words.
+
+```{r keep-main-chars}
+keep <- sc %>% count(name, 
+                     sort=TRUE) %>%
+  filter(!is.na(name)) %>%
+  filter(n > 999)
+
+```
+
+Re-compute the sentiment after removing unimportant characters:
+
+```{r main-characters}
+sc_s %>% 
+  filter(name %in% keep$---) %>% 
+  group_by(name) %>% 
+  summarise(---) %>% 
+  arrange(m)
+```
+
+
+## Exercises
+
+1. Bart Simpson is featured at various ages. How has the sentiment of his words changed over his life?
+2. Repeat the sentiment analysis with the NRC lexicon. What character is the most "angry"? "joyful"?
