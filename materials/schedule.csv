@@ -14,12 +14,12 @@ Week,Lecture,Date,HTML,PDF,Exercise,Topic,Readings,Assessment
 7,A,2020-05-04T00:00:00Z,lecture_7a.html,lecture_7a.pdf,7a/mida-exercise-7a.zip,Introuction to linear models,NA,NA
 7,B,2020-05-06T00:00:00Z,lecture_7b.html,lecture_7b.pdf,7b/mida-exercise-7b.zip,NA,NA,NA
 8,A,2020-05-11T00:00:00Z,lecture_8a.html,lecture_8a.pdf,8a/mida-exercise-8a.zip,Analysing text data,NA,NA
-8,B,2020-05-13T00:00:00Z,lecture_8b.html,lecture_8b.pdf,8b/mida-exercise-8b.zip,NA,NA,Assignment 2
+8,B,2020-05-13T00:00:00Z,lecture_8b.html,lecture_8b.pdf,8b/mida-exercise-8b.zip,NA,NA,NA
 9,A,2020-05-18T00:00:00Z,NA,NA,NA,"Wrangling, plotting and modeling network data",NA,NA
-9,B,2020-05-20T00:00:00Z,NA,NA,NA,NA,NA,NA
-10,A,2020-05-25T00:00:00Z,NA,NA,NA,"Computational modeling, and good data collection practices",NA,NA
+9,B,2020-05-20T00:00:00Z,NA,NA,NA,NA,NA,Assignment 2
+10,A,2020-05-25T00:00:00Z,NA,NA,NA,Computational modeling - classification and regression trees,NA,NA
 10,B,2020-05-27T00:00:00Z,NA,NA,NA,NA,NA,NA
-11,A,2020-06-01T00:00:00Z,NA,NA,NA,Miscellaneous topics,NA,Takehome Exam
-11,B,2020-06-03T00:00:00Z,NA,NA,NA,Project Development,NA,NA
+11,A,2020-06-01T00:00:00Z,NA,NA,NA,Project Development,NA,NA
+11,B,2020-06-03T00:00:00Z,NA,NA,NA,Project Development,NA,Takehome Exam
 12,A,2020-06-08T00:00:00Z,NA,NA,NA,Submission and Peer Evaluation of Projects,NA,Project Due
 12,B,2020-06-10T00:00:00Z,NA,NA,NA,NA,NA,Project Peer Evaluation
