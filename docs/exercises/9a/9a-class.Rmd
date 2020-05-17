@@ -1,0 +1,71 @@
+---
+title: "9a-class-network"
+author: "Your Name"
+date: "17/05/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+# you have to install this from github
+# run: remotes::install_github("sctyner/geomnet")
+library(geomnet)
+library(janitor)
+```
+
+```{r class-names}
+class_names <- read_csv(here::here("data/class_names.csv")) %>% clean_names()
+
+class_names
+```
+
+
+```{r class-names}
+class_graph
+```
+
+
+```{r class-names}
+ggplot(class_graph, aes(from_id = s1_name, to_id = s2_name)) +
+  geom_net(layout.alg = "kamadakawai",
+    size = 2, 
+    labelon = TRUE, 
+    vjust = -0.6, 
+    directed = FALSE, 
+    fontsize = 3) +
+  theme_net()
+```
+
+
+- Try changing the layout method to "circle" or "mds"
+- Try setting a random seed, a random number that affects the initial condition for the layout optimisation. You coulde use code like this, substituting in a different number:
+
+```{r}
+set.seed(---)
+```
+
+
+- For the class members/tutors, shevin, james, nicole, wai, jamesjing, write out the 5x5 association matrix.
+
+```{r}
+class_names_subset <- class_names %>%
+  ___(s1_name %in% c(___, ___))
+
+class_names_subset
+```
+
+
+- try exploring the other datasets in the `geomnet` package:
+
+```{r}
+?geomnet::bikes
+?geomnet::blood
+?geomnet::email
+```
+
+
