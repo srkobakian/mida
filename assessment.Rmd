@@ -100,7 +100,7 @@ There are several ways to do the storyboard:
   - [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) package, and there is an [example here](project/electricity-webstory.zip) that contains code for a complete dashboard
 	- A basic [shiny](https://shiny.rstudio.com/gallery/) app
 	- slides with the [xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html) package
-	- a [learnr](https://rstudio.github.io/learnr/index.html) tutorial 
+	- a [learnr](https://rstudio.github.io/learnr/index.html) tutorial, example project [here](project/pisa_au_app.zip). 
   
 Past Example projects from ETC1010:
 
