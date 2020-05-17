@@ -1,0 +1,128 @@
+---
+title: "9a-cross-rates"
+author: "your name"
+date: "17/05/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(geomnet)
+```
+
+
+```{r}
+rates <- read_csv("data/rates_new.csv")
+# remove duplicate rows
+rates <- rates %>% 
+  distinct() %>%  
+  arrange(date)
+```
+
+## Your turn - plotting cross rate time series
+
+Make some plots (or google) to answer these questions
+
+- Is the NZD more similar to AUD, EUR, or JPY? (What currency is NZD?)
+- Is SGD more similar to AUD, EUR, or JPY? (What currency is SGD?)
+
+- How many currencies are there in the British Isles? 
+
+
+## Remove relatively stable currencies
+
+```{r pivot-cv}
+# Compute coefficient of variation. We will only analyse 
+# currencies that have changes substantially over this time.
+cv <- function(x){
+  sd(x)/mean(x)
+}
+
+rates_long <- rates %>% 
+  pivot_longer(cols = -date, names_to = "currency") 
+
+rates_cv <- rates_long %>% 
+  group_by(currency) %>% 
+  summarise(cv = cv(value)) 
+```
+
+### Your turn
+
+- compute a five number summary of the CV values over all currencies
+- create a new table called `rates_stable` that has cv less than
+its first quantile
+- remove low quantile currencies from `rates_long` using an anti
+join save the results to a new object called `rates_sub`
+- Some of the currencies ... aren't really currencies. Google these ones: XAG, XDR, XPT - what are they?
+- Remove the not currencies from `rates_sub` using `filter()`.
+
+
+## Standardising columns
+
+Using group by and mutate!
+
+```{r rescale}
+scale01 <- function(x) (x - mean(x)) / sd(x)
+
+rates_scaled <- rates_dropped %>%
+  group_by(currency) %>% 
+  mutate(value = scale01(value))
+```
+
+### Your turn
+
+- Make a plot of the AUD vs the SGD (using the standardised units). Do they look like they are trending together?
+
+- How does this compare to the network layout?
+- Starting from the code block below, construct a network layout
+from a distance matrix:
+
+```{r}
+rates_wide <- rates_scaled %>% 
+    pivot_wider(id_cols = "date", names_from = "currency") %>%
+    select(-date)
+
+# compute distance between currencies, rows <--> columns 
+rates_wide_t <- t(rates_wide)
+
+currency_dist <- as.matrix(dist(rates_wide_t, 
+                             diag = TRUE, 
+                             upper = TRUE))
+distance_tbl <-  currency_dist %>% 
+  as.data.frame() %>%
+  rownames_to_column(var = "from_currency") %>% 
+  pivot_longer(-from_currency, 
+               names_to = "to_currency",
+               values_to = "distance")
+```
+
+- Remember you want to filter out rows when from and to are the same
+- And filter out currencies that are "far" away from each other
+
+- Here's a starter to help you visualise the network
+
+```{r network}
+library(geomnet)
+set.seed(10052016)
+ggplot(data = ---, 
+       aes(
+         from_id = from_currency, 
+         to_id = to_currency
+         )) +
+  geom_net(
+    layout.alg = "kamadakawai",
+    size = 2, 
+    labelon = TRUE, 
+    vjust = -0.6, 
+    ecolour = "grey60",
+    directed = FALSE, 
+    fontsize = 3, 
+    ealpha = 0.5
+    ) +
+    theme_net() +
+    theme(
+      legend.position = "bottom"
+      )
+```
+
+
