@@ -87,9 +87,11 @@ kable(escape = FALSE,
 
 ## Project
 
-[Project instructions](project/project-instructions.html) 
+[Project instructions](project/project-instructions.html) and
+[project groups](./groups.html). Please check the project groups
+for any discrepancies. 
 
-- **Deadline 1 (13th May)**:  Find team members, and potential topics to study (List of groups will be posted here)
+- **Deadline 1 (13th May)**:  Find team members, and potential topics to study (List of groups will be posted [here](./groups.html))
 - **Deadline 2 (20th May)**:  Team members and team name, data description.
 - **Deadline 3 (29th May) **:  Electronic copy of your data, and a page of data description, and cleaning done, or needing to be done.
 - **Deadline 4 (3rd June) **:  Final version of story board uploaded. 
