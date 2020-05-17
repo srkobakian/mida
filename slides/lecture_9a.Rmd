@@ -68,14 +68,53 @@ as_table <- function(...) knitr::kable(..., format='html', digits = 3)
 ```
 
 
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggraph)
+library(igraph)
+library(tidygraph)
+library(knitr)
+library(lubridate)
+library(gridExtra)
+library(plotly)
+library(geomnet)
+opts_chunk$set(echo = TRUE,   
+               message = FALSE,
+               warning = FALSE,
+               collapse = TRUE,
+               fig.height = 4,
+               fig.width = 8,
+               fig.retina = 2,
+               out.width = "100%",
+               fig.align = "center",
+               cache = FALSE)
+
+as_table <- function(...) knitr::kable(..., format='html', digits = 3)
+
+library(geomnet)
+data(madmen)
+madmen_nodes <- as_tibble(madmen$vertices) %>% 
+  mutate_all(as.character) %>% 
+  rename(gender = Gender)
+madmen_edges <- as_tibble(madmen$edges) %>% mutate_all(as.character)
+```
+
+
 ---
 # Announcements
 
-- Project deadlines:
-  - **Deadline 2 (22nd May) **:  Electronic copy of your data, and a page of data description, and cleaning done, or needing to be done.
-  - **Deadline 3 (27th May) **:  Final version of story board uploaded. 
-- Practical exam: **<DATE>**
+- Assignment 2: due 20th May at 5pm
 
+- Project deadlines:
+  - **Milestone 2 (20th May) **: Finalised team/team members,
+  a paragraph about what you're going to do and links to your data sources. 
+  - **Milestone 3 (27th May) **:  Upload data, and Rmd file,
+  and html describing your data, the cleaning you've done and 
+  what's left.
+  
 ---
 class: refresher
 
@@ -84,9 +123,7 @@ class: refresher
 ---
 # Network analysis
 
---
-
-# A description of phone calls
+**A description of phone calls**
 
 - Johnny --> Liz
 - Liz --> Anna
@@ -98,7 +135,7 @@ class: refresher
 # As a graph
 
 ```{r make-call-graph, echo = FALSE}
-simple <- make_graph('bull')
+simple <- make_graph(c(1,2,1,3,2,3,2,4,3,5), directed = TRUE)
 V(simple)$name <- c('Johnny', 'Dan', 'Liz', 'Lucy', 'Anna')
 
 example <- as_tbl_graph(simple)
@@ -115,30 +152,8 @@ class: transition
 
 # And as an association matrix
 
-[DEMO]
-
----
-# Nodes and edges?
-
-Netword data can be thought of as two related tables, **nodes** and **edges**:
-
-- **nodes** are connection points
-- **edges** are the connections between points
-
----
-# Example: Mad Men. (Nodes = characters from the series)
-
-```{r mm-show-nodes, echo=FALSE}
-library(geomnet)
-data(madmen)
-as_tibble(madmen$vertices)
-```
-
----
-# Example: Mad Men. (Edges = how they are associated)
-
-```{r echo=FALSE}
-as_tibble(madmen$edges)
+```{r, echo = FALSE}
+as_adjacency_matrix(simple, sparse = FALSE)
 ```
 
 ---
@@ -175,36 +190,69 @@ include_graphics("images/Mad-men-title-card.jpg")
 - Overlaying other aspects, e.g. gender
 
 ---
-# introducing `tidygraph` and `ggraph`
+# introducing `madmen` data
 
-.pull-left[
 ```{r make-madmen-graph}
-library(tidygraph)
-library(ggraph)
-
 glimpse(madmen)
 ```
-]
-
-.pull-right[
-```{r print-madmen, echo = FALSE}
-MMnet <- madmen$edges %>%
-  rename(from_id = Name1, to_id = Name2) %>%
-  mutate_all(as.character) %>%
-  full_join(mutate(madmen$vertices, label = as.character(label)), 
-            by = c("from_id" = "label"))
-
-```
-]
 
 ---
-# How to plot
+# Nodes and edges?
 
-```{r ggraph-madmen}
+Netword data can be thought of as two related tables, **nodes** and **edges**:
+
+- **nodes** are connection points
+- **edges** are the connections between points
+
+---
+# Example: Mad Men. (Nodes = characters from the series)
+
+```{r mm-nodes}
+madmen_nodes
+```
+
+---
+# Example: Mad Men. (Edges = how they are associated)
+
+```{r mm-edges}
+madmen_edges
+```
+
+---
+# Let's get the madmen data into the right shape
+
+```{r}
+madmen_edges %>%
+  rename(from_id = Name1, to_id = Name2) 
+```
+
+---
+# Let's get the madmen data into the right shape
+
+```{r}
+madmen_net <- madmen_edges %>%
+  rename(from_id = Name1, to_id = Name2) %>%
+  full_join(madmen_nodes,  #<<
+            by = c("from_id" = "label")) #<<
+
+madmen_net
+```
+
+---
+# Full join?
+
+```{r full-join-gif, echo = FALSE, out.width = "60%"}
+include_graphics("gifs/full-join.gif")
+```
+
+---
+# Plotting the data
+
+```{r ggraph-madmen, echo = FALSE, fig.width = 10, fig.height = 5}
 # create plot
 set.seed(5556677)
-ggplot(data = MMnet, aes(from_id = from_id, to_id = to_id)) +
-  geom_net(aes(colour = Gender), layout.alg = "kamadakawai",
+ggplot(data = madmen_net, aes(from_id = from_id, to_id = to_id)) +
+  geom_net(aes(colour = gender), layout.alg = "kamadakawai",
     size = 2, labelon = TRUE, vjust = -0.6, ecolour = "grey60",
     directed =FALSE, fontsize = 3, ealpha = 0.5) +
     scale_colour_manual(values = c("#FF69B4", "#0099ff")) +
@@ -215,12 +263,146 @@ ggplot(data = MMnet, aes(from_id = from_id, to_id = to_id)) +
 ```
 
 ---
+# How to plot
+
+.left-code[
+```{r graph-step-1, eval = FALSE}
+set.seed(5556677)
+ggplot(data = madmen_net, 
+       aes(from_id = from_id, 
+           to_id = to_id)) +
+  geom_net(aes(colour = gender)) 
+
+```  
+]
+
+.right-plot[
+```{r graph-step-1-out, ref.label = 'graph-step-1', echo = FALSE, out.width = "100%"}
+
+```
+]
+
+---
+# How to plot: specify the layout algorithm
+
+.left-code[
+```{r graph-plot-2, eval = FALSE}
+set.seed(5556677)
+ggplot(data = madmen_net, 
+       aes(from_id = from_id, 
+           to_id = to_id)) +
+  geom_net(aes(colour = gender), 
+           layout.alg = "kamadakawai") 
+```  
+]
+
+.right-plot[
+```{r graph-plot-2-out, ref.label = 'graph-plot-2', echo = FALSE, out.width = "100%"}
+
+```
+]
+
+---
+# How to plot
+
+.left-code[
+```{r graph-plot-3, eval = FALSE}
+set.seed(5556677)
+ggplot(data = madmen_net, 
+       aes(from_id = from_id, 
+           to_id = to_id)) +
+  geom_net(aes(colour = gender), 
+           layout.alg = "kamadakawai",
+           directed = FALSE,
+           labelon = TRUE,
+           fontsize = 3) 
+```  
+]
+
+.right-plot[
+```{r graph-plot-3-out, ref.label = 'graph-plot-3', echo = FALSE, out.width = "100%"}
+
+```
+]
+
+---
+# How to plot
+
+.left-code[
+```{r graph-plot-4, eval = FALSE}
+set.seed(5556677)
+ggplot(data = madmen_net, 
+       aes(from_id = from_id, 
+           to_id = to_id)) +
+  geom_net(aes(colour = gender), 
+           layout.alg = "kamadakawai",
+           directed = FALSE,
+           labelon = TRUE,
+           fontsize = 3,
+           size = 2,
+           vjust = -0.6,
+           ecolour = "grey60",
+           ealpha = 0.5)
+```  
+]
+
+.right-plot[
+```{r graph-plot-4-out, ref.label = 'graph-plot-4', echo = FALSE, out.width = "100%"}
+
+```
+]
+
+---
+# How to plot
+
+.left-code[
+```{r graph-plot-5, eval = FALSE}
+set.seed(5556677)
+ggplot(data = madmen_net, 
+       aes(from_id = from_id, 
+           to_id = to_id)) +
+  geom_net(aes(colour = gender), 
+           layout.alg = "kamadakawai",
+           directed = FALSE,
+           labelon = TRUE,
+           fontsize = 3,
+           size = 2,
+           vjust = -0.6,
+           ecolour = "grey60",
+           ealpha = 0.5) +
+    scale_colour_manual(values = c("#FF69B4", "#0099ff")) +
+    lims(x = c(-0.05, 1.05)) + 
+    theme_net() +
+    theme(legend.position = "bottom")
+```  
+]
+
+.right-plot[
+```{r graph-plot-5-out, ref.label = 'graph-plot-5', echo = FALSE, out.width = "100%"}
+
+```
+]
+
+
+---
 # Which actor was most connected?
 
-```{r most-connected}
-madmen$edges %>% 
-  gather(X, Name, Name1, Name2) %>% 
-  count(Name, sort=TRUE)
+```{r}
+madmen_edges %>% 
+  pivot_longer(cols = c(Name1, Name2),
+               names_to = "List",
+               values_to = "Name") 
+```
+
+---
+# Which actor was most connected?
+
+```{r}
+madmen_edges %>% 
+  pivot_longer(cols = c(Name1, Name2),
+               names_to = "List",
+               values_to = "Name") %>% 
+  count(Name, sort = TRUE)
 ```
 
 ---
@@ -248,30 +430,54 @@ Fall 2000 Season of [Division I college football](https://en.wikipedia.org/wiki/
 - Nodes are the teams, edges are the matches. 
 - Teams are broken into "conferences" which are the primary competition, but they can play outside this group.
 
-```{r  make-football-graph, echo=FALSE}
+---
+# American college football data
+
+Edges:
+.pull-left[
+```{r}
+football$edges
+```
+]
+
+--
+
+Nodes:
+.pull-right[
+```{r}
+football$vertices
+```
+]
+
+---
+# American college football: joining the data
+
+```{r  make-football-graph}
 # data step: merge vertices and edges
 ftnet <- full_join(
   football$edges, football$vertices,
   by = c("from" = "label")
 ) %>%
-  mutate(schools = ifelse(value == "Independents", from, ""))
+  mutate(schools = if_else(value == "Independents", from, ""))
 
+ftnet
 ```
 
 ---
 # Example: American college football
 
-```{r print-football}
+```{r print-football, eval = FALSE}
 ggplot(data = ftnet,
        aes(from_id = from, to_id = to)) +
   geom_net(
-    aes(
-      colour = value, group = value,
-      linetype = factor(1-same.conf),
-      label = schools
-    ),
+    aes(colour = value, 
+        group = value,
+        linetype = factor(1-same.conf),
+        label = schools),
     linewidth = 0.5,
-    size = 5, vjust = -0.75, alpha = 0.3,
+    size = 5, 
+    vjust = -0.75, 
+    alpha = 0.3,
     layout.alg = 'fruchtermanreingold'
   ) +
   theme_net() +
@@ -281,7 +487,7 @@ ggplot(data = ftnet,
 
 ---
 
-```{r print-gg-foot-graph, echo = FALSE, fig.width = 10, fig.height = 8, out.width = "80%"}
+```{r print-gg-foot-graph, echo = FALSE, fig.width = 10, fig.height = 8, out.width = "100%", ref.label='print-football'}
 # gg_foot_graph
 ```
 
@@ -332,30 +538,39 @@ hp_all
 ---
 # Let's plot the characters
 
-```{r echo=TRUE}
-
-ggplot(data=hp_all, 
-       aes(from_id = from_id, to_id = to_id)) + 
-  geom_net(fiteach=T, directed = T, size = 3, linewidth = .5, 
-           ealpha = .5, labelon = T, fontsize = 3, repel = T, 
-           labelcolour = "black", arrowsize = .5, singletons = FALSE,
-           aes(colour = house, group = house, shape = gender)) + 
-  scale_colour_manual(values = c("#941B08","#F1F31C", 
-                                 "#071A80", "#154C07")) + 
+```{r plot-hp, echo=TRUE, eval = FALSE}
+ggplot(data = hp_all, 
+       aes(from_id = from_id, 
+           to_id = to_id)) + 
+  geom_net(aes(colour = house, group = house, shape = gender),
+           fiteach=T, 
+           directed = T, 
+           size = 3, 
+           linewidth = .5, 
+           ealpha = .5, 
+           labelon = T, 
+           fontsize = 3, 
+           repel = T, 
+           labelcolour = "black", 
+           arrowsize = .5, 
+           singletons = FALSE) + 
+  scale_colour_manual(values = c("#941B08","#F1F31C", "#071A80", "#154C07")) + 
   facet_wrap(~book, labeller = "label_both", ncol=3) + 
-  theme_net() + theme(panel.background = element_rect(colour = 'black'), legend.position="bottom")
+  theme_net() + 
+  theme(panel.background = element_rect(colour = 'black'),
+        legend.position="bottom")
 ```
 
 ---
 # Let's plot the characters
 
-```{r ggraph-hp}
+```{r ggraph-hp-out, ref.label='plot-hp', echo = FALSE, fig.width = 10, fig.height = 6}
 ```
 
 
 ---
 class: transition
-# Your turn: rstudio exercise
+# Your turn: lab exercise
 
 .pull-left[
 - Read in last semesters class data, which contains `s1_name` and `s2_name` are the first names of class members, and tutors, with the latter being the "go-to" person for the former. 
@@ -363,24 +578,407 @@ class: transition
 ]
 
 .pull-right[
-```{r}
+```{r echo = FALSE}
 include_graphics("images/class_network.png")
 ```
 ]
 
-## Simpsons
 
-Your turn to make a network diagram for the Simpsons. The measure of association will be "that the two characters had lines in the same episode together".
+# recap: on network data
 
-- How many characters appeared only in one episode? (You will want to drop these)
-- Write code to search if a character has a line in an episode
-- Compile a dataset of episode (rows) and character (columns) which is a binary matrix where 1 indicates the character had a line in the episode, and 0 is otherwise
-- Gather the matrix into long form, with these columns: `episode`, `character`, `had a line` (0,1)
-- Filter the rows with `had a line` equal to 1.
-- Count the number of times the pair of characters appeared. This now forms your edge set, with an additional column of the strength of the relationship
-- Make your network display
+- To make a network analysis, you need:
+    - an association matrix, that describes how nodes (vertices) are connected to each other
+    - a layout algorithm to place the nodes optimally so that the fewest edges cross, or that the nodes that are most closely associated are near to each other.
 
 ---
-  
+class: refresher
+# Quantitative association matrices
+
+Previous association matrices were black and white: 
+
+```{r show-network-data, out.width = "80%", echo = FALSE}
+include_graphics("images/network_data.png")
+```
+
+---
+class: refresher
+# Quantitative association matrices
+
+- You could have the association between nodes described as real numbers.
+
+--
+
+- E.g., these are the number of times that these people called each other in the last week:
+
+```{r show-n-times-ppl-called, echo = FALSE}
+d <- matrix(c(0, 5, 4, 1, 1, 
+              5, 0, 4, 2, 1,
+              4, 4, 0, 0, 0,
+              1, 2, 0, 0, 6,
+              1, 1, 0, 6, 0), ncol=5, byrow=T)
+colnames(d) <- c("Meg", "Tay", "Yat", "Zili", "Jess")
+rownames(d) <- colnames(d)
+kable(d)
+```
+
+---
+# Quantitative association matrices
+
+We would need to turn this into an edge data set:
+
+```{r show-edges, echo=FALSE}
+d_edges <- d %>% as_tibble() %>%
+  mutate(from = rownames(d)) %>%
+  gather(to, count, -from)
+d_edges
+```
+
+---
+# Quantitative association matrices
+
+- We need to decide what corresponds to a "connection".
+- Let's say they need to have called each other at least 4 times, to be considered connected.
+
+
+```{r decide-connections, echo = TRUE}
+d_edges_filter <- d_edges %>% filter(count > 3)
+```
+
+--
+
+```{r decide-connections-print, echo = TRUE}
+d_edges_filter
+```
+
+---
+# Association matrices: Make the network diagram.
+
+```{r geom-net-cals, eval = FALSE}
+library(geomnet)
+set.seed(2019-10-09)
+ggplot(data = d_edges_filter, 
+       aes(
+         from_id = from, 
+         to_id = to)) +
+  geom_net(
+    layout.alg = "kamadakawai",
+    size = 2, 
+    labelon = TRUE, 
+    vjust = -0.6, 
+    ecolour = "grey60",
+    directed =FALSE, 
+    fontsize = 3, 
+    ealpha = 0.5
+    ) +
+    theme_net() 
+```  
+
+
+---
+# Association matrices: Make the network diagram.
+
+```{r geom-net-cals-out, ref.label = 'geom-net-cals', echo = FALSE, out.width = "100%"}
+
+```
+
+
+---
+# Data:  Last 2018, 4 months of currency USD cross-rates
+
+SO let's try this with cross-currency rates across the globe!
+
+- Data extracted from http://openexchangerates.org/api/historical
+- R packages `jsonlite`, processed with `tidyverse`, `lubridate`
+
+---
+# Data:  Last 4 months of currency USD cross-rates
+
+```{r show-rates, echo=FALSE, fig.width=5, fig.height=5}
+rates <- read_csv(here::here("slides/data/rates_new.csv"))
+rates <- rates %>% 
+  distinct() %>%  
+  arrange(date)
+rates %>% head()
+```
+
+---
+# Data:  Last 4 months of currency USD cross-rates
+
+```{r plot-rates, echo=FALSE, out.width = "100%"}
+p1 <- ggplot(rates, aes(x=date, y=AUD)) + geom_line()
+p2 <- ggplot(rates, aes(x=date, y=EUR)) + geom_line()
+p3 <- ggplot(rates, aes(x=date, y=JPY)) + geom_line()
+p4 <- rates %>% select(date, AUD, EUR, JPY) %>%
+  gather(curr, value, -date) %>%
+  ggplot(aes(x=date, y=value, colour=curr, group=curr)) + 
+    geom_line() + theme(legend.position="none") +
+  scale_colour_brewer(palette="Dark2")
+grid.arrange(p1, p2, p3, p4, ncol=2)
+```
+
+---
+# Your turn: Rstudio
+
+Make some plots (or google) to answer these questions
+
+- Is the NZD more similar to AUD, EUR, or JPY? (What currency is NZD?)
+- Is SGD more similar to AUD, EUR, or JPY? (What currency is SGD?)
+- How many currencies are there in the British Isles? 
+
+```{r cd-round-1, echo = FALSE}
+countdown(minutes = 5)
+```
+
+---
+
+```{r show-many-currencies, out.width = "100%", echo = FALSE}
+p1 <- ggplot(rates, aes(x=date, y=AUD)) + geom_line()
+p2 <- ggplot(rates, aes(x=date, y=EUR)) + geom_line()
+p3 <- ggplot(rates, aes(x=date, y=JPY)) + geom_line()
+p4 <- ggplot(rates, aes(x=date, y=SGD)) + geom_line()
+grid.arrange(p1, p2, p3, p4, ncol=2)
+```
+
+---
+# Pre-processing: Keep currencies that change
+
+- Some currencies don't change very much. 
+- These should be filtered from the analysis, because in a study of currency movement, if it doesn't move then there is nothing more to be said. 
+
+---
+# Pre-processing: Keep currencies that change
+
+- To filter out these currencies we use a statistic called [coefficient of variation](https://en.wikipedia.org/wiki/Coefficient_of_variation):
+
+$$
+Coef Variation = \frac{\sigma}{\mu}
+$$
+
+--
+
+- Measures standard deviation of currency relative to the mean. 
+- For high means, we expect a currency to change more. 
+- That is, relatively the standard deviation would be larger to consider it to be changing.
+
+---
+
+# Computing CV
+
+### Stratgey pivot to long form then group and summarize currency values
+
+```{r}
+# Compute coefficient of variation. We will only analyse 
+# currencies that have changes substantially over this time.
+cv <- function(x){
+  sd(x)/mean(x)
+}
+
+rates_cv <- rates %>% 
+  pivot_longer(cols = -date, names_to = "currency") %>% 
+  group_by(currency) %>% 
+  summarise(cv = cv(value)) 
+```
+
+---
+
+## Distrubtion of CV values
+
+```{r cv-histogram, echo = FALSE}
+rates_cv %>% 
+  ggplot(aes(x = cv)) +
+    geom_histogram(binwidth = 0.01)
+```
+
+---
+
+# Filter out currencies if they have CVs below the first quantile
+
+```{r low-quantile}
+rates_stable <- rates_cv %>%
+  filter(cv < quantile(cv, 0.25))
+```
+
+---
+
+# Filter out low cv currencies using pivot and an anti join
+
+```{r anti-low-cv}
+rates_sub <- rates %>% 
+  pivot_longer(cols = -date, names_to = "currency") %>% 
+  anti_join(rates_stable)
+rates_sub
+```
+
+---
+# Remove currencies that are not currencies
+
+Some of the currencies ... aren't really currencies. Google these ones: XAG, XDR, XPT - what are they?
+
+```{r cd-2, echo = FALSE}
+countdown(minutes = 2)
+```
+
+---
+# Remove currencies that are not currencies
+
+```{r}
+# Remove non-currencies
+rates_dropped <- rates_sub %>% 
+  filter(!currency %in% c("ALL", "XAG", "XDR", "XPT"))
+```
+
+XAG is Gold
+XPT is Platinum
+XDR is special drawing rights
+
+---
+# Standardize the currencies
+
+To examine overall trend regardless of actual USD cross rate, standardise the values to have mean 0 and standard deviation 1.
+
+
+```{r scale-fun}
+scale01 <- function(x) (x - mean(x)) / sd(x)
+```
+
+---
+# Rescale all values to have standardised values
+
+##  Use `group_by()` plus `mutate()`!
+
+--
+```{r rescale-rates}
+rates_scaled <- rates_dropped %>%
+  group_by(currency) %>% 
+  mutate(value = scale01(value))
+```
+
+---
+# Standardize the currencies
+
+```{r currencies-standardized, out.width = "100%", echo = FALSE}
+rates_scaled %>% 
+    filter(currency %in% c("AUD", "EUR", "JPY")) %>% 
+    ggplot(aes(x =  date, y = value)) + 
+    geom_line() +
+    facet_grid(~currency)
+```
+
+---
+# Compute distances between all pairs of currencies
+
+Euclidean distance is used to compute similarity between all pairs of currencies. 
+
+$d_{ij} = \sqrt{\sum_{i=1}^{t}{(C_{1i}-C_{2i})^2}}$
+
+---
+# Compute distances between all pairs of currencies
+
+We need to put our data back in wide form! And then turn it
+into a matrix. 
+
+```{r compute-dist-01}
+rates_wide <- rates_scaled %>% 
+    pivot_wider(id_cols = "date", names_from = "currency") %>%
+    select(-date)
+
+# compute distance between currencies, rows <--> columns 
+rates_wide_t <- t(rates_wide)
+```
+
+
+
+---
+# Use built in function to compute distance
+
+```{r}
+currency_dist <- as.matrix(dist(rates_wide_t, 
+                             diag = TRUE, 
+                             upper = TRUE))
+
+currency_dist[1:5, 1:5]
+```
+
+
+---
+# A note on distance matrices:
+
+- A distance matrix is the inverse of an association matrix. 
+- A distance matrix close to 0 means the pair are most similar. 
+- For an association matrix far from zero means the pair are close. 
+- Either can be used to generate a network. 
+
+---
+# Create network: Pivot data into long form, filter based on similarity
+
+Here only the pairs of currencies who are closer than "4" to each other are kept. 
+
+```{r}
+distance_tbl <-  currency_dist %>% 
+  as.data.frame() %>%
+  rownames_to_column(var = "from_currency") %>% 
+  pivot_longer(-from_currency, 
+               names_to = "to_currency",
+               values_to = "distance") %>% 
+  filter(distance < 3 ) %>%
+  filter(from_currency != to_currency)
+```
+
+---
+# Create network: Gather data into long form, filter based on similarity
+
+Here only the pairs of currencies who are closer than "4" to each other are kept. 
+
+```{r show-zero-tbl}
+distance_tbl
+```
+
+
+---
+# Network laid out
+
+.left-code[
+```{r currency-network, eval = FALSE}
+# Make network
+library(geomnet)
+set.seed(10052016)
+ggplot(data = distance_tbl, 
+       aes(
+         from_id = from_currency, 
+         to_id = to_currency
+         )) +
+  geom_net(
+    layout.alg = "kamadakawai",
+    size = 2, 
+    labelon = TRUE, 
+    vjust = -0.6, 
+    ecolour = "grey60",
+    directed = FALSE, 
+    fontsize = 3, 
+    ealpha = 0.5
+    ) +
+    theme_net() +
+    theme(
+      legend.position = "bottom"
+      )
+```  
+]
+
+.right-plot[
+```{r currency-network-out, ref.label = 'currency-network', echo = FALSE, out.width = "100%"}
+
+```
+]
+
+---
+class: transition
+
+# Your turn
+
+- Make a plot of the AUD vs the SGD (using the standardised units). Do they look like they are trending together as suggested by the network?
+- Try out the remaining lab exercises 
+
+---
+
 ```{r endslide, child="components/endslide.Rmd"}
 ```
